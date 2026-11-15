@@ -1,0 +1,30 @@
+name: Publish GitHub Pages game release
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - index.html
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  publish-release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Create a GitHub Release for this game commit
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          SHORT_SHA="${GITHUB_SHA:0:12}"
+          TAG="build-${SHORT_SHA}"
+          gh release create "${TAG}" \
+            --repo "${GITHUB_REPOSITORY}" \
+            --target "${GITHUB_SHA}" \
+            --title "Missile Defense Roguelite - ${TAG}" \
+            --notes "GitHub Pages game deployment. Commit: ${GITHUB_SHA}. Entry point: index.html."
