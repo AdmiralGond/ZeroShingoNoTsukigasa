@@ -15,16 +15,33 @@ jobs:
   publish-release:
     runs-on: ubuntu-latest
     steps:
-      - name: Create a GitHub Release for this game commit
+      - name: Check out release source and notes
+        uses: actions/checkout@v4
+      - name: Publish uniquely versioned GitHub Release
         env:
           GH_TOKEN: ${{ github.token }}
         shell: bash
         run: |
           set -euo pipefail
-          SHORT_SHA="${GITHUB_SHA:0:12}"
-          TAG="build-${SHORT_SHA}"
-          gh release create "${TAG}" \
-            --repo "${GITHUB_REPOSITORY}" \
-            --target "${GITHUB_SHA}" \
-            --title "Missile Defense Roguelite - ${TAG}" \
-            --notes "GitHub Pages game deployment. Commit: ${GITHUB_SHA}. Entry point: index.html."
+          VERSION="v$(TZ=Asia/Seoul date +'%Y.%m.%d').${GITHUB_RUN_NUMBER}"
+          NOTES_PATH=".github/release-notes/${VERSION}.md"
+          echo "Publishing ${VERSION} for ${GITHUB_SHA}"
+          if gh release view "${VERSION}" --repo "${GITHUB_REPOSITORY}" >/dev/null 2>&1; then
+            echo "Release ${VERSION} already exists; refusing to overwrite a published record" >&2
+            exit 1
+          fi
+          if [[ -f "${NOTES_PATH}" ]]; then
+            gh release create "${VERSION}" \
+              --repo "${GITHUB_REPOSITORY}" \
+              --target "${GITHUB_SHA}" \
+              --title "Missile Defense Roguelite ${VERSION}" \
+              --notes-file "${NOTES_PATH}" \
+              --latest
+          else
+            gh release create "${VERSION}" \
+              --repo "${GITHUB_REPOSITORY}" \
+              --target "${GITHUB_SHA}" \
+              --title "Missile Defense Roguelite ${VERSION}" \
+              --generate-notes \
+              --latest
+          fi
