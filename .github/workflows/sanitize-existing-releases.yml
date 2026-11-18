@@ -1,0 +1,54 @@
+name: Sanitize existing public release notes
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - .github/workflows/sanitize-existing-releases.yml
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  sanitize:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out published notes
+        uses: actions/checkout@v4
+      - name: Update published release descriptions and initial version label
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          repo="${GITHUB_REPOSITORY}"
+          initial="v2026.11.16.1"
+          initial_notes=".github/release-notes/${initial}.md"
+
+          # Convert the original hash-bearing build tag to a public version label.
+          old_tag="$(gh api "repos/${repo}/releases?per_page=100" --jq '[.[] | select(.tag_name | startswith("build-")) | .tag_name] | first // empty')"
+          if [[ -n "${old_tag}" ]]; then
+            old_sha="$(gh api "repos/${repo}/git/ref/tags/${old_tag}" --jq '.object.sha')"
+            gh api --method POST "repos/${repo}/git/refs" -f ref="refs/tags/${initial}" -f sha="${old_sha}" >/dev/null
+            release_id="$(gh api "repos/${repo}/releases/tags/${old_tag}" --jq '.id')"
+            gh api --method PATCH "repos/${repo}/releases/${release_id}" \
+              -f tag_name="${initial}" \
+              -f name="Missile Defense Roguelite ${initial}" \
+              -f body="$(cat "${initial_notes}")" \
+              -f target_commitish="${old_sha}" >/dev/null
+            gh api --method DELETE "repos/${repo}/git/refs/tags/${old_tag}" >/dev/null
+          fi
+
+          for version in v2026.11.16.1 v2026.11.17.2 v2026.11.18.3; do
+            notes=".github/release-notes/${version}.md"
+            test -f "${notes}"
+            gh release edit "${version}" \
+              --repo "${repo}" \
+              --title "Missile Defense Roguelite ${version}" \
+              --notes-file "${notes}"
+            actual="$(gh api "repos/${repo}/releases/tags/${version}" --jq '.body')"
+            expected="$(cat "${notes}")"
+            [[ "${actual}" == "${expected}" ]] || { echo "Public notes verification failed for ${version}" >&2; exit 1; }
+          done
+          echo "Public release descriptions synchronized."
