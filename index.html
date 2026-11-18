@@ -11423,7 +11423,7 @@ kbd{font:inherit;font-size:10px;margin-left:6px;padding:1px 5px;border:1px solid
     RG.lastTotal = total; RG.score += total; shownScore = -1; refreshScore();
     if (RG.score > RG.best) { RG.best = RG.score; }
     modal = win ? "res" : "over";
-    const scoreGuide = win && !guidanceSkipped && !RG.seen.score ? (RG.seen.score = true, `<div class="rg-panel guide"><button class="rg-x" type="button" data-act="hideGuide" aria-label="닫기">✕</button><h2>점수 안내</h2><p class="rg-body">${lines(GUIDE.score[0][1])}</p></div>`) : "";
+    const scoreGuide = win && !guideSkipped && !RG.seen.score ? (RG.seen.score = true, `<div class="rg-panel guide"><button class="rg-x" type="button" data-act="hideGuide" aria-label="닫기">✕</button><h2>점수 안내</h2><p class="rg-body">${lines(GUIDE.score[0][1])}</p></div>`) : "";
     layer.innerHTML = `<div class="rg-pair"><div class="rg-panel"><h2 class="${win ? "ok" : "bad"}">${win ? "ROUND CLEAR" : "함선 격침 — MISSION FAILED"}</h2>
       <table>${L.map(l => `<tr><td>${l[0]}</td><td>${l[1]}</td><td>${l[2] == null ? "" : sgn(l[2])}</td></tr>`).join("")}</table>
       <div class="rg-sum"><span>획득 점수</span><b>+${fmt(total)}</b></div>
@@ -11486,16 +11486,18 @@ kbd{font:inherit;font-size:10px;margin-left:6px;padding:1px 5px;border:1px solid
     bomber: ["전폭기", "<b>전폭기</b>: 접근해 미사일을 발사합니다,\n발사 전에 격추하면 +500."],
     hyper: ["초고속탄", "<b>초고속탄(141)</b>: 일반 요격탄보다 빠를 수 있습니다."] };
   let guideSeq = [], guideDone = null, guideHold = false, guideLast = "닫기";
-  // X/Skip dismisses all automatic guidance for this page session, including coaching.
-  // H still explicitly opens the reference guide; restarting a run does not undo Skip.
-  let guidanceSkipped = false;
-  function skipGuidance() {
-    guidanceSkipped = true;
+  // Guide and practice coach keep separate skip states throughout this page session.
+  // X dismisses only its own guidance type; H always opens the reference guide.
+  let guideSkipped = false;
+  let coachSkipped = false;
+  function skipGuide() { guideSkipped = true; }
+  function skipCoach() {
+    coachSkipped = true;
     if (RG.co) RG.co.finished = true;
     coachEl.hidden = true;
   }
   function showGuide(keys, done, last, manual=false) {
-    if (keys && guidanceSkipped && !manual) { if (done) done(); return; }
+    if (keys && guideSkipped && !manual) { if (done) done(); return; }
     if (modal !== "tut") { guideHold = !modal; if (guideHold) holdPause(); guideSeq = keys.flatMap(k => GUIDE[k]).flatMap(([h, b]) => { const L = b.split("\n"), out = []; for (let q = 0; q < L.length; q += 3) out.push([h, L.slice(q, q + 3).join("\n")]); return out; }); tutStep = 0; guideDone = done || null; guideLast = last || "닫기"; }
     modal = "tut";
     const [h, b] = guideSeq[tutStep], lastSlide = tutStep === guideSeq.length - 1;
@@ -11522,7 +11524,7 @@ kbd{font:inherit;font-size:10px;margin-left:6px;padding:1px 5px;border:1px solid
       <h3>보유 카드</h3>${have.length ? `<ul>${have.map(c => `<li class="g-${c.g}" style="--rc:${GRADE[c.g].c}"><b>${c.n} <i>${GRADE[c.g].ko}</i> ×${RG.cards[c.key]}</b><small>${c.d}</small></li>`).join("")}</ul>` : `<p class="rg-body">아직 획득한 카드가 없습니다.</p>`}</div>`;
     tabEl.hidden = false;
   }
-  const act = { hideGuide: () => { skipGuidance(); const g = layer.querySelector(".rg-panel.guide"); if (g) g.remove(); }, toCards: () => { if (!RG.seen.cards) { RG.seen.cards = true; showGuide(["cards"], () => showCards(true), "카드 선택으로"); } else showCards(true); }, newRun, reroll, tutSkip: () => { skipGuidance(); closeGuide(); }, tutPrev: () => { tutStep = Math.max(0, tutStep - 1); showGuide(); },
+  const act = { hideGuide: () => { skipGuide(); const g = layer.querySelector(".rg-panel.guide"); if (g) g.remove(); }, toCards: () => { if (!RG.seen.cards) { RG.seen.cards = true; showGuide(["cards"], () => showCards(true), "카드 선택으로"); } else showCards(true); }, newRun, reroll, tutSkip: () => { skipGuide(); closeGuide(); }, tutPrev: () => { tutStep = Math.max(0, tutStep - 1); showGuide(); },
     tutNext: () => { if (tutStep >= guideSeq.length - 1) closeGuide(); else { tutStep++; showGuide(); } } };
   layer.addEventListener("click", e => { const b = e.target.closest("[data-act]"); if (!b || b.disabled) return;
     if (b.dataset.act === "pick") pick(+b.dataset.i); else act[b.dataset.act]?.(); });
@@ -11623,7 +11625,7 @@ kbd{font:inherit;font-size:10px;margin-left:6px;padding:1px 5px;border:1px solid
     c.idx++; c.shown = -1; c.stepT = 0;
   }
   function coachTick() {
-    const on = !guidanceSkipped && RG.co && !RG.co.finished && RG.round <= TUTORIAL_ROUNDS && RG.live && !modal && tabEl.hidden;
+    const on = !coachSkipped && RG.co && !RG.co.finished && RG.round <= TUTORIAL_ROUNDS && RG.live && !modal && tabEl.hidden;
     if (!on) { coachEl.hidden = true; return; }
     const w = session.world, c = RG.co;
     const st = w.scoreState.killCount > 0 ? 5 : (w.interceptors.length > 0 || w.pendingEngagements.some(p => p.fireAuthorized)) ? 4 : w.pendingEngagements.length > 0 ? 3 : w.reservationQueue.length > 0 ? 2 : w.tracks.some(t => t.visible) ? 1 : 0;
@@ -11647,7 +11649,7 @@ kbd{font:inherit;font-size:10px;margin-left:6px;padding:1px 5px;border:1px solid
     }
     coachEl.hidden = false;
   }
-  coachEl.addEventListener("click", e => { if (e.target.closest(".rg-x") && RG.co) skipGuidance(); });
+  coachEl.addEventListener("click", e => { if (e.target.closest(".rg-x") && RG.co) skipCoach(); });
   (function fxLoop() {                                   // hide the v155 cursor rings while a card/result/TAB panel is open
     gameRoot.classList.toggle("rg-modal-open", !!modal || !tabEl.hidden);
     coachTick(); BGM.tick(); requestAnimationFrame(fxLoop);
