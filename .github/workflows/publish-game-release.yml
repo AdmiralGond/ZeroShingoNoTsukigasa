@@ -23,6 +23,18 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
+          # An explicit release-update marker revises the existing version instead of creating another.
+          COMMIT_MESSAGE="$(git log -1 --pretty=%B)"
+          if [[ "${COMMIT_MESSAGE}" =~ \[release-update:(v[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+)\] ]]; then
+            VERSION="${BASH_REMATCH[1]}"
+            NOTES_PATH=".github/release-notes/${VERSION}.md"
+            test -f "${NOTES_PATH}" || { echo "Missing release notes: ${NOTES_PATH}" >&2; exit 1; }
+            gh release view "${VERSION}" --repo "${GITHUB_REPOSITORY}" >/dev/null
+            gh api --method PATCH "repos/${GITHUB_REPOSITORY}/git/refs/tags/${VERSION}" -f sha="${GITHUB_SHA}" -F force=true >/dev/null
+            gh release edit "${VERSION}" --repo "${GITHUB_REPOSITORY}" --target "${GITHUB_SHA}" --notes-file "${NOTES_PATH}" --latest
+            echo "Updated existing release ${VERSION} to ${GITHUB_SHA}"
+            exit 0
+          fi
           VERSION="v$(TZ=Asia/Seoul date +'%Y.%m.%d').${GITHUB_RUN_NUMBER}"
           NOTES_PATH=".github/release-notes/${VERSION}.md"
           echo "Publishing ${VERSION} for ${GITHUB_SHA}"
