@@ -27,7 +27,7 @@ jobs:
           initial_notes=".github/release-notes/${initial}.md"
 
           # Convert the original hash-bearing build tag to a public version label.
-          old_tag="$(gh api "repos/${repo}/releases?per_page=100" --jq '[.[] | select(.tag_name | startswith("build-")) | .tag_name] | first // empty')"
+          old_tag="$(gh release list --repo "${repo}" --limit 100 --json tagName --jq '[.[] | select(.tagName | startswith("build-")) | .tagName] | first // empty')"
           if [[ -n "${old_tag}" ]]; then
             old_sha="$(gh api "repos/${repo}/git/ref/tags/${old_tag}" --jq '.object.sha')"
             gh api --method POST "repos/${repo}/git/refs" -f ref="refs/tags/${initial}" -f sha="${old_sha}" >/dev/null
