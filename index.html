@@ -1878,6 +1878,17 @@ kbd{font:inherit;font-size:10px;margin-left:6px;padding:1px 5px;border:1px solid
 #rgToast{position:absolute;left:330px;top:92px;width:640px;z-index:51;padding:10px 16px;background:rgba(40,8,36,.92);border:1px solid #c44cff;color:#f1dcff;font-size:14px;font-weight:700;pointer-events:none;box-shadow:0 0 18px rgba(196,76,255,.35)}
 #rgToast[hidden]{display:none}
 
+.rg-panel{position:relative}#rgCoach{pointer-events:none}
+.rg-x,.rg-panel>button.rg-x,.rg-panel button.rg-x{position:absolute;top:6px;right:8px;margin:0;width:26px;height:26px;padding:0;line-height:1;font-size:14px;letter-spacing:0;text-align:center;background:rgba(255,255,255,.06);border:1px solid var(--muted);color:var(--text);cursor:pointer;pointer-events:auto}
+.rg-x:hover{background:rgba(255,80,80,.35)}
+
+.ln{display:block}.rg-panel.guide{width:440px}.rg-body{line-height:1.9}
+#rgCoach{width:520px}#rgCoach p{line-height:1.6}
+
+.rg-coach-h{padding-right:34px}
+
+.ln.gap{height:.8em}
+
 </style>
 </head>
 <body>
@@ -2902,7 +2913,7 @@ kbd{font:inherit;font-size:10px;margin-left:6px;padding:1px 5px;border:1px solid
     return profile.launchMpCost;
   }
 
-  function rgMpCost(c) { const R = window.__RG; let m = R ? R.mpCostMul : 1; if (R && (c === AUTO_RAM_MP_LAUNCH_COST || c === CIWS_GUN_MP_BURST_COST)) m *= R.closeCostMul; return Math.max(1, Math.round(c * m)); }
+  function rgMpCost(c) { const R = window.__RG; let m = R ? R.mpCostMul : 1; if (R && (c === AUTO_RAM_MP_LAUNCH_COST || c === CIWS_GUN_MP_BURST_COST)) m = R.closeCostMul; return Math.max(1, Math.round(c * m)); }
   function hasSufficientCombatMp(world, cost) {
     if (!Number.isInteger(cost) || cost <= 0) {
       throw new Error(`Invalid MP cost: ${cost}`);
@@ -3214,6 +3225,7 @@ kbd{font:inherit;font-size:10px;margin-left:6px;padding:1px 5px;border:1px solid
       return clamp(1 - (1 - basePk) * missMul, profile.minProbability, profile.maxProbability);
     },
     decide(world, interceptor, target) {
+      if (window.__RG) window.__RG.pkScope = interceptor.autoShortRange ? "C" : "M";
       const probability = this.probability(
         target, interceptor.weaponId, world.ship.position,
         world.missileMotionMultiplier
@@ -5954,7 +5966,7 @@ kbd{font:inherit;font-size:10px;margin-left:6px;padding:1px 5px;border:1px solid
           state.nextPkCheckAt <= state.burstEndsAt + 1e-9) {
         const tickNumber = state.pkDrawIndex++;
         const p = 1 - Math.pow(
-          1 - Math.min(0.9, CIWS_GUN_PK_REFERENCE_PROBABILITY * (window.__RG ? window.__RG.ciwsMul : 1)),
+          1 - Math.min(0.9, 1 - (1 - CIWS_GUN_PK_REFERENCE_PROBABILITY * (window.__RG ? window.__RG.ciwsMul : 1)) * (window.__RG ? window.__RG.missMulC : 1)),
           CIWS_GUN_PK_TICK_SECONDS / CIWS_GUN_PK_REFERENCE_SECONDS
         );
         const roll = deterministicUnit(
@@ -7668,7 +7680,7 @@ kbd{font:inherit;font-size:10px;margin-left:6px;padding:1px 5px;border:1px solid
     launchInterceptor(targetEntityId, channelId, launchTrackPosition,
       weaponId=WEAPON_IDS.ONE, options={}) {
       const w = this.world;
-      const baseSpeed = INTERCEPTOR_WEAPON_SPEED_PROFILES[weaponId].baseSpeed * (window.__RG ? window.__RG.speedMul : 1);
+      const baseSpeed = INTERCEPTOR_WEAPON_SPEED_PROFILES[weaponId].baseSpeed * (window.__RG ? window.__RG.speedFor(options) : 1);
       const fixedSpeed = weaponId === WEAPON_IDS.FOUR;
       const launchSpeed = fixedSpeed ? baseSpeed :
         INTERCEPTOR_WEAPON_SPEED_PROFILES.COMMON.launchSpeed;
@@ -11102,7 +11114,7 @@ kbd{font:inherit;font-size:10px;margin-left:6px;padding:1px 5px;border:1px solid
   function resetRun() {
     Object.assign(DEFENSE_RESOURCE_PROFILE, BASE_PROFILE); TRACKING_RADAR_RADIUS = BASE_TRACK;
     Object.assign(RG, { round: 0, score: 0, hp: null, cards: {}, dmgMul: 1,
-      mpCostMul: 1, missMul: 1, speedMul: 1, queueExtra: 0, extraRam: 0, extraCiws: 0, ciwsRange: 0, sdBonus: {}, radar3d: 0, fastMul: 1, ciwsMul: 1, lowMul: 1, nearMul: 1, closeCostMul: 1, rescue: 0, rescuePct: 0, rescueLeft: 0, emergUses: 0, emergPct: 0, emergLeft: 0, killMp: 0, absorb: 0, droneHp: 0, droneLast: 0, crisisMul: 1, comboExtra: 0, distMul: 0, nohitMul: 0, extraOffer: 0, rank: null, lastTotal: 0, scoreMul: 1, cd: 0.5, rerollBonus: 0, extraCh: 0, repair: 0, rd: null, live: false });
+      mpCostMul: 1, missMul: 1, speedMul: 1, missMulC: 1, speedMulC: 1, fastMulC: 1, lowMulC: 1, nearMulC: 1, killMpC: 0, pkScope: "M", queueExtra: 0, extraRam: 0, extraCiws: 0, ciwsRange: 0, sdBonus: {}, radar3d: 0, fastMul: 1, ciwsMul: 1, lowMul: 1, nearMul: 1, closeCostMul: 1, rescue: 0, rescuePct: 0, rescueLeft: 0, emergUses: 0, emergPct: 0, emergLeft: 0, killMp: 0, absorb: 0, droneHp: 0, droneLast: 0, crisisMul: 1, comboExtra: 0, distMul: 0, nohitMul: 0, extraOffer: 0, rank: null, lastTotal: 0, scoreMul: 1, cd: 0.5, rerollBonus: 0, extraCh: 0, repair: 0, rd: null, live: false });
   }
   RG.best = 0; RG.token = 0; RG.seen = { score: false, cards: false }; RG.tabOpened = false;
   try { localStorage.removeItem("rg_best"); localStorage.removeItem("rg_tut"); } catch (e) {}
@@ -11121,8 +11133,8 @@ kbd{font:inherit;font-size:10px;margin-left:6px;padding:1px 5px;border:1px solid
   // -- tier 1 impact: interceptor speed, channels
   family("speed", "요격탄 부스터", 5, { N:[4], E:[8], U:[13], R:[20] }, v => `요격탄 속도 +${v}%`, v => { RG.speedMul = Math.min(1.6, RG.speedMul + v / 100); });
   // the most valuable card in the game: one more slot in the reservation queue (the planning surface itself), at a mana price
-  family("queue", "예약 대기열 확장", 2, { R:[1,15] }, (a, b) => `예약 대기열 +${a}칸 / MP 소모 +${b}%`, (a, b) => { RG.queueExtra += a; RG.mpCostMul *= 1 + b / 100; });
-  family("ch", "채널 증설", 2, { U:[1,12], R:[1,0] }, (a, b) => b ? `일반 채널 +1 / MP 소모 +${b}%` : "일반 채널 +1", (a, b) => { RG.extraCh++; if (b) RG.mpCostMul *= 1 + b / 100; });
+  family("queue", "예약 대기열 확장", 2, { R:[1,15] }, (a, b) => `예약 대기열 +${a}칸 / M계열 MP 소모 +${b}%`, (a, b) => { RG.queueExtra += a; RG.mpCostMul *= 1 + b / 100; });
+  family("ch", "채널 증설", 2, { U:[1,12], R:[1,0] }, (a, b) => b ? `일반 채널 +1 / M계열 MP 소모 +${b}%` : "일반 채널 +1", (a, b) => { RG.extraCh++; if (b) RG.mpCostMul *= 1 + b / 100; });
   // -- tier 2: hit chance
   family("seek", "정밀 시커", 6, { N:[5], E:[10], U:[18], R:[26] }, v => `요격 실패 확률 -${v}%`, v => { RG.missMul = cut(RG.missMul, v, 0.5); });
   family("over", "과충전 탄두", 2, { E:[8,15], U:[14,15], R:[22,15] }, (a, b) => `요격 실패 확률 -${a}% / MP 소모 +${b}%`, (a, b) => { RG.missMul = cut(RG.missMul, a, 0.5); RG.mpCostMul *= 1 + b / 100; });
@@ -11170,6 +11182,30 @@ kbd{font:inherit;font-size:10px;margin-left:6px;padding:1px 5px;border:1px solid
   family("ramu", "RAM 증설", 2, { R:[1] }, () => "자동 RAM 1기 추가 (일반 채널 1개를 자동 방어가 점유)", () => { RG.extraRam++; }, autoOk);
   family("scout", "정찰 보고", 1, { U:[1] }, () => "카드 선택지 +1장 (최대 4장)", () => { RG.extraOffer = 1; });
   family("sup", "보급 요청", 3, { E:[1], U:[2] }, v => `카드 리롤 횟수 +${v}`, v => { RG.rerollBonus += v; });
+  // ===== scope split: M = manual M1~M4 missiles, C = automatic CIWS + RAM. No card boosts both at once. =====
+  const sp = [["N",5],["E",10],["U",18],["R",26]];
+  family("speed", "M 요격탄 부스터", 5, { N:[4], E:[8], U:[13], R:[20] }, v => `M계열 요격탄 속도 +${v}%`, v => { RG.speedMul = Math.min(1.6, RG.speedMul + v / 100); });
+  family("speedC", "자동 RAM 부스터", 5, { N:[4], E:[8], U:[13], R:[20] }, v => `자동 RAM 요격탄 속도 +${v}%`, v => { RG.speedMulC = Math.min(1.6, RG.speedMulC + v / 100); });
+  family("seek", "M 정밀 시커", 6, { N:[5], E:[10], U:[18], R:[26] }, v => `M계열 요격 실패 확률 -${v}%`, v => { RG.missMul = cut(RG.missMul, v, 0.5); });
+  family("seekC", "CIWS·RAM 정밀 사격", 6, { N:[5], E:[10], U:[18], R:[26] }, v => `CIWS·RAM 요격 실패 확률 -${v}%`, v => { RG.missMulC = cut(RG.missMulC, v, 0.5); });
+  family("over", "M 과충전 탄두", 2, { E:[8,15], U:[14,15], R:[22,15] }, (a, b) => `M계열 실패 확률 -${a}% / MP 소모 +${b}%`, (a, b) => { RG.missMul = cut(RG.missMul, a, 0.5); RG.mpCostMul *= 1 + b / 100; });
+  family("overC", "CIWS·RAM 과충전", 2, { E:[8,15], U:[14,15], R:[22,15] }, (a, b) => `CIWS·RAM 실패 확률 -${a}% / MP 소모 +${b}%`, (a, b) => { RG.missMulC = cut(RG.missMulC, a, 0.5); RG.closeCostMul *= 1 + b / 100; });
+  family("fast", "M 고속 표적 추적기", 3, { N:[7], E:[12], U:[18], R:[26] }, v => `M계열: 고속(75 이상) 표적 실패 확률 -${v}%`, v => { RG.fastMul = cut(RG.fastMul, v, 0.5); });
+  family("fastC", "CIWS·RAM 고속 표적 추적기", 3, { N:[7], E:[12], U:[18], R:[26] }, v => `CIWS·RAM: 고속(75 이상) 표적 실패 확률 -${v}%`, v => { RG.fastMulC = cut(RG.fastMulC, v, 0.5); });
+  family("low", "M 저고도·해면 대응", 3, { N:[7], E:[12], U:[18], R:[26] }, v => `M계열: 저고도·해면 표적 실패 확률 -${v}%`, v => { RG.lowMul = cut(RG.lowMul, v, 0.5); });
+  family("lowC", "CIWS·RAM 저고도·해면 대응", 3, { N:[7], E:[12], U:[18], R:[26] }, v => `CIWS·RAM: 저고도·해면 표적 실패 확률 -${v}%`, v => { RG.lowMulC = cut(RG.lowMulC, v, 0.5); });
+  family("near", "M 근접전 숙련", 3, { N:[7], E:[12], U:[18], R:[26] }, v => `M계열: 근거리(1200 이내) 표적 실패 확률 -${v}%`, v => { RG.nearMul = cut(RG.nearMul, v, 0.5); });
+  family("nearC", "CIWS·RAM 근접전 숙련", 3, { N:[7], E:[12], U:[18], R:[26] }, v => `CIWS·RAM: 근거리(1200 이내) 표적 실패 확률 -${v}%`, v => { RG.nearMulC = cut(RG.nearMulC, v, 0.5); });
+  family("ace", "M 에이스 사수", 2, { U:[8,0.06,12], R:[14,0.10,20] }, (a, b, c) => `M계열 실패 -${a}%, 발사 쿨다운 -${b}초, 점수 +${c}%`,
+    (a, b, c) => { RG.missMul = cut(RG.missMul, a, 0.5); RG.cd = Math.max(0.2, +(RG.cd - b).toFixed(2)); RG.scoreMul += c / 100; });
+  family("rel", "M 장전 단축", 4, { N:[0.04], E:[0.07], U:[0.11], R:[0.16] }, v => `M계열 발사 승인 쿨다운 -${v}초`, v => { RG.cd = Math.max(0.2, +(RG.cd - v).toFixed(2)); });
+  family("eff", "M 효율 사출", 4, { N:[4], E:[7], U:[11], R:[16] }, v => `M계열 MP 소모 -${v}%`, v => { RG.mpCostMul = cut(RG.mpCostMul, v, 0.4); });
+  family("close", "CIWS·RAM 효율 사출", 3, { N:[8], E:[14], U:[22], R:[30] }, v => `CIWS·RAM MP 소모 -${v}%`, v => { RG.closeCostMul = cut(RG.closeCostMul, v, 0.35); });
+  family("lite", "M 경량 사출", 2, { E:[10,5], U:[16,5], R:[24,5] }, (a, b) => `M계열 MP 소모 -${a}% / 실패 확률 +${b}%`, (a, b) => { RG.mpCostMul = cut(RG.mpCostMul, a, 0.4); RG.missMul *= 1 + b / 100; });
+  family("liteC", "CIWS·RAM 경량 사출", 2, { E:[10,5], U:[16,5], R:[24,5] }, (a, b) => `CIWS·RAM MP 소모 -${a}% / 실패 확률 +${b}%`, (a, b) => { RG.closeCostMul = cut(RG.closeCostMul, a, 0.35); RG.missMulC *= 1 + b / 100; });
+  family("killmp", "M 탄약 회수", 5, { N:[150], E:[300], U:[500], R:[800] }, v => `M계열 요격 성공 시 MP +${u(v)}`, v => { RG.killMp += v; });
+  family("killmpC", "CIWS·RAM 탄약 회수", 5, { N:[150], E:[300], U:[500], R:[800] }, v => `CIWS·RAM 격추 시 MP +${u(v)}`, v => { RG.killMpC += v; });
+  { const last = new Map(); FAMILIES.forEach(f => last.set(f.id, f)); FAMILIES.length = 0; last.forEach(f => FAMILIES.push(f)); }   // later definition wins
   const CARDS = FAMILIES.flatMap(F => GORDER.filter(g => F.tiers[g]).map(g => ({ key: F.id + g, F, g, p: F.tiers[g], n: F.n, d: F.d(...F.tiers[g]) })));
   const famOwned = F => GORDER.reduce((s, g) => s + (RG.cards[F.id + g] || 0), 0);
   // Round rank (decided by the round SCORE) shifts the odds of higher grades -> score feeds the card system.
@@ -11334,15 +11370,10 @@ kbd{font:inherit;font-size:10px;margin-left:6px;padding:1px 5px;border:1px solid
     cameraZoom = overviewZoomForStage(spec); updateTargetHudScreenScale();
     cameraCenter.x = DEFAULT_CAMERA_CENTER.x; cameraCenter.y = DEFAULT_CAMERA_CENTER.y;
     TRACKING_RADAR_RADIUS = BASE_TRACK + 200 * RG.radar3d;
-    const intro = introOf(RG.round);
-    if (RG.round > TUTORIAL_ROUNDS && isSpike(RG.round) && !RG.noEnd) showToast(intro ? intro.msg : "고강도 위협 — 여러 속성이 겹쳐서 옵니다");
     RG.rescueLeft = RG.rescue; RG.emergLeft = RG.emergUses; RG.droneLast = 0;
-    RG.co = { st: 0, idx: 0, shown: -1, skip: 0, skipped: 0, stepT: 0, mpT: 0, w0: session.selectedWeaponId, v0: session.closeDefenseAutoEnabled, wSwap: false, next: false, multi: false, cOn: false, vTog: false, tabSeen: RG.tabOpened };
+    RG.co = { st: 0, idx: 0, shown: -1, closed: -1, stepT: 0, mpT: 0, w0: session.selectedWeaponId, v0: session.closeDefenseAutoEnabled, wSwap: false, next: false, multi: false, cOn: false, vTog: false, tabSeen: RG.tabOpened };
     RG.live = true; modal = null; layer.innerHTML = ""; refreshScore();
   }
-  const toastEl = document.createElement("div"); toastEl.id = "rgToast"; toastEl.hidden = true; gameRoot.appendChild(toastEl);
-  let toastT = 0;
-  function showToast(msg) { toastEl.textContent = msg; toastEl.hidden = false; clearTimeout(toastT); toastT = setTimeout(() => { toastEl.hidden = true; }, 9000); }
   const _upd = session.update.bind(session);
   session.update = function (dt) {
     _upd(dt);
@@ -11352,14 +11383,15 @@ kbd{font:inherit;font-size:10px;margin-left:6px;padding:1px 5px;border:1px solid
     for (const e of w.events) {
       if (e.type === "ShieldImpact" && RG.absorb && d.shieldActive && d.recoveryLockTicks === 0)
         d.mp = Math.min(PF.maxMp, d.mp + Math.round(e.damage * Math.min(RG.absorb, 90) / 100));
-      if (e.type === "InterceptorHit" && RG.killMp && d.recoveryLockTicks === 0) d.mp = Math.min(PF.maxMp, d.mp + RG.killMp);
+      const km = (e.scoreSource === "CIWS" || e.scoreSource === "RAM") ? RG.killMpC : RG.killMp;
+      if (e.type === "InterceptorHit" && km && d.recoveryLockTicks === 0) d.mp = Math.min(PF.maxMp, d.mp + km);
     }
     if (RG.droneHp && d.hp > 0 && w.time - RG.droneLast >= 10) { RG.droneLast += 10; d.hp = Math.min(PF.maxHp, d.hp + RG.droneHp); }
     if (RG.emergLeft > 0 && !d.shieldActive && d.recoveryLockTicks > 0) {           // emergency shield
       RG.emergLeft--; d.mp = Math.round(PF.maxMp * RG.emergPct / 100); d.shieldActive = true; d.recoveryLockTicks = 0; w.events.push({ type: "ShieldReactivated" });
     }
     if (w.battleState !== BattleState.RUNNING) {
-      RG.live = false; if (RG.noEnd) return; modal = "wait"; toastEl.hidden = true;
+      RG.live = false; if (RG.noEnd) return; modal = "wait";
       const win = w.battleState === BattleState.SUCCESS, hp = w.defenseState.hp;
       const tok = RG.token;
       setTimeout(() => { if (tok === RG.token) endRound(win, hp); }, win ? 1500 : 1800);
@@ -11391,7 +11423,7 @@ kbd{font:inherit;font-size:10px;margin-left:6px;padding:1px 5px;border:1px solid
     RG.lastTotal = total; RG.score += total; shownScore = -1; refreshScore();
     if (RG.score > RG.best) { RG.best = RG.score; }
     modal = win ? "res" : "over";
-    const scoreGuide = win && !RG.seen.score ? (RG.seen.score = true, `<div class="rg-panel guide"><h2>점수 안내</h2><p class="rg-body">${GUIDE.score[0][1]}</p></div>`) : "";
+    const scoreGuide = win && !guidanceSkipped && !RG.seen.score ? (RG.seen.score = true, `<div class="rg-panel guide"><button class="rg-x" type="button" data-act="hideGuide" aria-label="닫기">✕</button><h2>점수 안내</h2><p class="rg-body">${lines(GUIDE.score[0][1])}</p></div>`) : "";
     layer.innerHTML = `<div class="rg-pair"><div class="rg-panel"><h2 class="${win ? "ok" : "bad"}">${win ? "ROUND CLEAR" : "함선 격침 — MISSION FAILED"}</h2>
       <table>${L.map(l => `<tr><td>${l[0]}</td><td>${l[1]}</td><td>${l[2] == null ? "" : sgn(l[2])}</td></tr>`).join("")}</table>
       <div class="rg-sum"><span>획득 점수</span><b>+${fmt(total)}</b></div>
@@ -11413,7 +11445,12 @@ kbd{font:inherit;font-size:10px;margin-left:6px;padding:1px 5px;border:1px solid
   }
   function pick(i) {
     const c = offers[i]; if (!c) return;
-    c.F.f(...c.p); RG.cards[c.key] = (RG.cards[c.key] || 0) + 1; startRound();
+    c.F.f(...c.p); RG.cards[c.key] = (RG.cards[c.key] || 0) + 1;
+    const intro = introOf(RG.round + 1);                          // new threat attribute arrives next round -> announce it in the guide window
+    if (intro && RG.round + 1 > TUTORIAL_ROUNDS) {
+      GUIDE.threat = [["신규 위협 — " + intro.attrs.map(a => THREAT[a][0]).join(" · "), intro.attrs.map(a => THREAT[a][1]).join("\n\n")]];
+      showGuide(["threat"], startRound, "작전 개시");
+    } else startRound();
   }
   function reroll() { if (rerolls > 0) { rerolls--; offers = drawOffers(); showCards(false); } }
   function newRun() { resetRun(); startRound(); }
@@ -11425,25 +11462,44 @@ kbd{font:inherit;font-size:10px;margin-left:6px;padding:1px 5px;border:1px solid
 
   // ---- Tutorial ----
   // Guide = reference text. Practice (rounds 1-2) is taught by the coach; score/card guides appear when first needed.
+  const lines = s => String(s).split("\n").map(l => l === "" ? `<span class="ln gap"></span>` : `<span class="ln">${l}</span>`).join("");   // blank line = paragraph break
   const GUIDE = {
     intro: [
-      ["작전 개요", "함선(중앙)을 향해 날아오는 적 대함 미사일을 요격하세요. 함선에는 <b>체력(HP)</b>과 이를 먼저 흡수하는 <b>실드(MP)</b>가 있습니다. 마우스 커서 옆 원형 게이지로 확인하세요 — <b style='color:#25c3cb'>바깥 청록 = MP</b>, <b style='color:#10e05e'>안쪽 초록 = HP</b>. 체력이 0이 되면 작전 실패입니다."],
-      ["화면 읽기와 훈련", "레이더에 포착된 위협은 <b>Track</b>으로 표시되고, 체력이 줄면 일반 채널이 하나씩 파괴됩니다. 이제 <b>실전 훈련</b>이 시작됩니다. 화면 아래 코치의 안내에 따라 직접 요격해 보세요. 훈련 중에는 함선이 격침되지 않습니다."] ],
+      ["작전 개요", "적 미사일을 요격해 함선을 지키세요.\n체력(HP)이 0이 되면 실패입니다.\n커서 옆 링: <b style='color:#25c3cb'>바깥 청록 = MP</b>, <b style='color:#10e05e'>안쪽 초록 = HP</b>."],
+      ["실전 훈련", "레이더에 잡힌 위협은 Track으로 표시됩니다.\n이제 코치를 따라 직접 요격해 보세요.\n훈련 중에는 함선이 격침되지 않습니다."] ],
     flow: [
-      ["교전 순서", "<b>클릭</b> 으로 Track을 선택·예약(대기열 기본 4칸, 카드로 확장) → <b>Q</b> 로 선택한 무장을 등록(발사 대기) → <b>A</b> 로 발사 승인. <b>C</b> 는 발사 승인 자동화입니다. <b>Z</b> 마지막 예약 취소, <b>X</b> 전체 취소, 우클릭은 해당 예약 취소."],
-      ["위협 종류", "속도는 <b>느림 40 / 보통 55 / 빠름 75</b> 세 등급이 처음부터 나옵니다. 그 밖의 속성은 일정 라운드마다 <b>하나씩 새로 등장</b>하고 화면 위에 안내가 뜹니다: 저고도(포착이 늦음), 특수탄(보라색·피해 1400), 해면 밀착(근접 시 급가속), 웨이포인트 우회 비행, 전폭기(발사 전 격추 시 +500), 초고속탄(141)."],
-      ["무장과 MP", "<b>1~4</b> 로 요격 무장을 고릅니다(4번은 근접 RAM). 발사마다 MP를 소모하고, MP는 <b>2초마다</b> 일정량 회복됩니다. MP가 부족해 실패한 재시도만 다음 2초 주기를 기다립니다(같은 순간엔 회복이 먼저). MP가 0이 되면 실드가 꺼집니다. <b>V</b> 는 근접 자동 방어(CIWS·자동 RAM), <b>S</b> 일시정지, <b>W</b> 배속, <b>F</b> 기본 시점, 휠 확대·축소, <b>R</b> 전체 초기화, <b>H</b> 이 가이드 다시 보기입니다."] ],
+      ["교전 순서", "<b>클릭</b> 표적 예약, <b>Q</b> 무장 등록, <b>A</b> 발사 승인.\n<b>C</b> 자동 승인, <b>Z / X</b> 예약 취소."],
+      ["위협 종류", "속도는 느림 40, 보통 55, 빠름 75.\n\n새 속성은 일정 라운드마다 하나씩 추가됩니다.\n추가 직전, 카드 선택 뒤에 안내가 나옵니다."],
+      ["무장과 MP", "<b>1~4</b> 무장 선택 (4번 = RAM).\n\n발사마다 MP 소모, 2초마다 회복,\nMP가 0이면 실드가 꺼집니다."],
+      ["조작 키", "<b>V</b> 근접 자동 방어, <b>S</b> 정지, <b>W</b> 배속,\n<b>F</b> 기본 시점, <b>TAB</b> 업그레이드 현황,\n<b>R</b> 전체 초기화, <b>H</b> 가이드."] ],
     cards: [
-      ["카드 선택", "라운드를 클리어하면 <b>카드 3장</b> 중 하나를 고릅니다. 등급은 <b style='color:#4da3ff'>노말</b> → <b style='color:#b36bff'>에픽</b> → <b style='color:#ffd23f'>유니크</b> → <b style='color:#3ee08a'>레어</b> 순으로 강합니다. <b>첫 번째 카드는 방금 받은 랭크가 등급을 확정</b>(C→노말, B→에픽, A→유니크, S→레어)하고, 나머지는 낮은 확률로 뽑힙니다. <b>리롤(E)</b>로 다시 뽑고, <b>TAB</b> 으로 업그레이드 현황을 봅니다. 수치 강화뿐 아니라 치명타 생존·비상 실드·요격 시 MP 회수 같은 특수 효과도 있습니다."] ],
+      ["카드 등급", "등급은 <b style='color:#4da3ff'>노말</b> &lt; <b style='color:#b36bff'>에픽</b> &lt; <b style='color:#ffd23f'>유니크</b> &lt; <b style='color:#3ee08a'>레어</b> 순입니다.\n\n첫 카드는 랭크가 등급을 확정합니다,\n(C 노말, B 에픽, A 유니크, S 레어)."],
+      ["카드 선택", "나머지 카드는 확률로 나옵니다.\n<b>E</b> 리롤, <b>TAB</b> 업그레이드 현황."] ],
     score: [
-      ["점수와 랭크", "요격 1발은 <b>1000점 + 속성 보너스</b>(고속 +150, 저고도 +200, 해면 밀착 +250, 특수탄 +350)이지만 <b>가까이서 격추할수록 최대 90%까지 감점</b>됩니다(멀리서 먼저 격추 = 선제 격추). RAM·CIWS 격추는 ×0.9, 연속 요격은 +10씩(최대 +100), 전폭기를 발사 전에 격추하면 +500입니다. 클리어 <b>+500</b>, 무피해 <b>+1000</b>, 잔여 체력 <b>최대 +500</b>. 이 합계를 기준 점수와 비교해 <b>랭크(C/B/A/S)</b>가 정해지고 첫 번째 카드의 등급을 확정합니다. 카드 효과는 랭크에 영향을 주지 않습니다."] ],
+      ["점수와 랭크", "요격 = 1000점 + 속성 보너스, 가까이서 격추할수록 감점.\n\n클리어 +500, 무피해 +1000, 체력 최대 +500.\n합계로 랭크(C/B/A/S)가 정해집니다."] ],
   };
+  const THREAT = {
+    low: ["저고도 비행", "<b>저고도 비행</b>: 레이더에 늦게 잡힙니다, 격추 +200."],
+    special: ["특수탄", "<b>특수탄(보라)</b>: 피해 1400, 격추 +350."],
+    skim: ["해면 밀착", "<b>해면 밀착</b>: 근접 시 급가속, 격추 +250."],
+    fly: ["웨이포인트", "<b>웨이포인트</b>: 경유점을 돌아 와 도착 예측이 어렵습니다."],
+    bomber: ["전폭기", "<b>전폭기</b>: 접근해 미사일을 발사합니다,\n발사 전에 격추하면 +500."],
+    hyper: ["초고속탄", "<b>초고속탄(141)</b>: 일반 요격탄보다 빠를 수 있습니다."] };
   let guideSeq = [], guideDone = null, guideHold = false, guideLast = "닫기";
-  function showGuide(keys, done, last) {
-    if (modal !== "tut") { guideHold = !modal; if (guideHold) holdPause(); guideSeq = keys.flatMap(k => GUIDE[k]); tutStep = 0; guideDone = done || null; guideLast = last || "닫기"; }
+  // X/Skip dismisses all automatic guidance for this page session, including coaching.
+  // H still explicitly opens the reference guide; restarting a run does not undo Skip.
+  let guidanceSkipped = false;
+  function skipGuidance() {
+    guidanceSkipped = true;
+    if (RG.co) RG.co.finished = true;
+    coachEl.hidden = true;
+  }
+  function showGuide(keys, done, last, manual=false) {
+    if (keys && guidanceSkipped && !manual) { if (done) done(); return; }
+    if (modal !== "tut") { guideHold = !modal; if (guideHold) holdPause(); guideSeq = keys.flatMap(k => GUIDE[k]).flatMap(([h, b]) => { const L = b.split("\n"), out = []; for (let q = 0; q < L.length; q += 3) out.push([h, L.slice(q, q + 3).join("\n")]); return out; }); tutStep = 0; guideDone = done || null; guideLast = last || "닫기"; }
     modal = "tut";
     const [h, b] = guideSeq[tutStep], lastSlide = tutStep === guideSeq.length - 1;
-    layer.innerHTML = `<div class="rg-panel wide"><h2>GUIDE ${tutStep + 1} / ${guideSeq.length} — ${h}</h2><p class="rg-body">${b}</p>
+    layer.innerHTML = `<div class="rg-panel wide"><button class="rg-x" type="button" data-act="tutSkip" aria-label="닫기">✕</button><h2>GUIDE ${tutStep + 1} / ${guideSeq.length} — ${h}</h2><p class="rg-body">${lines(b)}</p>
       <div class="rg-row"><button data-act="tutSkip">건너뛰기</button><span>
       <button data-act="tutPrev" ${tutStep ? "" : "disabled"}>◀ 이전</button> <button data-act="tutNext">${lastSlide ? guideLast : "다음 ▶"} <kbd>ENTER</kbd></button></span></div></div>`;
   }
@@ -11458,15 +11514,15 @@ kbd{font:inherit;font-size:10px;margin-left:6px;padding:1px 5px;border:1px solid
     const P = DEFENSE_RESOURCE_PROFILE, d = session.world.defenseState;
     const hp = RG.live || modal === "wait" ? d.hp : (RG.hp ?? P.maxHp);
     const S = [["체력", `${u(hp)} / ${u(P.maxHp)}`], ["최대 MP", u(P.maxMp)], ["MP 회복", `${u(P.mpRegenerationPerCycle)} / 2초`],
-      ["실드 재가동 MP", u(P.shieldReactivationMp)], ["복구 대기", `${P.recoveryLockSeconds}초`], ["MP 소모", pct(RG.mpCostMul)],
-      ["요격 실패 확률", pct(RG.missMul)], ["발사 쿨다운", `${RG.cd.toFixed(2)}초`], ["받는 피해", pct(RG.dmgMul)],
+      ["실드 재가동 MP", u(P.shieldReactivationMp)], ["복구 대기", `${P.recoveryLockSeconds}초`], ["MP 소모 (M / CIWS·RAM)", `${pct(RG.mpCostMul)} / ${pct(RG.closeCostMul)}`],
+      ["요격 실패 (M / CIWS·RAM)", `${pct(RG.missMul)} / ${pct(RG.missMulC)}`], ["M 발사 쿨다운", `${RG.cd.toFixed(2)}초`], ["받는 피해", pct(RG.dmgMul)],
       ["일반 채널", 6 + RG.extraCh], ["예약 대기열", 4 + RG.queueExtra], ["3D 레이더 사거리", TRACKING_RADAR_RADIUS], ["CIWS 사거리", 800 + RG.ciwsRange], ["CIWS / RAM 수", `${1 + RG.extraCiws} / ${1 + RG.extraRam}`], ["점수 배율", `×${RG.scoreMul.toFixed(2)}`], ["카드 리롤", `${2 + RG.rerollBonus}회`]];
     const have = CARDS.filter(c => RG.cards[c.key]).reverse().sort((a, b) => GORDER.indexOf(b.g) - GORDER.indexOf(a.g));
     tabEl.innerHTML = `<div class="rg-panel wide"><h2>UPGRADE STATUS <kbd>TAB</kbd></h2><div class="rg-grid">${S.map(s => `<div><span>${s[0]}</span><b>${s[1]}</b></div>`).join("")}</div>
       <h3>보유 카드</h3>${have.length ? `<ul>${have.map(c => `<li class="g-${c.g}" style="--rc:${GRADE[c.g].c}"><b>${c.n} <i>${GRADE[c.g].ko}</i> ×${RG.cards[c.key]}</b><small>${c.d}</small></li>`).join("")}</ul>` : `<p class="rg-body">아직 획득한 카드가 없습니다.</p>`}</div>`;
     tabEl.hidden = false;
   }
-  const act = { toCards: () => { if (!RG.seen.cards) { RG.seen.cards = true; showGuide(["cards"], () => showCards(true), "카드 선택으로"); } else showCards(true); }, newRun, reroll, tutSkip: closeGuide, tutPrev: () => { tutStep = Math.max(0, tutStep - 1); showGuide(); },
+  const act = { hideGuide: () => { skipGuidance(); const g = layer.querySelector(".rg-panel.guide"); if (g) g.remove(); }, toCards: () => { if (!RG.seen.cards) { RG.seen.cards = true; showGuide(["cards"], () => showCards(true), "카드 선택으로"); } else showCards(true); }, newRun, reroll, tutSkip: () => { skipGuidance(); closeGuide(); }, tutPrev: () => { tutStep = Math.max(0, tutStep - 1); showGuide(); },
     tutNext: () => { if (tutStep >= guideSeq.length - 1) closeGuide(); else { tutStep++; showGuide(); } } };
   layer.addEventListener("click", e => { const b = e.target.closest("[data-act]"); if (!b || b.disabled) return;
     if (b.dataset.act === "pick") pick(+b.dataset.i); else act[b.dataset.act]?.(); });
@@ -11477,14 +11533,24 @@ kbd{font:inherit;font-size:10px;margin-left:6px;padding:1px 5px;border:1px solid
     if (!tabEl.hidden) { e.stopImmediatePropagation(); if (k === "escape") toggleTab(); return; }
     if (modal) {
       e.stopImmediatePropagation();
-      if (modal === "tut") { if (k === "enter" || k === " ") act.tutNext(); else if (k === "arrowright") act.tutNext(); else if (k === "arrowleft") act.tutPrev(); else if (k === "escape") closeGuide(); }
+      if (k === "enter") e.preventDefault(); // Avoid native focused-button click after keydown.
+      if (modal === "tut") {
+        if (["enter", " ", "arrowright", "arrowleft"].includes(k)) {
+          e.preventDefault();
+          if (e.repeat) return; // One page per physical keypress.
+        }
+        if (k === "enter" || k === " ") act.tutNext(); else if (k === "arrowright") act.tutNext(); else if (k === "arrowleft") act.tutPrev(); else if (k === "escape") closeGuide();
+      }
       else if (modal === "res" && k === "enter") act.toCards();
       else if (modal === "over" && k === "enter") newRun();
       else if (modal === "card") { if (k >= "1" && k <= String(offers.length)) pick(+k - 1); else if (k === "e") reroll(); }
       return;
     }
-    if (k === "h") { e.stopImmediatePropagation(); showGuide(["intro", "flow", "cards", "score"]); }
-    if (k === "enter" && RG.co) { RG.co.skip++; }
+    if (k === "h") { e.stopImmediatePropagation(); showGuide(["intro", "flow", "cards", "score"], null, null, true); }
+    if (k === "enter" && RG.co && !coachEl.hidden && !RG.co.finished) {
+      e.preventDefault(); e.stopImmediatePropagation();
+      if (!e.repeat) advanceCoach();
+    }
   }, true);
 
   const rb = document.getElementById("restartBtn");               // a free round restart would break the run
@@ -11536,22 +11602,28 @@ kbd{font:inherit;font-size:10px;margin-left:6px;padding:1px 5px;border:1px solid
   const coachEl = document.createElement("div"); coachEl.id = "rgCoach"; coachEl.hidden = true; gameRoot.appendChild(coachEl);
   const K = k => `<kbd>${k}</kbd>`;
   const COACH = {
-    1: [["레이더 탐지", `적이 접근하면 화면 가장자리에 <b>Track</b>이 뜹니다. ${K("W")} 로 배속하며 첫 Track을 찾아보세요.`, c => c.st >= 1],
-        ["① 클릭 — 표적 예약", "Track을 <b>클릭</b>해 예약 큐에 올리세요.", c => c.st >= 2],
-        ["② Q — 무장 등록", `${K("Q")} 를 눌러 선택한 무장으로 <b>등록</b>(발사 대기)합니다.`, c => c.st >= 3],
-        ["③ A — 발사 승인", `${K("A")} 를 눌러 <b>발사를 승인</b>합니다. 채널이 비면 요격탄이 나갑니다.`, c => c.st >= 4],
-        ["다음 표적을 미리", `요격탄이 날아가는 동안 다음 표적이 탐지됩니다. 도착이 가장 빠른 표적(<b>TTI</b>가 짧은 것)을 골라 <b>미리 예약</b>(클릭 → ${K("Q")})해 두면, 채널이 돌아오는 즉시 ${K("A")} 로 승인할 수 있습니다.`, c => c.st >= 5 || c.next],
-        ["좋습니다!", "한 표적을 쏘는 동안 다음 표적을 미리 예약하세요 — 클릭 → Q → A. TTI를 비교해 어느 표적이 먼저 닿는지 읽어 보세요.", null]],
-    2: [["무장 선택", `${K("1")}~${K("4")} 로 요격 무장을 바꿔 보세요. 4번은 근접 RAM입니다.`, c => c.wSwap],
-        ["연속 예약", "표적이 둘 이상이면 <b>연달아 클릭</b>해 예약 큐(기본 4칸)에 쌓고 Q → A 로 처리하세요. 쌓아 둔 순서가 곧 교전 순서입니다.", c => c.multi],
-        ["자동 발사 승인", `${K("C")} 를 켜면 등록된 교전이 <b>자동으로 발사 승인</b>됩니다.`, c => c.cOn],
-        ["근접 자동 방어", `${K("V")} 로 CIWS·자동 RAM을 켜고 끌 수 있습니다. 놓친 표적을 가까이서 막아 줍니다 — 한 번 눌러 보세요.`, c => c.vTog],
-        ["MP 관리", "커서 옆 <b>청록 링 = MP</b>. 발사마다 줄고 <b>2초마다</b> 조금씩 회복됩니다. 링이 바닥나면 실드가 꺼집니다. 다음 표적에 쓸 MP를 남겨 두세요.", c => c.mpT >= 10],
-        ["업그레이드 현황", `${K("TAB")} 으로 지금까지 얻은 카드와 능력치를 확인해 보세요.`, c => c.tabSeen],
-        ["훈련 종료", "다음에 도착할 순서를 TTI로 예측해 예약을 미리 걸어 두세요. 이후부터는 실전입니다.", null]],
+    1: [["레이더 탐지", `Track이 뜨면 시작합니다,\n${K("W")} 로 배속할 수 있습니다.`, c => c.st >= 1],
+        ["① 클릭 — 표적 예약", "Track을 <b>클릭</b>해 예약하세요.", c => c.st >= 2],
+        ["② Q — 무장 등록", `${K("Q")} 로 무장을 <b>등록</b>하세요.`, c => c.st >= 3],
+        ["③ A — 발사 승인", `${K("A")} 로 <b>발사를 승인</b>하세요.`, c => c.st >= 4],
+        ["다음 표적을 미리", `요격탄이 나는 동안 다음 표적이 뜹니다,\nTTI가 짧은 표적을 <b>미리 예약</b>(클릭 → ${K("Q")})하세요.`, c => c.st >= 5 || c.next],
+        ["좋습니다!", "다음 표적도 같은 순서로,\n한 발 쏘는 동안 다음 표적을 예약하세요.", null]],
+    2: [["무장 선택", `${K("1")}~${K("4")} 로 무장을 바꿔 보세요,\n4번은 근접 RAM입니다.`, c => c.wSwap],
+        ["연속 예약", "표적이 둘 이상이면 연달아 클릭하세요,\n예약 순서가 곧 교전 순서입니다.", c => c.multi],
+        ["자동 승인", `${K("C")} 를 켜면 등록한 교전을 <b>자동 승인</b>합니다.`, c => c.cOn],
+        ["근접 자동 방어", `${K("V")} 로 CIWS·자동 RAM을 켜고 끕니다,\n한 번 눌러 보세요.`, c => c.vTog],
+        ["MP 관리", "<b>청록 링 = MP</b>, 발사마다 줄고 2초마다 회복됩니다,\n다음 표적용 MP를 남겨 두세요.", c => c.mpT >= 10],
+        ["업그레이드 현황", `${K("TAB")} 으로 얻은 카드와 능력치를 확인하세요.`, c => c.tabSeen],
+        ["훈련 종료", "도착 순서를 TTI로 예측해 미리 예약하세요,\n다음부터는 실전입니다.", null]],
   };
+  function advanceCoach() {
+    const c = RG.co, steps = COACH[RG.round];
+    if (!c || c.finished || !steps || coachEl.hidden) return;
+    if (c.idx >= steps.length - 1) { c.finished = true; coachEl.hidden = true; return; }
+    c.idx++; c.shown = -1; c.stepT = 0;
+  }
   function coachTick() {
-    const on = RG.co && RG.round <= TUTORIAL_ROUNDS && RG.live && !modal && tabEl.hidden;
+    const on = !guidanceSkipped && RG.co && !RG.co.finished && RG.round <= TUTORIAL_ROUNDS && RG.live && !modal && tabEl.hidden;
     if (!on) { coachEl.hidden = true; return; }
     const w = session.world, c = RG.co;
     const st = w.scoreState.killCount > 0 ? 5 : (w.interceptors.length > 0 || w.pendingEngagements.some(p => p.fireAuthorized)) ? 4 : w.pendingEngagements.length > 0 ? 3 : w.reservationQueue.length > 0 ? 2 : w.tracks.some(t => t.visible) ? 1 : 0;
@@ -11563,7 +11635,6 @@ kbd{font:inherit;font-size:10px;margin-left:6px;padding:1px 5px;border:1px solid
     if (session.closeDefenseAutoEnabled !== c.v0) c.vTog = true;
     if (RG.tabOpened) c.tabSeen = true;
     const steps = COACH[RG.round]; if (!steps) { coachEl.hidden = true; return; }
-    if (c.skip > c.skipped) { c.skipped = c.skip; c.idx++; c.stepT = 0; }
     c.stepT += 1 / 60;
     if (steps[c.idx] && steps[c.idx][2] && steps[c.idx][2](c)) { c.idx++; c.stepT = 0; }
     if (steps[c.idx - 1] && steps[c.idx] === undefined) c.idx = steps.length - 1;
@@ -11572,17 +11643,19 @@ kbd{font:inherit;font-size:10px;margin-left:6px;padding:1px 5px;border:1px solid
     if (c.shown !== c.idx) {
       c.shown = c.idx;
       coachEl.innerHTML = `<div class="rg-coach-h"><i>훈련</i><span>${steps.map((_, i) => i < c.idx ? "●" : i === c.idx ? "◉" : "○").join(" ")}</span></div>
-        <strong>${cur[0]}</strong><p>${cur[1]}</p>${cur[2] ? `<small>${K("ENTER")} 이 단계 건너뛰기</small>` : ""}`;
+        <strong>${cur[0]}</strong><p>${lines(cur[1])}</p><small>${K("ENTER")} ${c.idx === steps.length - 1 ? "닫기" : "다음 안내"} · ✕ 안내 건너뛰기</small><button class="rg-x" type="button" aria-label="안내 건너뛰기">✕</button>`;
     }
     coachEl.hidden = false;
   }
+  coachEl.addEventListener("click", e => { if (e.target.closest(".rg-x") && RG.co) skipGuidance(); });
   (function fxLoop() {                                   // hide the v155 cursor rings while a card/result/TAB panel is open
     gameRoot.classList.toggle("rg-modal-open", !!modal || !tabEl.hidden);
     coachTick(); BGM.tick(); requestAnimationFrame(fxLoop);
   })();
-  RG.missMulFor = (tg, dist) => { let m = RG.missMul;
-    if (tg) { if (tg.baseSpeed >= ENEMY_SPEED_FAST - 0.5) m *= RG.fastMul; if (tg.sensorProfile === SensorProfile.LOW_ALTITUDE || tg.flightProfile === FlightProfile.SEA_SKIMMING) m *= RG.lowMul; }
-    if (dist < SHORT_RANGE_DEFENSE_RADIUS) m *= RG.nearMul; return m; };
+  RG.missMulFor = (tg, dist) => { const c = RG.pkScope === "C"; let m = c ? RG.missMulC : RG.missMul;
+    if (tg) { if (tg.baseSpeed >= ENEMY_SPEED_FAST - 0.5) m *= c ? RG.fastMulC : RG.fastMul; if (tg.sensorProfile === SensorProfile.LOW_ALTITUDE || tg.flightProfile === FlightProfile.SEA_SKIMMING) m *= c ? RG.lowMulC : RG.lowMul; }
+    if (dist < SHORT_RANGE_DEFENSE_RADIUS) m *= c ? RG.nearMulC : RG.nearMul; return m; };
+  RG.speedFor = o => (o && o.autoShortRange) ? RG.speedMulC : RG.speedMul;
   RG.regenMulFor = d => d.hp <= DEFENSE_RESOURCE_PROFILE.maxHp * 0.3 ? RG.crisisMul : 1;
   RG.tryRescue = d => { if (RG.round <= TUTORIAL_ROUNDS) { d.hp = Math.round(DEFENSE_RESOURCE_PROFILE.maxHp * 0.5); return true; } if (RG.rescueLeft > 0) { RG.rescueLeft--; d.hp = Math.max(1, Math.round(DEFENSE_RESOURCE_PROFILE.maxHp * RG.rescuePct / 100)); return true; } return false; };
   RG.maxHp = () => DEFENSE_RESOURCE_PROFILE.maxHp; RG.repairVal = () => RG.repair; RG.isSpike = isSpike; RG.genOrders = genOrders; RG.isSpike = isSpike; RG.pressure = pressure; RG.scoreState = () => session.world.scoreState; RG.startRound = startRound; RG.FAMILIES = FAMILIES; RG.resetRun = resetRun; RG.TUT_ROUNDS = TUTORIAL_ROUNDS;
