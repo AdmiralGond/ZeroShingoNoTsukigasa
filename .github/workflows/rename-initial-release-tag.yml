@@ -1,0 +1,48 @@
+name: Rename initial release tag
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - .github/workflows/rename-initial-release-tag.yml
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  rename:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          persist-credentials: true
+      - name: Rename the existing first release without changing its history
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          old_tag='build-776ebb5942f0'
+          new_tag='v2026.11.16.1'
+          initial_sha='776ebb5942f0d0b977c269cdd065de406b81174e'
+          release_id='446229845'
+          echo 'Checking original release before modifying tags'
+          actual_id="$(gh release view "$old_tag" --json databaseId --jq '.databaseId')"
+          test "$actual_id" = "$release_id"
+          actual_sha="$(git rev-parse "${old_tag}^{commit}")"
+          test "$actual_sha" = "$initial_sha"
+          echo 'Creating the new human-readable tag via authenticated Git push'
+          if ! git ls-remote --exit-code --tags origin "refs/tags/${new_tag}" >/dev/null 2>&1; then
+            git tag "${new_tag}" "${initial_sha}"
+            git push origin "refs/tags/${new_tag}"
+          fi
+          echo 'Reassigning the existing release to the version tag'
+          gh release edit "$old_tag" --tag "$new_tag" --title "Missile Defense Roguelite $new_tag" --notes-file ".github/release-notes/${new_tag}.md"
+          release_after="$(gh release view "$new_tag" --json databaseId --jq '.databaseId')"
+          test "$release_after" = "$release_id"
+          echo 'Release ID is preserved; deleting the original hash-bearing tag'
+          git push origin ":refs/tags/${old_tag}"
+          echo 'Tag rename and release record preservation verified'
