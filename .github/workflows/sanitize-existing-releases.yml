@@ -48,17 +48,13 @@ jobs:
             # Keep the existing release record and retag its original commit.
             old_sha="$(gh release view "${old_tag}" --repo "${repo}" --json targetCommitish --jq '.targetCommitish')"
             echo "Resolved original build target"
-            gh api --method POST "repos/${repo}/git/refs" -f ref="refs/tags/${initial}" -f sha="${old_sha}" >/dev/null
-            echo "Created public version tag"
-            release_id="$(gh release view "${old_tag}" --repo "${repo}" --json databaseId --jq '.databaseId')"
-            gh api --method PATCH "repos/${repo}/releases/${release_id}" \
-              -f tag_name="${initial}" \
-              -f name="Missile Defense Roguelite ${initial}" \
-              -f body="$(cat "${initial_notes}")" \
-              -f target_commitish="${old_sha}" >/dev/null
-            echo "Reassigned original release to the public version tag"
-            gh api --method DELETE "repos/${repo}/git/refs/tags/${old_tag}" >/dev/null
-            echo "Removed hash-bearing original tag"
+            gh release edit "${old_tag}" \
+              --repo "${repo}" \
+              --tag "${initial}" \
+              --target "${old_sha}" \
+              --title "Missile Defense Roguelite ${initial}" \
+              --notes-file "${initial_notes}"
+            echo "Renamed original release tag through GitHub Release API"
           fi
 
           for version in v2026.11.17.2 v2026.11.18.3; do
