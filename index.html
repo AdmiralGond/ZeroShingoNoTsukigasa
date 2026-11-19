@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>MISSILE DEFENSE ROGUELITE</title>
+<title>MISSILE DEFENSE ROGUELITE v10</title>
 <style>
   :root {
     color-scheme: dark;
@@ -1820,75 +1820,181 @@
   }
 
 </style>
-<style>
+<style id="v10-ui">
+/* ===================== v10 UI SYSTEM — reference: WebGame_v030 (StartPase) =====================
+   Typography tokens (--kr-*) are copied verbatim from WebGame_v030/source/style.css.
+   Graphic surfaces are the ZIP's own SVG resources (inlined, so the file runs offline).
+   Rule: colour/spacing/geometry come from the ZIP; motion values come from resource/rule/timing.csv. */
+:root {
+  color-scheme: dark;
+  --kr-font-brand: "Paperlogy", "Noto Sans KR", system-ui, sans-serif;
+  --kr-font-product: "Paperlogy", "Noto Sans KR", system-ui, sans-serif;
+  --kr-display-hero-family: var(--kr-font-brand); --kr-display-hero-size: 48px; --kr-display-hero-weight: 800; --kr-display-hero-leading: 1.15; --kr-display-hero-tracking: -0.8px;
+  --kr-section-heading-family: var(--kr-font-brand); --kr-section-heading-size: 36px; --kr-section-heading-weight: 700; --kr-section-heading-leading: 1.20; --kr-section-heading-tracking: -0.5px;
+  --kr-sub-heading-family: var(--kr-font-brand); --kr-sub-heading-size: 28px; --kr-sub-heading-weight: 600; --kr-sub-heading-leading: 1.25; --kr-sub-heading-tracking: -0.3px;
+  --kr-feature-title-family: var(--kr-font-product); --kr-feature-title-size: 22px; --kr-feature-title-weight: 600; --kr-feature-title-leading: 1.28; --kr-feature-title-tracking: 0px;
+  --kr-body-family: var(--kr-font-product); --kr-body-size: 16px; --kr-body-weight: 400; --kr-body-leading: 1.45; --kr-body-tracking: 0px;
+  --kr-body-medium-family: var(--kr-font-product); --kr-body-medium-size: 16px; --kr-body-medium-weight: 500; --kr-body-medium-leading: 1.45; --kr-body-medium-tracking: 0px;
+  --kr-button-family: var(--kr-font-product); --kr-button-size: 16px; --kr-button-weight: 600; --kr-button-leading: 1.30; --kr-button-tracking: 0px;
+  --kr-caption-family: var(--kr-font-product); --kr-caption-size: 14px; --kr-caption-weight: 300; --kr-caption-leading: 1.45; --kr-caption-tracking: 0px;
+  --kr-small-family: var(--kr-font-product); --kr-small-size: 12px; --kr-small-weight: 400; --kr-small-leading: 1.45; --kr-small-tracking: 0px;
+  --kr-micro-family: var(--kr-font-product); --kr-micro-size: 8px; --kr-micro-weight: 700; --kr-micro-leading: 1.20; --kr-micro-tracking: 0.1px;
+  --combat-core-head-size: 10px; --combat-core-head-weight: 500;
+  --combat-core-value-size: 11px; --combat-core-value-weight: 600;
+  --combat-core-table-leading: 1.30;
+  --kr-report-elapsed-size: 14px; --kr-report-elapsed-weight: 500; --kr-report-elapsed-leading: 1.30;
+  --kr-space-4: 4px; --kr-space-8: 8px; --kr-space-12: 12px;
+  --kr-space-16: 16px; --kr-space-20: 20px; --kr-space-24: 24px;
+  --kr-space-48: 48px; --kr-section-gap: 64px;
+  --kr-card-padding: var(--kr-space-24);
+  --kr-element-gap: var(--kr-space-16);
+  --cyan-peak: #0cfbf9;
+  --ship-management-button-width: 181px;
+}
+:root{
+  --kr-font-brand:"Paperlogy","Paperlogy Pack","Noto Sans KR","Malgun Gothic","Apple SD Gothic Neo",system-ui,sans-serif;
+  --kr-font-product:var(--kr-font-brand);
+  --ui-text:#f4fcff; --ui-body:#ddf7ff; --ui-muted:#83b8c5; --ui-disabled:#86aebc;
+  --ui-line:rgba(112,222,236,.28); --ui-line-strong:rgba(112,222,236,.36);
+  --ui-glow:drop-shadow(0 0 7px rgba(11,218,248,.24)) drop-shadow(0 0 18px rgba(18,25,225,.14));
+  --img-popup-frame:url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI2ODAiIGhlaWdodD0iOTIiIHZpZXdCb3g9IjAgMCA2ODAgOTIiIHByZXNlcnZlQXNwZWN0UmF0aW89Im5vbmUiPgogPGRlZnM+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJodWRTaWRlIiB4MT0iMCIgeTE9IjAiIHgyPSIxIiB5Mj0iMCI+PHN0b3Agc3RvcC1jb2xvcj0iIzEyMTllMSIgc3RvcC1vcGFjaXR5PSIuMTMiLz48c3RvcCBvZmZzZXQ9Ii40MiIgc3RvcC1jb2xvcj0iIzEyMTllMSIgc3RvcC1vcGFjaXR5PSIwIi8+PC9saW5lYXJHcmFkaWVudD4KICA8bGluZWFyR3JhZGllbnQgaWQ9Imh1ZEZpbGwiIHgxPSIwIiB5MT0iMCIgeDI9IjAiIHkyPSIxIj48c3RvcCBzdG9wLWNvbG9yPSIjMGUyMDUxIiBzdG9wLW9wYWNpdHk9Ii40NSIvPjxzdG9wIG9mZnNldD0iLjMyIiBzdG9wLWNvbG9yPSIjMDgyODNkIiBzdG9wLW9wYWNpdHk9Ii43MiIvPjxzdG9wIG9mZnNldD0iMSIgc3RvcC1jb2xvcj0iIzA1MWYzMiIgc3RvcC1vcGFjaXR5PSIuNzkiLz48L2xpbmVhckdyYWRpZW50PgogIDxsaW5lYXJHcmFkaWVudCBpZD0iaHVkSGVhZGVyIiB4MT0iMCIgeTE9IjAiIHgyPSIxIiB5Mj0iMCI+PHN0b3Agc3RvcC1jb2xvcj0iIzBiZGFmOCIgc3RvcC1vcGFjaXR5PSIuMDQiLz48c3RvcCBvZmZzZXQ9Ii41MiIgc3RvcC1jb2xvcj0iIzBiZGFmOCIgc3RvcC1vcGFjaXR5PSIwIi8+PC9saW5lYXJHcmFkaWVudD4KICA8Y2xpcFBhdGggaWQ9Imh1ZENsaXAiPjxwYXRoIGQ9Ik05IDAgSDY3MSBMNjgwIDkgVjgzIEw2NzEgOTIgSDkgTDAgODMgVjkgWiIvPjwvY2xpcFBhdGg+CiAgPGZpbHRlciBpZD0iYWNjZW50R2xvdyIgeD0iLTIwJSIgeT0iLTUwMCUiIHdpZHRoPSIxNDAlIiBoZWlnaHQ9IjExMDAlIj48ZmVHYXVzc2lhbkJsdXIgc3RkRGV2aWF0aW9uPSIyIi8+PC9maWx0ZXI+CiA8L2RlZnM+CiA8ZyBjbGlwLXBhdGg9InVybCgjaHVkQ2xpcCkiPgogIDxyZWN0IHg9IjAiIHk9IjAiIHdpZHRoPSI2ODAiIGhlaWdodD0iOTIiIGZpbGw9InVybCgjaHVkRmlsbCkiLz4KICA8cmVjdCB4PSIwIiB5PSIwIiB3aWR0aD0iNjgwIiBoZWlnaHQ9IjkyIiBmaWxsPSJ1cmwoI2h1ZFNpZGUpIi8+CiAgPCEtLSB2MTMzIC5odWQtY2FyZDogYW4gb3JkaW5hcnkgMnB4IHJlY3Rhbmd1bGFyIGJvcmRlciBDTElQUEVEIGF0IGZvdXIgOXB4IGNvcm5lcnMuIC0tPgogIDxyZWN0IHg9IjEiIHk9IjEiIHdpZHRoPSI2NzgiIGhlaWdodD0iOTAiIGZpbGw9Im5vbmUiIHN0cm9rZT0iIzBiZGFmOCIgc3Ryb2tlLW9wYWNpdHk9Ii45MCIgc3Ryb2tlLXdpZHRoPSIyIi8+CiAgPCEtLSB2MTMzIGluc2V0IDFweCBib3JkZXIgZ2xvdyBhbmQgaW5zZXQgMjJweCB2ZXJ5IHdlYWsgY3lhbiBnbG93LiAtLT4KICA8cmVjdCB4PSIyLjUiIHk9IjIuNSIgd2lkdGg9IjY3NSIgaGVpZ2h0PSI4NyIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjMjVjM2NiIiBzdHJva2Utb3BhY2l0eT0iLjE4IiBzdHJva2Utd2lkdGg9IjEiLz4KICA8cmVjdCB4PSIxIiB5PSIxIiB3aWR0aD0iNjc4IiBoZWlnaHQ9IjkwIiBmaWxsPSJub25lIiBzdHJva2U9IiMwYmRhZjgiIHN0cm9rZS1vcGFjaXR5PSIuMDQ1IiBzdHJva2Utd2lkdGg9IjIwIi8+CiAgPCEtLSB2MTMzIDo6YmVmb3JlIGF0IDRweCBpbnNldCwgc2VwYXJhdGUgZnJvbSB0aGUgb3V0ZXIgYm9yZGVyLiAtLT4KICA8cmVjdCB4PSI0LjUiIHk9IjQuNSIgd2lkdGg9IjY3MSIgaGVpZ2h0PSI4MyIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjMjVjM2NiIiBzdHJva2Utb3BhY2l0eT0iLjIwIiBzdHJva2Utd2lkdGg9IjEiLz4KICA8IS0tIEhlYWRlciBzZXBhcmF0b3IgYW5kIDM0LzI0LzI4cHggYWNjZW50IGxpbmVzIGFyZSBDU1Mgb3ZlcmxheXMgc28KICAgICAgIFNWRyA5LXNsaWNlIHJlc2l6aW5nIGRvZXMgbm90IGRpc3RvcnQgdGhlaXIgdjEzMyBsZW5ndGhzLiAtLT4KIDwvZz4KPC9zdmc+Cg=="); --img-popup-header:url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI2ODAiIGhlaWdodD0iMzgiIHZpZXdCb3g9IjAgMCA2ODAgMzgiPjxkZWZzPjxsaW5lYXJHcmFkaWVudCBpZD0iaGVhZGVyIiB4MT0iMCIgeTE9IjAiIHgyPSIxIiB5Mj0iMCI+PHN0b3Agc3RvcC1jb2xvcj0iIzBiZGFmOCIgc3RvcC1vcGFjaXR5PSIuMDQiLz48c3RvcCBvZmZzZXQ9Ii41MiIgc3RvcC1jb2xvcj0iIzBiZGFmOCIgc3RvcC1vcGFjaXR5PSIwIi8+PC9saW5lYXJHcmFkaWVudD48L2RlZnM+PHJlY3Qgd2lkdGg9IjY4MCIgaGVpZ2h0PSIzOCIgZmlsbD0idXJsKCNoZWFkZXIpIi8+PHBhdGggZD0iTTAgMzcuNSBINjgwIiBzdHJva2U9IiM3MGRlZWMiIHN0cm9rZS1vcGFjaXR5PSIuMTYiIHN0cm9rZS13aWR0aD0iMSIvPjwvc3ZnPgo=");
+  --img-popup-tl:url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI2OCIgaGVpZ2h0PSI0OCIgdmlld0JveD0iMCAwIDY4IDQ4Ij48ZGVmcz48L2RlZnM+PHBhdGggZD0iTTAgMSBIMzQiIGZpbGw9Im5vbmUiIHN0cm9rZT0iIzBjZmJmOSIgc3Ryb2tlLW9wYWNpdHk9Ii45NiIgc3Ryb2tlLXdpZHRoPSIyIi8+PHBhdGggZD0iTTEgMCBWMjQiIGZpbGw9Im5vbmUiIHN0cm9rZT0iIzBjZmJmOSIgc3Ryb2tlLW9wYWNpdHk9Ii45NiIgc3Ryb2tlLXdpZHRoPSIyIi8+PC9zdmc+Cg=="); --img-popup-br:url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI1NiIgaGVpZ2h0PSIyIiB2aWV3Qm94PSIwIDAgNTYgMiI+PGRlZnM+PC9kZWZzPjxwYXRoIGQ9Ik0yOCAxIEg1NiIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjMGNmYmY5IiBzdHJva2Utb3BhY2l0eT0iLjk2IiBzdHJva2Utd2lkdGg9IjIiLz48L3N2Zz4K");
+  --img-ctl-n:url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxODEiIGhlaWdodD0iNTQiIHZpZXdCb3g9IjAgMCAxODEgNTQiPjxkZWZzPjxsaW5lYXJHcmFkaWVudCBpZD0iZmFjZSIgeDE9IjAiIHkxPSIwIiB4Mj0iMCIgeTI9IjEiPjxzdG9wIHN0b3AtY29sb3I9IiMwODJkNDkiLz48c3RvcCBvZmZzZXQ9IjEiIHN0b3AtY29sb3I9IiMwNjIyMzgiLz48L2xpbmVhckdyYWRpZW50PjxsaW5lYXJHcmFkaWVudCBpZD0iZmFjZUxlZnQiIHgxPSIwIiB5MT0iMCIgeDI9IjEiIHkyPSIwIj48c3RvcCBzdG9wLWNvbG9yPSIjMjBmM2YyIiBzdG9wLW9wYWNpdHk9Ii4wNDUiLz48c3RvcCBvZmZzZXQ9Ii40OCIgc3RvcC1jb2xvcj0iIzIwZjNmMiIgc3RvcC1vcGFjaXR5PSIwIi8+PC9saW5lYXJHcmFkaWVudD48Y2xpcFBhdGggaWQ9ImNvcm5lcnMiPjxwb2x5Z29uIHBvaW50cz0iNywwIDE4MSwwIDE4MSw0NyAxNzQsNTQgMCw1NCAwLDciLz48L2NsaXBQYXRoPjwvZGVmcz48ZyBjbGlwLXBhdGg9InVybCgjY29ybmVycykiPjxyZWN0IHdpZHRoPSIxODEiIGhlaWdodD0iNTQiIGZpbGw9InVybCgjZmFjZSkiLz48cmVjdCB3aWR0aD0iMTgxIiBoZWlnaHQ9IjU0IiBmaWxsPSJ1cmwoI2ZhY2VMZWZ0KSIvPjxyZWN0IHg9IjEiIHk9IjEiIHdpZHRoPSIxNzkiIGhlaWdodD0iNTIiIGZpbGw9Im5vbmUiIHN0cm9rZT0iIzEzY2JlOCIgc3Ryb2tlLXdpZHRoPSIyIi8+PC9nPjwvc3ZnPgo="); --img-ctl-h:url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxODEiIGhlaWdodD0iNTQiIHZpZXdCb3g9IjAgMCAxODEgNTQiPjxkZWZzPjxsaW5lYXJHcmFkaWVudCBpZD0iZmFjZSIgeDE9IjAiIHkxPSIwIiB4Mj0iMCIgeTI9IjEiPjxzdG9wIHN0b3AtY29sb3I9IiMwODJkNDkiLz48c3RvcCBvZmZzZXQ9IjEiIHN0b3AtY29sb3I9IiMwNjIyMzgiLz48L2xpbmVhckdyYWRpZW50PjxsaW5lYXJHcmFkaWVudCBpZD0iZmFjZUxlZnQiIHgxPSIwIiB5MT0iMCIgeDI9IjEiIHkyPSIwIj48c3RvcCBzdG9wLWNvbG9yPSIjMjBmM2YyIiBzdG9wLW9wYWNpdHk9Ii4wNDUiLz48c3RvcCBvZmZzZXQ9Ii40OCIgc3RvcC1jb2xvcj0iIzIwZjNmMiIgc3RvcC1vcGFjaXR5PSIwIi8+PC9saW5lYXJHcmFkaWVudD48Y2xpcFBhdGggaWQ9ImNvcm5lcnMiPjxwb2x5Z29uIHBvaW50cz0iNywwIDE4MSwwIDE4MSw0NyAxNzQsNTQgMCw1NCAwLDciLz48L2NsaXBQYXRoPjwvZGVmcz48ZyBjbGlwLXBhdGg9InVybCgjY29ybmVycykiPjxyZWN0IHdpZHRoPSIxODEiIGhlaWdodD0iNTQiIGZpbGw9InVybCgjZmFjZSkiLz48cmVjdCB3aWR0aD0iMTgxIiBoZWlnaHQ9IjU0IiBmaWxsPSJ1cmwoI2ZhY2VMZWZ0KSIvPjxyZWN0IHg9IjEiIHk9IjEiIHdpZHRoPSIxNzkiIGhlaWdodD0iNTIiIGZpbGw9Im5vbmUiIHN0cm9rZT0iIzIwZjNmMiIgc3Ryb2tlLXdpZHRoPSIyIi8+PC9nPjwvc3ZnPgo="); --img-ctl-d:url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxODEiIGhlaWdodD0iNTQiIHZpZXdCb3g9IjAgMCAxODEgNTQiPjxkZWZzPjxjbGlwUGF0aCBpZD0iY29ybmVycyI+PHBvbHlnb24gcG9pbnRzPSI3LDAgMTgxLDAgMTgxLDQ3IDE3NCw1NCAwLDU0IDAsNyIvPjwvY2xpcFBhdGg+PGxpbmVhckdyYWRpZW50IGlkPSJnIiB4Mj0iMCIgeTI9IjEiPjxzdG9wIHN0b3AtY29sb3I9IiMwOTI4M2YiLz48c3RvcCBvZmZzZXQ9IjEiIHN0b3AtY29sb3I9IiMwNjFkMzAiLz48L2xpbmVhckdyYWRpZW50PjwvZGVmcz48ZyBjbGlwLXBhdGg9InVybCgjY29ybmVycykiPjxyZWN0IHdpZHRoPSIxODEiIGhlaWdodD0iNTQiIGZpbGw9InVybCgjZykiLz48cmVjdCB4PSIxIiB5PSIxIiB3aWR0aD0iMTc5IiBoZWlnaHQ9IjUyIiBmaWxsPSJub25lIiBzdHJva2U9IiMxNDVkNjUiIHN0cm9rZS13aWR0aD0iMiIvPjwvZz48L3N2Zz4=");
+  --img-glyph:url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMSIgaGVpZ2h0PSIxMSIgdmlld0JveD0iMCAwIDExIDExIj4KIDxkZWZzPjxmaWx0ZXIgaWQ9ImNyb3NzR2xvdyIgeD0iLTEyMCUiIHk9Ii0xMjAlIiB3aWR0aD0iMzQwJSIgaGVpZ2h0PSIzNDAlIj48ZmVHYXVzc2lhbkJsdXIgc3RkRGV2aWF0aW9uPSIyIi8+PC9maWx0ZXI+PC9kZWZzPgogPGcgZmlsbD0iIzBjZmJmOSIgb3BhY2l0eT0iLjUyIiBmaWx0ZXI9InVybCgjY3Jvc3NHbG93KSI+PHJlY3QgeD0iMSIgeT0iNSIgd2lkdGg9IjkiIGhlaWdodD0iMSIvPjxyZWN0IHg9IjUiIHk9IjEiIHdpZHRoPSIxIiBoZWlnaHQ9IjkiLz48L2c+CiA8ZyBmaWxsPSIjMGNmYmY5Ij48cmVjdCB4PSIxIiB5PSI1IiB3aWR0aD0iOSIgaGVpZ2h0PSIxIi8+PHJlY3QgeD0iNSIgeT0iMSIgd2lkdGg9IjEiIGhlaWdodD0iOSIvPjwvZz4KPC9zdmc+Cg=="); --img-close-slot:url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNiIgaGVpZ2h0PSIxOCIgdmlld0JveD0iMCAwIDE2IDE4Ij48ZGVmcz48cmFkaWFsR3JhZGllbnQgaWQ9InNsb3RHbG93IiBjeD0iNTAlIiBjeT0iNDUlIiByPSI2MiUiPjxzdG9wIHN0b3AtY29sb3I9IiMwYmRhZjgiIHN0b3Atb3BhY2l0eT0iLjA0NSIvPjxzdG9wIG9mZnNldD0iMSIgc3RvcC1jb2xvcj0iIzBiZGFmOCIgc3RvcC1vcGFjaXR5PSIwIi8+PC9yYWRpYWxHcmFkaWVudD48Y2xpcFBhdGggaWQ9InNsb3RDb3JuZXJDbGlwIj48cGF0aCBkPSJNMiAwIEgxNiBWMTYgTDE0IDE4IEgwIFYyIFoiLz48L2NsaXBQYXRoPjwvZGVmcz48ZyBjbGlwLXBhdGg9InVybCgjc2xvdENvcm5lckNsaXApIj48cG9seWdvbiBwb2ludHM9IjIsMCAxNiwwIDE2LDE2IDE0LDE4IDAsMTggMCwyIiBmaWxsPSIjMDUxZjMyIiBmaWxsLW9wYWNpdHk9Ii41NCIvPjxwb2x5Z29uIHBvaW50cz0iMiwwIDE2LDAgMTYsMTYgMTQsMTggMCwxOCAwLDIiIGZpbGw9InVybCgjc2xvdEdsb3cpIi8+PHJlY3QgeD0iLjUiIHk9Ii41IiB3aWR0aD0iMTUiIGhlaWdodD0iMTciIGZpbGw9Im5vbmUiIHN0cm9rZT0iIzI1YzNjYiIgc3Ryb2tlLW9wYWNpdHk9Ii41MCIgc3Ryb2tlLXdpZHRoPSIxIi8+PHJlY3QgeD0iMS41IiB5PSIxLjUiIHdpZHRoPSIxMyIgaGVpZ2h0PSIxNSIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjNzBkZWVjIiBzdHJva2Utb3BhY2l0eT0iLjA1IiBzdHJva2Utd2lkdGg9IjEiLz48L2c+PC9zdmc+Cg=="); --img-ring:url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNSIgaGVpZ2h0PSIxNSIgdmlld0JveD0iMCAwIDE1IDE1Ij48ZGVmcz48L2RlZnM+PGNpcmNsZSBjeD0iNy41IiBjeT0iNy41IiByPSI2Ljc1IiBmaWxsPSJub25lIiBzdHJva2U9IiM3MGRlZWMiIHN0cm9rZS1vcGFjaXR5PSIuNTUiIHN0cm9rZS13aWR0aD0iMS41Ii8+PHBhdGggZD0iTS43NSA3LjUgQTYuNzUgNi43NSAwIDAgMSAxNC4yNSA3LjUiIGZpbGw9Im5vbmUiIHN0cm9rZT0iIzBjZmJmOSIgc3Ryb2tlLXdpZHRoPSIxLjUiLz48L3N2Zz4K");
+}
+/* Paperlogy is used when installed; resource/font/*.ttf is picked up when the folder sits next to this file. */
+@font-face{font-family:"Paperlogy Pack";src:url("resource/font/Paperlogy-3Light.ttf") format("truetype");font-weight:300;font-display:swap}
+@font-face{font-family:"Paperlogy Pack";src:url("resource/font/Paperlogy-4Regular.ttf") format("truetype");font-weight:400;font-display:swap}
+@font-face{font-family:"Paperlogy Pack";src:url("resource/font/Paperlogy-5Medium.ttf") format("truetype");font-weight:500;font-display:swap}
+@font-face{font-family:"Paperlogy Pack";src:url("resource/font/Paperlogy-6SemiBold.ttf") format("truetype");font-weight:600;font-display:swap}
+@font-face{font-family:"Paperlogy Pack";src:url("resource/font/Paperlogy-7Bold.ttf") format("truetype");font-weight:700;font-display:swap}
+@font-face{font-family:"Paperlogy Pack";src:url("resource/font/Paperlogy-8ExtraBold.ttf") format("truetype");font-weight:800;font-display:swap}
+
+/* ---------- HUD (static: never animates in/out, values change instantly, numbers never type) ---------- */
+.game-root{font-family:var(--kr-font-product);font-synthesis:none;font-kerning:normal}
 .stage-menu{gap:18px}
-.rg-score{font-size:var(--font-body);font-weight:800;letter-spacing:.08em;color:var(--muted)}
-.rg-score b{color:var(--cyan-peak);margin-left:6px;font-size:var(--font-brand)}
-#rgLayer,#rgTab{position:absolute;inset:0;z-index:60;display:flex;align-items:center;justify-content:center;background:rgba(2,8,12,.72);color:var(--text);font-family:inherit}
-#rgTab{z-index:70;background:rgba(2,8,12,.55)}#rgTab[hidden]{display:none}#rgLayer:empty{display:none}
-.rg-panel{width:560px;max-height:84%;overflow:auto;padding:26px 30px;background:rgba(3,16,22,.96);border:1px solid var(--line);box-shadow:0 0 28px rgba(11,218,248,.18)}
-.rg-panel.wide{width:900px}
-.rg-panel h2{margin:0 0 16px;font-size:18px;letter-spacing:.08em;color:var(--cyan-peak)}
-.rg-panel h2.ok{color:var(--ok)}.rg-panel h2.bad{color:var(--threat-red-hot)}
-.rg-panel h3{margin:18px 0 8px;font-size:13px;color:var(--muted);letter-spacing:.08em}
-.rg-panel table{width:100%;border-collapse:collapse;font-size:14px}
-.rg-panel td{padding:6px 0;border-bottom:1px solid rgba(255,255,255,.08)}.rg-panel td:nth-child(2){color:var(--muted);text-align:center}.rg-panel td:last-child{text-align:right;color:var(--warn);font-weight:800}
-.rg-sum{display:flex;justify-content:space-between;margin-top:12px;font-size:14px}.rg-sum b{color:var(--warn)}.rg-sum.big{font-size:20px}.rg-sum.big b{color:var(--cyan-peak)}
-.rg-body{font-size:15px;line-height:1.75;margin:0 0 20px}.rg-body b{color:var(--warn)}
-.rg-panel button{font:inherit;font-size:13px;font-weight:800;letter-spacing:.05em;color:var(--text);background:rgba(33,141,148,.18);border:1px solid var(--line);padding:9px 16px;cursor:pointer}
-.rg-panel button:hover:not(:disabled){background:rgba(33,141,148,.4)}.rg-panel button:disabled{opacity:.4;cursor:default}
-.rg-panel>button{margin-top:20px;width:100%}
-kbd{font:inherit;font-size:10px;margin-left:6px;padding:1px 5px;border:1px solid var(--muted);color:var(--muted)}
-.rg-row{display:flex;justify-content:space-between;align-items:center;margin-top:18px}.rg-row>button{margin:0;width:auto}
-.rg-hint{font-size:12px;color:var(--muted)}
-.rg-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
-.rg-panel .rg-card{position:relative;margin:0;width:auto;min-height:210px;display:flex;flex-direction:column;align-items:flex-start;text-align:left;padding:16px;border:1px solid var(--rc);background:linear-gradient(180deg,rgba(255,255,255,.05),rgba(0,0,0,.3))}
-.rg-card i{font-style:normal;font-size:10px;letter-spacing:.14em;color:var(--rc)}.rg-card strong{font-size:18px;margin:8px 0;color:#fff}
-.rg-card p{margin:0;font-size:13px;line-height:1.6;color:var(--text);font-weight:600}.rg-card em{margin-top:auto;font-style:normal;font-size:11px;color:var(--muted)}
-.rg-card kbd{position:absolute;top:10px;right:10px}
-.rg-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}.rg-grid div{padding:8px 10px;border:1px solid rgba(255,255,255,.1)}.rg-grid span{display:block;font-size:10px;color:var(--muted)}.rg-grid b{font-size:15px;color:var(--cyan-peak)}
-.rg-panel ul{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:1fr 1fr;gap:8px}.rg-panel li{padding:8px 10px;border-left:3px solid var(--rc);background:rgba(255,255,255,.04);font-size:13px}.rg-panel li small{display:block;color:var(--muted);margin-top:3px}
+.rg-score{font-family:var(--kr-caption-family);font-size:var(--kr-caption-size);font-weight:var(--kr-body-medium-weight);letter-spacing:.08em;color:var(--ui-muted)}
+.rg-score b{color:var(--cyan-peak);margin-left:6px;font-size:var(--kr-body-size);font-weight:var(--kr-button-weight);font-variant-numeric:tabular-nums}
 #gHp{stroke:#3ddc84}#gMp{stroke:#2aa8ff}#gMp.off{stroke:#6b7f8c}
-.rg-panel .rg-cards .rg-card{border:2px solid var(--rc);background:linear-gradient(160deg,color-mix(in srgb,var(--rc) 24%,#04121a),#04121a 72%);box-shadow:0 0 14px color-mix(in srgb,var(--rc) 40%,transparent);overflow:hidden}
-.rg-panel .rg-cards .rg-card:hover{transform:translateY(-4px);box-shadow:0 0 26px var(--rc)}
-.rg-cards .rg-card i{display:block;width:calc(100% + 32px);margin:-16px -16px 12px;padding:6px 16px;background:var(--rc);color:#04121a;font-weight:900;font-size:11px;letter-spacing:.16em}
-.rg-cards .rg-card strong{color:var(--rc);text-shadow:0 0 10px color-mix(in srgb,var(--rc) 60%,transparent)}
-.rg-cards .rg-card kbd{top:36px;color:var(--rc);border-color:var(--rc)}
-.rg-cards .rg-card.g-U{box-shadow:0 0 22px color-mix(in srgb,var(--rc) 55%,transparent)}
-.rg-cards .rg-card.g-R{animation:rgGlow 2.2s ease-in-out infinite}
-@keyframes rgGlow{0%,100%{box-shadow:0 0 18px color-mix(in srgb,var(--rc) 50%,transparent)}50%{box-shadow:0 0 38px var(--rc)}}
-.rg-head{display:flex;justify-content:space-between;align-items:flex-start;gap:20px}.rg-head h2{margin-top:6px}
-.rg-rank{display:flex;gap:14px;align-items:center;margin-top:16px}.rg-rank>b{font-size:44px;line-height:1;min-width:44px;text-align:center}
-.rg-rank span{display:block;font-size:12px;color:var(--muted);margin-bottom:6px}.rg-rank.mini{margin:0}.rg-rank.mini>b{font-size:34px}
-.rg-odds{display:flex;gap:6px;flex-wrap:wrap}.rg-odds span{margin:0!important;padding:2px 8px;font-size:11px!important;font-weight:800;color:var(--rc)!important;border:1px solid var(--rc)}
-.rg-panel li{border-left-width:4px}.rg-panel li i{font-style:normal;font-size:10px;color:var(--rc);margin:0 4px}
-
-.rg-cards{grid-template-columns:repeat(var(--n,3),1fr)!important}
-.rg-cards .rg-card i .rg-fix{float:right;font-size:10px;padding:0 6px;background:#04121a;color:var(--rc);letter-spacing:.06em}
-.rg-odds em{font-style:normal;font-size:10px;color:var(--muted);align-self:center;margin:0 2px 0 4px}
-
 .rg-modal-open .pointer-defense-rings{display:none!important}
-.rg-pair{display:flex;gap:18px;align-items:flex-start;justify-content:center}.rg-panel.guide{width:360px;border-color:var(--warn)}.rg-panel.guide h2{color:var(--warn)}
-#rgCoach{position:absolute;left:330px;top:596px;width:640px;z-index:50;padding:12px 18px;background:rgba(3,16,22,.9);border:1px solid var(--warn);box-shadow:0 0 18px rgba(255,207,102,.25);color:var(--text);pointer-events:none}
-#rgCoach[hidden]{display:none}.rg-coach-h{display:flex;justify-content:space-between;font-size:11px;color:var(--muted);letter-spacing:.1em}
-.rg-coach-h i{font-style:normal;color:#04121a;background:var(--warn);padding:0 8px;font-weight:900}#rgCoach strong{display:block;margin:6px 0 2px;font-size:16px;color:var(--warn)}
-#rgCoach p{margin:0;font-size:14px;line-height:1.55}#rgCoach p b{color:var(--cyan-peak)}#rgCoach small{display:block;margin-top:6px;font-size:11px;color:var(--muted)}
-.rg-panel kbd,#rgCoach kbd{margin:0 2px}
 
-#rgToast{position:absolute;left:330px;top:92px;width:640px;z-index:51;padding:10px 16px;background:rgba(40,8,36,.92);border:1px solid #c44cff;color:#f1dcff;font-size:14px;font-weight:700;pointer-events:none;box-shadow:0 0 18px rgba(196,76,255,.35)}
-#rgToast[hidden]{display:none}
+.ui-host [hidden],.ui-pop-win[hidden],.ui-pop-win [hidden]{display:none!important}   /* scoped: v164 HUD elements keep their own hidden behaviour */
+/* ---------- Host layers (tier order follows the ZIP: modal is the topmost tier) ---------- */
+#rgLayer,#rgTab{position:absolute;inset:0;pointer-events:none;color:var(--ui-text);font-family:var(--kr-font-product)}
+#rgLayer{z-index:60}#rgTab{z-index:70}
+.ui-host.is-on{pointer-events:auto}
+.ui-backdrop{position:absolute;inset:0;background:rgb(28 35 51);opacity:0;transition:opacity var(--ui-bd-in) cubic-bezier(.22,1,.36,1)}
+.ui-host.is-visible .ui-backdrop{opacity:.5}
+.ui-host.is-closing .ui-backdrop{transition-duration:var(--ui-bd-out);opacity:0}
+.ui-stage{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;pointer-events:none}
+.ui-row{position:relative;pointer-events:none}
 
-.rg-panel{position:relative}#rgCoach{pointer-events:none}
-.rg-x,.rg-panel>button.rg-x,.rg-panel button.rg-x{position:absolute;top:6px;right:8px;margin:0;width:26px;height:26px;padding:0;line-height:1;font-size:14px;letter-spacing:0;text-align:center;background:rgba(255,255,255,.06);border:1px solid var(--muted);color:var(--text);cursor:pointer;pointer-events:auto}
-.rg-x:hover{background:rgba(255,80,80,.35)}
+/* ---------- Window / popup shell (9-slice popup frame + header + accents) ---------- */
+.ui-window,.ui-pop-win{position:relative;isolation:isolate;color:var(--ui-text);filter:var(--ui-glow);pointer-events:auto}
+.ui-window{width:var(--w,560px);clip-path:inset(0 0 calc(100% - 46px) 0);transition:clip-path var(--ui-slide) cubic-bezier(.22,1,.36,1)}
+.ui-window.is-open{clip-path:inset(0)}
+.ui-window.is-closed-lock{pointer-events:none}
+.ui-window::before,.ui-pop-win::before{content:"";position:absolute;inset:0;pointer-events:none;z-index:-5;border:9px solid transparent;border-image-source:var(--img-popup-frame);border-image-slice:9 fill;border-image-width:9px;border-image-repeat:stretch}
+.ui-window::after,.ui-pop-win::after{content:"";position:absolute;inset:0;pointer-events:none;z-index:5;background:var(--img-popup-tl) left top/68px 48px no-repeat,var(--img-popup-br) right bottom/56px 2px no-repeat}
+.ui-pop-win{position:absolute;transform-origin:center center}
+.ui-head{position:relative;z-index:10;display:flex;align-items:center;justify-content:space-between;gap:var(--kr-element-gap);height:46px;padding:0 20px 0 44px;background:var(--img-popup-header) center/100% 100% no-repeat}
+.ui-head::before{content:"";position:absolute;left:27px;top:50%;transform:translateY(-50%);width:11px;height:11px;background:var(--img-glyph) center/11px 11px no-repeat}
+.ui-pop-win .ui-head{height:38px}
+.ui-head h2{margin:0;white-space:nowrap;font-family:var(--kr-button-family);font-size:var(--kr-button-size);font-weight:var(--kr-button-weight);line-height:var(--kr-button-leading);letter-spacing:var(--kr-button-tracking)}
+.ui-head-r{display:flex;align-items:center;gap:var(--kr-space-12)}
+.ui-dots{font-size:var(--kr-small-size);letter-spacing:.2em;color:var(--ui-muted)}
+.ui-x{display:flex;align-items:center;justify-content:center;flex:0 0 16px;width:16px;height:18px;padding:0;border:0;cursor:pointer;pointer-events:auto;background:var(--img-close-slot) center/100% 100% no-repeat;clip-path:polygon(2px 0,100% 0,100% calc(100% - 2px),calc(100% - 2px) 100%,0 100%,0 2px)}
+.ui-x:hover{filter:brightness(1.5)}
+.ui-x img{display:block;width:11px;height:11px;pointer-events:none}
+.ui-body{position:relative;z-index:1;padding:20px 28px 8px;max-height:calc(var(--maxh,800px) - 150px);overflow:auto;scrollbar-width:thin;color:var(--ui-body);font-family:var(--kr-body-family);font-size:var(--kr-small-size);font-weight:var(--kr-small-weight);line-height:var(--kr-small-leading)}
+.ui-pop-win .ui-body{padding:12px 20px 4px}
+.ui-foot{position:relative;z-index:1;display:flex;align-items:center;justify-content:space-between;gap:var(--kr-space-12);padding:12px 28px 26px}
+.ui-pop-win .ui-foot{padding:4px 20px 14px;font-size:var(--kr-small-size);color:var(--ui-muted)}
+.ui-foot:empty{display:none}
+.ui-foot-r{display:flex;gap:var(--kr-space-12);margin-left:auto}
 
-.ln{display:block}.rg-panel.guide{width:440px}.rg-body{line-height:1.9}
-#rgCoach{width:520px}#rgCoach p{line-height:1.6}
+/* ---------- Buttons: StartPase control artwork (normal / hover / disabled), single cyan family ---------- */
+.ui-btn{display:inline-flex;align-items:center;justify-content:center;gap:var(--kr-space-8);min-width:var(--ship-management-button-width);height:54px;padding:6px 20px;border:2px solid transparent;border-radius:0;cursor:pointer;color:#f3f6f7;background:var(--img-ctl-n) center/100% 100% no-repeat;background-origin:border-box;font-family:var(--kr-button-family);font-size:var(--kr-button-size);font-weight:var(--kr-button-weight);line-height:var(--kr-button-leading);clip-path:polygon(7px 0,100% 0,100% calc(100% - 7px),calc(100% - 7px) 100%,0 100%,0 7px)}
+.ui-btn:hover:not(:disabled){background-image:var(--img-ctl-h);color:#fff}
+.ui-btn:focus-visible{outline:2px solid #fff;outline-offset:2px}
+.ui-btn:disabled{cursor:default;color:var(--ui-disabled);background-image:var(--img-ctl-d)}
+.ui-btn.is-ghost{min-width:0;padding:6px 16px}
+.ui-window kbd,.ui-pop-win kbd{font:inherit;font-size:var(--kr-small-size);margin:0 2px;padding:0 5px;border:1px solid var(--ui-line-strong);color:var(--ui-muted)}
+.ui-btn kbd{color:inherit;opacity:.8}
+.ui-hint{font-size:var(--kr-small-size);color:var(--ui-muted)}
 
-.rg-coach-h{padding-right:34px}
+/* ---------- Text motion primitives (typing / caret / same-position exit) ---------- */
+.tx-box{position:relative}
+.tx-box.is-transitioning{overflow:hidden}                         /* clip only while the old text departs */
+.tx-move{display:block;transform:translateY(0);opacity:1}
+.tx-move.is-leaving{transform:translateY(calc(var(--ui-leave-y) * -1));opacity:0;transition:transform var(--ui-leave) ease-in-out,opacity var(--ui-leave) ease-in-out}
+.tw .tw-c{visibility:hidden}.tw .tw-c.on{visibility:visible}       /* full text bounds are reserved while typing: nothing shifts */
+.typewriter-caret{display:inline-block;position:relative;width:0;height:1em;vertical-align:-.15em}
+.typewriter-caret::after{content:"";position:absolute;left:2px;top:0;width:2px;height:100%;background:var(--cyan-peak);animation:ui-caret var(--ui-caret) linear infinite}
+@keyframes ui-caret{0%,100%{opacity:1}50%{opacity:0}}
+[data-gate]{visibility:hidden}[data-gate].is-shown{visibility:visible}
+.ui-window:not(.is-ready) .ui-pop{animation-play-state:paused}
+.ui-pop{animation:ui-pop var(--ui-pop) cubic-bezier(.215,.61,.355,1) backwards;animation-delay:calc(var(--i,0) * var(--ui-stagger))}
+@keyframes ui-pop{from{opacity:0;transform:scale(var(--ui-pop-scale))}to{opacity:1;transform:scale(1)}}
 
-.ln.gap{height:.8em}
+/* ---------- Status row (report-class windows only) ---------- */
+.ui-status{display:flex;align-items:center;gap:9px;min-height:21px;margin-bottom:var(--kr-space-12);font-family:var(--kr-caption-family);font-size:var(--kr-caption-size);font-weight:var(--kr-caption-weight);line-height:var(--kr-caption-leading);color:var(--ui-body)}
+.ui-st-r{flex:0 0 15px;width:15px;height:15px;background:var(--img-ring) center/15px 15px no-repeat;animation:ui-spin var(--ui-spin) linear infinite}
+.ui-st-r.is-complete{animation:none;transform:none}
+@keyframes ui-spin{to{transform:rotate(360deg)}}
+.ui-st-t{margin-left:auto;font-size:var(--kr-report-elapsed-size);font-weight:var(--kr-report-elapsed-weight);font-variant-numeric:tabular-nums}
 
+/* ---------- Content: prose, tables, rank, cards, status grid ---------- */
+.rg-body{margin:0;font-family:var(--kr-body-family);font-size:var(--kr-body-size);font-weight:var(--kr-body-weight);line-height:var(--kr-body-leading);color:var(--ui-body)}
+.rg-body b{color:var(--cyan-peak);font-weight:var(--kr-body-medium-weight)}
+.ln{display:block}.ln.gap{height:.8em}
+.rg-note{margin:0 0 var(--kr-space-16)}
+.ui-pop-win .rg-body{font-size:var(--kr-body-size)}
+.ui-pop-win strong{display:block;margin:0 0 4px;font-family:var(--kr-feature-title-family);font-size:var(--kr-body-size);font-weight:var(--kr-feature-title-weight);color:var(--ui-text)}
+.ui-table-wrap{margin-top:var(--kr-space-4)}
+.ui-table{width:100%;table-layout:fixed;border-collapse:collapse;border:1px solid var(--ui-line-strong);color:var(--ui-body);font-size:var(--kr-small-size)}
+.ui-table tr{height:32px}
+.ui-table th,.ui-table td{border:1px solid var(--ui-line);padding:6px 10px;white-space:nowrap;line-height:1.35;background:rgba(4,25,43,.16);font-weight:700;font-variant-numeric:tabular-nums}
+.ui-table td:nth-child(1){width:48%;text-align:left;background:rgba(8,40,61,.34)}
+.ui-table td:nth-child(2){width:26%;text-align:center;color:var(--ui-muted);font-weight:400}
+.ui-table td:nth-child(3){text-align:right}
+.ui-table tfoot td{background:rgba(8,40,61,.5);color:var(--ui-text);font-size:var(--kr-body-size)}
+.ui-table tfoot td[colspan]{text-align:left}
+.ui-table tfoot tr:last-child td:last-child{color:var(--cyan-peak)}
+.rg-rank{display:flex;gap:14px;align-items:center;margin-top:var(--kr-space-16)}
+.rg-rank>b{font-family:var(--kr-font-brand);font-size:44px;font-weight:800;line-height:1;min-width:44px;text-align:center}
+.rg-rank.mini{margin:0}.rg-rank.mini>b{font-size:34px}
+.rg-rank span{display:block;font-size:var(--kr-small-size);color:var(--ui-muted);margin-bottom:6px}
+.rg-odds{display:flex;gap:6px;flex-wrap:wrap}
+.rg-odds span{margin:0;padding:2px 8px;font-size:var(--kr-small-size);font-weight:600;color:var(--rc);border:1px solid var(--rc)}
+.rg-odds em{font-style:normal;font-size:var(--kr-small-size);color:var(--ui-muted);align-self:center;margin:0 2px 0 4px}
+.rg-head{display:flex;justify-content:flex-end;margin-bottom:var(--kr-space-16)}
+.rg-cards{display:grid;grid-template-columns:repeat(var(--n,3),1fr);gap:16px}
+.rg-card{position:relative;display:flex;flex-direction:column;align-items:flex-start;text-align:left;min-height:210px;margin:0;padding:0 16px 14px;cursor:pointer;color:var(--ui-text);font:inherit;border:1px solid var(--rc);border-radius:0;background:linear-gradient(160deg,color-mix(in srgb,var(--rc) 22%,#04121a),#04121a 72%);clip-path:polygon(7px 0,100% 0,100% calc(100% - 7px),calc(100% - 7px) 100%,0 100%,0 7px)}
+.rg-card:hover{filter:brightness(1.22)}
+.rg-card:focus-visible{outline:2px solid #fff;outline-offset:2px}
+.rg-card i{display:block;width:calc(100% + 32px);margin:0 -16px 12px;padding:6px 16px;background:var(--rc);color:#04121a;font-style:normal;font-size:var(--kr-small-size);font-weight:var(--kr-button-weight);letter-spacing:.06em}
+.rg-card i .rg-fix{float:right;padding:0 6px;background:#04121a;color:var(--rc)}
+.rg-card strong{margin:0 0 8px;font-family:var(--kr-feature-title-family);font-size:var(--kr-feature-title-size);font-weight:var(--kr-feature-title-weight);line-height:var(--kr-feature-title-leading);color:var(--rc)}
+.rg-card p{margin:0;font-size:var(--kr-body-size);font-weight:var(--kr-body-weight);line-height:var(--kr-body-leading);color:var(--ui-body)}
+.rg-card em{margin-top:auto;padding-top:10px;font-style:normal;font-size:var(--kr-small-size);color:var(--ui-muted)}
+.rg-card kbd{position:absolute;top:36px;right:10px;color:var(--rc);border-color:var(--rc)}
+.rg-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+.rg-grid div{padding:8px 10px;border:1px solid var(--ui-line);background:rgba(4,25,43,.3)}
+.rg-grid span{display:block;font-size:var(--kr-small-size);color:var(--ui-muted)}
+.rg-grid b{font-size:var(--kr-body-size);font-weight:var(--kr-body-medium-weight);font-variant-numeric:tabular-nums}
+.ui-sub{margin:18px 0 8px;font-family:var(--kr-caption-family);font-size:var(--kr-caption-size);font-weight:var(--kr-caption-weight);color:var(--ui-muted);letter-spacing:.08em}
+.ui-body ul{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.ui-body li{padding:8px 10px;border-left:4px solid var(--rc);background:rgba(4,25,43,.3)}
+.ui-body li b{display:block;font-size:var(--kr-body-size);font-weight:var(--kr-body-medium-weight);color:var(--ui-text)}
+.ui-body li i{font-style:normal;font-size:var(--kr-small-size);color:var(--rc);margin:0 4px}
+.ui-body li small{display:block;margin-top:2px;font-size:var(--kr-small-size);color:var(--ui-body)}
+
+/* ---------- Popups (non-modal): coach + attached guide ---------- */
+#rgCoach{left:330px;top:596px;width:520px;z-index:50;pointer-events:none}
+#rgCoach .ui-x{pointer-events:auto}
+.ui-aside{left:calc(100% + 18px);top:0;width:380px}
+.ui-table tfoot td:nth-child(2){text-align:right;width:auto;color:inherit;font-weight:700}
 </style>
 </head>
 <body>
@@ -11102,6 +11208,169 @@ kbd{font:inherit;font-size:10px;margin-left:6px;padding:1px 5px;border:1px solid
     requestAnimationFrame(frame);
   }
 
+  // ======================= UI MOTION KIT (v10) =======================
+  // Re-implements the StartPase (WebGame_v030) presentation rules. Values come from resource/rule/timing.csv.
+  //  - typewriter  : source/typewriter.js        (first glyph at t=0, count = 1 + floor(elapsed / interval), caret blinks, hidden when done)
+  //  - window      : app.js report modal         (backdrop fade, clip-path slide from the 46px header, input lock)
+  //  - popup       : app.js audio popup          (scale 90% -> 100% + opacity, easeOutCubic; closing walks the SAME curve backwards)
+  //  - text swap   : app.js communication log    (old text exits 200ms upward + fade inside a clipped box, THEN new text types; no slide-in)
+  const UI = (() => {
+    const C = { popupMs: 320, popupScale: 0.9, slideMs: 240, bdInMs: 400, bdOutMs: 220, charMs: 32, reportCharMs: 40.186916,
+                caretMs: 700, leaveMs: 200, leaveY: 50, spinMs: 850, staggerMs: 80 };   // staggerMs is a v10 addition (card entrance)
+    const RS = document.documentElement.style;
+    RS.setProperty("--ui-slide", C.slideMs + "ms"); RS.setProperty("--ui-bd-in", C.bdInMs + "ms"); RS.setProperty("--ui-bd-out", C.bdOutMs + "ms");
+    RS.setProperty("--ui-caret", C.caretMs + "ms"); RS.setProperty("--ui-leave", C.leaveMs + "ms"); RS.setProperty("--ui-leave-y", C.leaveY + "px");
+    RS.setProperty("--ui-spin", C.spinMs + "ms"); RS.setProperty("--ui-pop", C.popupMs + "ms"); RS.setProperty("--ui-pop-scale", C.popupScale);
+    RS.setProperty("--ui-stagger", C.staggerMs + "ms");
+    const raf = requestAnimationFrame, frames = n => new Promise(r => { const f = () => (--n > 0 ? raf(f) : r()); raf(f); });
+    const msOf = k => (k === "report" ? C.reportCharMs : C.charMs);
+
+    // ---- typewriter: every character is a span, so the final layout exists from frame 0 (the window never resizes while typing) ----
+    function wrapChars(el) {
+      const w = document.createTreeWalker(el, NodeFilter.SHOW_TEXT), nodes = [], chars = [];
+      while (w.nextNode()) nodes.push(w.currentNode);
+      for (const n of nodes) {
+        if (n.parentElement.closest("[data-nt]")) continue;                        // headings inside a text block appear instantly
+        if (!/\S/.test(n.nodeValue) && n.nodeValue.includes("\n")) continue;
+        const f = document.createDocumentFragment();
+        for (const ch of n.nodeValue) { const s = document.createElement("span"); s.className = "tw-c"; s.textContent = ch; f.append(s); chars.push(s); }
+        n.replaceWith(f);
+      }
+      return chars;
+    }
+    function prep(el) { if (!el._chars) { el._chars = wrapChars(el); el.classList.add("tw"); } return el._chars; }
+    function typer(el, ms, done) {
+      const chars = prep(el), caret = document.createElement("span"); caret.className = "typewriter-caret";
+      let shown = 0, t0 = 0, f = 0, alive = true;
+      const paint = n => { for (; shown < n; shown++) chars[shown].classList.add("on"); if (shown && shown < chars.length) chars[shown - 1].after(caret); };
+      const end = () => { alive = false; caret.remove(); el.classList.remove("tw"); done && done(); };
+      const tick = now => { if (!alive) return; const n = Math.min(chars.length, 1 + Math.floor(Math.max(0, now - t0) / ms)); paint(n); if (n < chars.length) f = raf(tick); else end(); };
+      const api = { stop() { if (!alive) return; alive = false; cancelAnimationFrame(f); caret.remove(); }, skip() { if (!alive) return; cancelAnimationFrame(f); paint(chars.length); end(); }, get alive() { return alive; } };
+      if (!chars.length) { alive = false; el.classList.remove("tw"); queueMicrotask(() => done && done()); return api; }
+      t0 = performance.now(); paint(1);
+      if (chars.length === 1) end(); else f = raf(tick);
+      return api;
+    }
+
+    // ---- controller shared by one window / popup: typers in flight, skip, cancel ----
+    const newCtl = () => ({ dead: false, skipped: false, seq: false, live: new Set(),
+      typing() { return this.seq || this.live.size > 0; },
+      cancel() { this.dead = true; this.seq = false; this.live.forEach(t => t.stop()); this.live.clear(); },
+      skip() { this.skipped = true; this.live.forEach(t => t.skip()); } });
+    function typeEl(el, ms, ctl) {
+      return new Promise(res => { let ty; ty = typer(el, ms, () => { ctl.live.delete(ty); res(); }); if (ty.alive) { ctl.live.add(ty); if (ctl.skipped) ty.skip(); } });
+    }
+    // DOM-order sequence: [data-tw] types one by one; [data-gate] reveals an EMPTY frame first; [data-row] cells of a row type together
+    async function runSeq(root, ctl) {
+      ctl.seq = true;
+      for (const el of root.querySelectorAll("[data-tw],[data-gate],[data-row]")) {
+        if (ctl.dead) return;
+        if (el.hasAttribute("data-gate")) { el.classList.add("is-shown"); if (!ctl.skipped) await frames(2); continue; }
+        const list = el.hasAttribute("data-row") ? [...el.querySelectorAll("[data-cell]")] : [el.classList.contains("tx-box") ? el.firstElementChild : el];
+        await Promise.all(list.map(t => typeEl(t, msOf(el.dataset.tw), ctl)));
+      }
+      if (!ctl.dead) ctl.seq = false;
+    }
+
+    // ---- same-position text swap: old block exits (200ms, up + fade, clipped) -> new block types in. Strictly serial. ----
+    async function fill(box, html, kind, ctl) {
+      const r = box._r || (box._r = { n: 0, out: null, ty: null }), my = ++r.n, mv = box.firstElementChild;
+      if (r.ty) { r.ty.stop(); ctl.live.delete(r.ty); r.ty = null; }
+      if (mv.childNodes.length) {
+        if (!r.out) r.out = new Promise(res => raf(() => {
+          box.classList.add("is-transitioning"); mv.classList.add("is-leaving");
+          setTimeout(() => { mv.textContent = ""; mv.classList.remove("is-leaving"); box.classList.remove("is-transitioning"); r.out = null; res(); }, C.leaveMs);
+        }));
+        await r.out; if (my !== r.n) return;
+      }
+      mv.innerHTML = html; delete mv._chars; mv.classList.remove("tw");
+      if (kind) { let ty; ty = typer(mv, msOf(kind), () => { ctl.live.delete(ty); }); if (ty.alive) { r.ty = ty; ctl.live.add(ty); } }
+    }
+    function regionize(root) {                    // [data-region] becomes clip box (.tx-box) > moving block (.tx-move)
+      for (const b of root.querySelectorAll("[data-region]")) { const mv = document.createElement("div"); mv.className = "tx-move"; mv.append(...b.childNodes); b.append(mv); b.classList.add("tx-box"); }
+    }
+
+    // ---- markup shared by windows and popups ----
+    const XICON = "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCIgd2lkdGg9IjI0IiBoZWlnaHQ9IjI0Ij4KIDxwYXRoIGQ9Ik01LjUgNS41IEwxOC41IDE4LjUgTTE4LjUgNS41IEw1LjUgMTguNSIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjZjRmY2ZmIiBzdHJva2Utd2lkdGg9IjIuMiIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIi8+Cjwvc3ZnPg==";
+    const statusHTML = '<div class="ui-status"><span class="ui-st-r"></span><span class="ui-st-l"></span><span class="ui-st-t"></span></div>';
+    const inner = s => `<div class="ui-head"><h2>${s.title}</h2><div class="ui-head-r">${s.dots ? `<span class="ui-dots">${s.dots}</span>` : ""}${s.close ? `<button class="ui-x" type="button" data-act="${s.close}" aria-label="닫기"><img alt="" src="${XICON}"></button>` : ""}</div></div>` +
+      `<div class="ui-body">${s.status ? statusHTML : ""}${s.body}</div><div class="ui-foot">${s.foot || ""}</div>`;
+    function status(root) {                       // strings 1041 / 1043 / 1042 of the ZIP; the clock runs from window open
+      const lab = root.querySelector(".ui-st-l"), tm = root.querySelector(".ui-st-t"), ring = root.querySelector(".ui-st-r"), t0 = performance.now();
+      let f = 0, run = true; const sec = () => ((performance.now() - t0) / 1000).toFixed(1);
+      const tick = () => { if (!run) return; tm.textContent = sec() + "s"; f = raf(tick); };
+      lab.textContent = "생각 중"; tick();
+      return { typing() { ring.classList.add("is-complete"); lab.textContent = "생각이 완료됨"; }, done() { run = false; cancelAnimationFrame(f); tm.hidden = true; lab.textContent = sec() + "s 동안 처리함"; }, stop() { run = false; cancelAnimationFrame(f); } };
+    }
+    function mount(el, s) { el.innerHTML = inner(s); regionize(el); el.querySelectorAll("[data-tw],[data-cell]").forEach(n => prep(n.classList.contains("tx-box") ? n.firstElementChild : n)); }
+    function patch(el, s, ctl) {                  // same surface, new content: header/footer swap instantly, text regions use the exit -> type rule
+      ctl.cancel(); ctl.dead = false; ctl.skipped = false;
+      el.querySelector(".ui-head h2").innerHTML = s.title; el.querySelector(".ui-foot").innerHTML = s.foot || "";
+      const dots = el.querySelector(".ui-dots"); if (dots && s.dots) dots.textContent = s.dots;
+      const t = document.createElement("div"); t.innerHTML = s.body;
+      for (const nr of t.querySelectorAll("[data-region]")) { const box = el.querySelector(`[data-region="${nr.dataset.region}"]`); if (box) fill(box, nr.innerHTML, nr.dataset.tw || "", ctl); }
+    }
+
+    // ---- popup (non-modal): ZIP audio-popup motion, driven by one normalized progress value ----
+    function drive(el, onEnd) {
+      let p = 0, dir = 0, last = null, f = null;
+      const paint = () => { const e = 1 - Math.pow(1 - p, 3); el.style.opacity = e; el.style.transform = `scale(${C.popupScale + (1 - C.popupScale) * e})`; };
+      const tick = now => { f = null; if (!dir) return; if (last === null) last = now; p = Math.max(0, Math.min(1, p + dir * (now - last) / C.popupMs)); last = now; paint();
+        if (dir > 0 && p >= 1) { dir = 0; last = null; onEnd("open"); } else if (dir < 0 && p <= 0) { dir = 0; last = null; onEnd("closed"); } else f = raf(tick); };
+      return { go(d) { dir = d; last = null; if (f === null) f = raf(tick); }, paint, kill() { if (f !== null) cancelAnimationFrame(f); f = null; dir = 0; }, get p() { return p; } };
+    }
+    function popup(el, { remove = false } = {}) {
+      const ctl = newCtl(); let st = "closed";
+      el.classList.add("ui-pop-win");
+      const d = drive(el, s => { st = s; if (s === "open") { ctl.dead = false; runSeq(el, ctl); } else { el.hidden = true; el.innerHTML = ""; if (remove) el.remove(); } });
+      const api = {
+        show(s) { ctl.cancel(); ctl.dead = false; ctl.skipped = false; mount(el, s); el.hidden = false; if (st === "closed") { d.kill(); d.paint(); } st = "opening"; d.go(1); },
+        swap(s) { if (st !== "open") return api.show(s); patch(el, s, ctl); },
+        hide() { if (st === "closed" || st === "closing") return; ctl.cancel(); st = "closing"; d.go(-1); },   // typed text stays while the panel contracts
+        visible: () => st === "opening" || st === "open", skip: () => ctl.skip(), typing: () => ctl.typing(), el };
+      el.hidden = true; return api;
+    }
+
+    // ---- modal host: backdrop + one window at a time. A different modal closes the current one first (backdrop stays). ----
+    function host(el) {
+      el.classList.add("ui-host"); el.innerHTML = '<div class="ui-backdrop"></div><div class="ui-stage"><div class="ui-row"></div></div>';
+      const row = el.querySelector(".ui-row"); let cur = null, phase = "closed", queued = null, aside = null, bdTimer = 0;
+      function open(s) {
+        clearTimeout(bdTimer); const win = document.createElement("div"), ctl = newCtl();
+        win.className = "ui-window"; win.style.setProperty("--w", (s.w || 560) + "px"); mount(win, s); row.append(win);
+        cur = { id: s.id, el: win, ctl, s, stat: s.status ? status(win) : null }; phase = "opening";
+        el.classList.remove("is-closing"); el.classList.add("is-on"); win.getBoundingClientRect();
+        raf(() => { if (cur && cur.el === win && phase === "opening") { el.classList.add("is-visible"); win.classList.add("is-open"); } });
+        const me = cur; let opened = false;
+        const done = () => { if (opened || cur !== me || phase !== "opening") return; opened = true; phase = "open"; win.classList.add("is-ready");
+          if (me.stat) me.stat.typing();
+          if (s.aside) { aside = popup(document.createElement("div"), { remove: true }); aside.el.classList.add("ui-aside"); row.append(aside.el); aside.show(s.aside); }
+          runSeq(win, me.ctl).then(() => { if (!me.ctl.dead && me.stat) me.stat.done(); }); };
+        win.addEventListener("transitionend", e => { if (e.target === win && e.propertyName === "clip-path") done(); });
+        setTimeout(done, C.slideMs + 80);                                       // same guard as the ZIP: a reversed/skipped transition must not lock input
+      }
+      function closeWin() {
+        if (!cur || phase === "closing") return; const me = cur; phase = "closing";
+        me.ctl.cancel(); me.stat && me.stat.stop(); aside && aside.hide(); aside = null;
+        me.el.classList.remove("is-open"); me.el.classList.add("is-closed-lock");
+        let gone = false; const finish = () => { if (gone) return; gone = true; me.el.remove(); if (cur === me) cur = null; phase = "closed";
+          if (queued) { const q = queued; queued = null; open(q); } else { el.classList.remove("is-visible"); el.classList.add("is-closing"); bdTimer = setTimeout(() => { el.classList.remove("is-on", "is-closing"); }, C.bdOutMs); } };
+        me.el.addEventListener("transitionend", e => { if (e.target === me.el && e.propertyName === "clip-path") finish(); });
+        setTimeout(finish, C.slideMs + 80);
+      }
+      return {
+        modal(s) { if (cur && (phase === "open" || phase === "opening") && cur.id === s.id) { cur.s = s; patch(cur.el, s, cur.ctl); return; }
+          if (cur) { queued = s; closeWin(); } else { queued = null; open(s); } },
+        close() { queued = null; closeWin(); },
+        hideAside() { aside && aside.hide(); aside = null; },
+        skip() { cur && cur.ctl.skip(); aside && aside.skip(); },
+        typing() { return !!cur && !!(cur.ctl.typing() || (aside && aside.typing())); },
+        isOpen() { return !!cur && phase !== "closing"; }
+      };
+    }
+    return { CFG: C, host, popup };
+  })();
+
   // ======================= ROGUELITE LAYER =======================
   const RG = window.__RG = {};
   const BASE_PROFILE = JSON.parse(JSON.stringify(DEFENSE_RESOURCE_PROFILE));
@@ -11347,8 +11616,9 @@ kbd{font:inherit;font-size:10px;margin-left:6px;padding:1px 5px;border:1px solid
   // ---- Flow control ----
   const layer = document.createElement("div"); layer.id = "rgLayer";
   document.querySelector(".game-root").appendChild(layer);
-  const tabEl = document.createElement("div"); tabEl.id = "rgTab"; tabEl.hidden = true;
+  const tabEl = document.createElement("div"); tabEl.id = "rgTab";
   document.querySelector(".game-root").appendChild(tabEl);
+  const layerUI = UI.host(layer), tabUI = UI.host(tabEl); let tabOpen = false;
   const scoreEl = document.getElementById("rgScore"), bestEl = document.getElementById("rgBest");
   let modal = null, holds = 0, prevPaused = false, tutStep = 0, offers = [], rerolls = 0, shownScore = -1;
   const holdPause = () => { if (holds++ === 0) { prevPaused = session.isPaused; session.isPaused = true; } };
@@ -11371,8 +11641,8 @@ kbd{font:inherit;font-size:10px;margin-left:6px;padding:1px 5px;border:1px solid
     cameraCenter.x = DEFAULT_CAMERA_CENTER.x; cameraCenter.y = DEFAULT_CAMERA_CENTER.y;
     TRACKING_RADAR_RADIUS = BASE_TRACK + 200 * RG.radar3d;
     RG.rescueLeft = RG.rescue; RG.emergLeft = RG.emergUses; RG.droneLast = 0;
-    RG.co = { st: 0, idx: 0, shown: -1, closed: -1, stepT: 0, mpT: 0, w0: session.selectedWeaponId, v0: session.closeDefenseAutoEnabled, wSwap: false, next: false, multi: false, cOn: false, vTog: false, tabSeen: RG.tabOpened };
-    RG.live = true; modal = null; layer.innerHTML = ""; refreshScore();
+    RG.co = { st: 0, idx: 0, shown: -1, finished: false, stepT: 0, mpT: 0, w0: session.selectedWeaponId, v0: session.closeDefenseAutoEnabled, wSwap: false, next: false, multi: false, cOn: false, vTog: false, tabSeen: RG.tabOpened };
+    RG.live = true; modal = null; layerUI.close(); refreshScore();
   }
   const _upd = session.update.bind(session);
   session.update = function (dt) {
@@ -11423,25 +11693,25 @@ kbd{font:inherit;font-size:10px;margin-left:6px;padding:1px 5px;border:1px solid
     RG.lastTotal = total; RG.score += total; shownScore = -1; refreshScore();
     if (RG.score > RG.best) { RG.best = RG.score; }
     modal = win ? "res" : "over";
-    const scoreGuide = win && !guideSkipped && !RG.seen.score ? (RG.seen.score = true, `<div class="rg-panel guide"><button class="rg-x" type="button" data-act="hideGuide" aria-label="닫기">✕</button><h2>점수 안내</h2><p class="rg-body">${lines(GUIDE.score[0][1])}</p></div>`) : "";
-    layer.innerHTML = `<div class="rg-pair"><div class="rg-panel"><h2 class="${win ? "ok" : "bad"}">${win ? "ROUND CLEAR" : "함선 격침 — MISSION FAILED"}</h2>
-      <table>${L.map(l => `<tr><td>${l[0]}</td><td>${l[1]}</td><td>${l[2] == null ? "" : sgn(l[2])}</td></tr>`).join("")}</table>
-      <div class="rg-sum"><span>획득 점수</span><b>+${fmt(total)}</b></div>
-      <div class="rg-sum big"><span>누적 점수</span><b>${fmt(RG.score)}</b></div>
-      ${win ? `<div class="rg-rank"><b style="color:${RANKC[rank]}">${rank}</b><div><span>기준 점수의 ${Math.round(sc.ratio * 100)}% — 이 랭크가 첫 번째 카드의 등급을 확정합니다</span>${oddsHtml(rank)}</div></div>`
-            : `<div class="rg-sum"><span>최고 점수</span><b>${fmt(RG.best)}</b></div>`}
-      <button data-act="${win ? "toCards" : "newRun"}">${win ? "카드 선택 ▶" : "새 작전 시작"} <kbd>ENTER</kbd></button></div>${scoreGuide}</div>`;
+    const aside = win && !RG.seen.score ? (RG.seen.score = true, { id: "score", title: "점수 안내", close: "hideGuide", body: `<div class="rg-body" data-tw="std">${lines(GUIDE.score[0][1])}</div>` }) : null;
+    const cell = t => `<td data-cell>${t}</td>`;
+    const rows = L.map(l => `<tr data-row>${cell(l[0])}${cell(l[1])}${cell(l[2] == null ? "" : sgn(l[2]))}</tr>`).join("");
+    const sums = `<tr data-row><td data-cell colspan="2">획득 점수</td>${cell("+" + fmt(total))}</tr><tr data-row><td data-cell colspan="2">누적 점수</td>${cell(fmt(RG.score))}</tr>` + (win ? "" : `<tr data-row><td data-cell colspan="2">최고 점수</td>${cell(fmt(RG.best))}</tr>`);
+    layerUI.modal({ id: win ? "res" : "over", title: win ? "ROUND CLEAR" : "MISSION FAILED", w: 640, status: true, aside,
+      body: `<p class="rg-body rg-note" data-tw="report">${win ? `기준 점수의 ${Math.round(sc.ratio * 100)}% — 이 랭크가 첫 번째 카드의 등급을 확정합니다.` : "함선이 격침되어 작전이 종료되었습니다."}</p>
+        <div class="ui-table-wrap" data-gate><table class="ui-table"><tbody>${rows}</tbody><tfoot>${sums}</tfoot></table></div>
+        ${win ? `<div class="rg-rank" data-gate><b style="color:${RANKC[rank]}">${rank}</b>${oddsHtml(rank)}</div>` : ""}`,
+      foot: `<div class="ui-foot-r"><button class="ui-btn" data-act="${win ? "toCards" : "newRun"}">${win ? "카드 선택 ▶" : "새 작전 시작"} <kbd>ENTER</kbd></button></div>` });
   }
   function showCards(fresh) {
     if (fresh) { rerolls = 2 + RG.rerollBonus; offers = drawOffers(); }
     modal = "card";
     const rk = RG.rank || "C";
-    layer.innerHTML = `<div class="rg-panel wide"><div class="rg-head"><h2>UPGRADE — 카드를 선택하세요</h2>
-      <div class="rg-rank mini"><b style="color:${RANKC[rk]}">${rk}</b><div><span>이번 라운드 +${fmt(RG.lastTotal || 0)}점</span>${oddsHtml(rk)}</div></div></div>
-      <div class="rg-cards" style="--n:${offers.length}">${offers.map((c, i) => { const G = GRADE[c.g];
-        return `<button class="rg-card g-${c.g}" style="--rc:${G.c}" data-act="pick" data-i="${i}"><i>${G.t} · ${G.ko}${i === 0 ? `<b class="rg-fix">RANK ${rk} 확정</b>` : ""}</i><strong>${c.n}</strong>
-        <p>${c.d}</p><em>보유 ${famOwned(c.F)}/${c.F.max >= 99 ? "∞" : c.F.max}</em><kbd>${i + 1}</kbd></button>`; }).join("")}</div>
-      <div class="rg-row"><button data-act="reroll" ${rerolls > 0 ? "" : "disabled"}>리롤 (${rerolls}) <kbd>E</kbd></button><div class="rg-hint"><kbd>TAB</kbd> 업그레이드 현황</div></div></div>`;
+    layerUI.modal({ id: "card", title: "UPGRADE — 카드를 선택하세요", w: 900,
+      body: `<div class="rg-head"><div class="rg-rank mini"><b style="color:${RANKC[rk]}">${rk}</b><div><span>이번 라운드 +${fmt(RG.lastTotal || 0)}점</span>${oddsHtml(rk)}</div></div></div>
+        <div data-region="cards"><div class="rg-cards" style="--n:${offers.length}">${offers.map((c, i) => { const G = GRADE[c.g];
+        return `<button class="rg-card ui-pop g-${c.g}" style="--rc:${G.c};--i:${i}" data-act="pick" data-i="${i}"><i>${G.t} · ${G.ko}${i === 0 ? `<b class="rg-fix">RANK ${rk} 확정</b>` : ""}</i><strong>${c.n}</strong><p>${c.d}</p><em>보유 ${famOwned(c.F)}/${c.F.max >= 99 ? "∞" : c.F.max}</em><kbd>${i + 1}</kbd></button>`; }).join("")}</div></div>`,
+      foot: `<button class="ui-btn" data-act="reroll" ${rerolls > 0 ? "" : "disabled"}>리롤 (${rerolls}) <kbd>E</kbd></button><span class="ui-hint"><kbd>TAB</kbd> 업그레이드 현황</span>` });
   }
   function pick(i) {
     const c = offers[i]; if (!c) return;
@@ -11456,8 +11726,8 @@ kbd{font:inherit;font-size:10px;margin-left:6px;padding:1px 5px;border:1px solid
   function newRun() { resetRun(); startRound(); }
   function fullReset() {                         // R key / reset button: everything back to the very beginning
     RG.token++; RG.best = Math.max(RG.best, RG.score);
-    tabEl.hidden = true; holds = 0; prevPaused = false; session.isPaused = false;
-    modal = null; layer.innerHTML = ""; shownScore = -1; newRun();
+    if (tabOpen) { tabOpen = false; tabUI.close(); } holds = 0; prevPaused = false; session.isPaused = false;
+    modal = null; layerUI.close(); shownScore = -1; newRun();
   }
 
   // ---- Tutorial ----
@@ -11486,33 +11756,22 @@ kbd{font:inherit;font-size:10px;margin-left:6px;padding:1px 5px;border:1px solid
     bomber: ["전폭기", "<b>전폭기</b>: 접근해 미사일을 발사합니다,\n발사 전에 격추하면 +500."],
     hyper: ["초고속탄", "<b>초고속탄(141)</b>: 일반 요격탄보다 빠를 수 있습니다."] };
   let guideSeq = [], guideDone = null, guideHold = false, guideLast = "닫기";
-  // Guide and practice coach keep separate skip states throughout this page session.
-  // X dismisses only its own guidance type; H always opens the reference guide.
-  let guideSkipped = false;
-  let coachSkipped = false;
-  function skipGuide() { guideSkipped = true; }
-  function skipCoach() {
-    coachSkipped = true;
-    if (RG.co) RG.co.finished = true;
-    coachEl.hidden = true;
-  }
-  function showGuide(keys, done, last, manual=false) {
-    if (keys && guideSkipped && !manual) { if (done) done(); return; }
-    if (modal !== "tut") { guideHold = !modal; if (guideHold) holdPause(); guideSeq = keys.flatMap(k => GUIDE[k]).flatMap(([h, b]) => { const L = b.split("\n"), out = []; for (let q = 0; q < L.length; q += 3) out.push([h, L.slice(q, q + 3).join("\n")]); return out; }); tutStep = 0; guideDone = done || null; guideLast = last || "닫기"; }
+  function showGuide(keys, done, last) {
+    if (modal !== "tut") { guideHold = !modal; if (guideHold) holdPause(); guideSeq = keys.flatMap(k => GUIDE[k]); tutStep = 0; guideDone = done || null; guideLast = last || "닫기"; }
     modal = "tut";
     const [h, b] = guideSeq[tutStep], lastSlide = tutStep === guideSeq.length - 1;
-    layer.innerHTML = `<div class="rg-panel wide"><button class="rg-x" type="button" data-act="tutSkip" aria-label="닫기">✕</button><h2>GUIDE ${tutStep + 1} / ${guideSeq.length} — ${h}</h2><p class="rg-body">${lines(b)}</p>
-      <div class="rg-row"><button data-act="tutSkip">건너뛰기</button><span>
-      <button data-act="tutPrev" ${tutStep ? "" : "disabled"}>◀ 이전</button> <button data-act="tutNext">${lastSlide ? guideLast : "다음 ▶"} <kbd>ENTER</kbd></button></span></div></div>`;
+    layerUI.modal({ id: "tut", title: `GUIDE ${tutStep + 1} / ${guideSeq.length} — ${h}`, w: 640, close: "tutSkip",
+      body: `<div data-region="body" data-tw="report"><div class="rg-body">${lines(b)}</div></div>`,
+      foot: `<button class="ui-btn is-ghost" data-act="tutSkip">건너뛰기</button><div class="ui-foot-r"><button class="ui-btn is-ghost" data-act="tutPrev" ${tutStep ? "" : "disabled"}>◀ 이전</button><button class="ui-btn" data-act="tutNext">${lastSlide ? guideLast : "다음 ▶"} <kbd>ENTER</kbd></button></div>` });
   }
   function closeGuide() {
-    modal = null; layer.innerHTML = ""; if (guideHold) { guideHold = false; releasePause(); }
+    modal = null; layerUI.close(); if (guideHold) { guideHold = false; releasePause(); }
     const d = guideDone; guideDone = null; if (d) d();
   }
   // ---- TAB panel ----
   function toggleTab() {
-    if (!tabEl.hidden) { tabEl.hidden = true; releasePause(); return; }
-    holdPause(); RG.tabOpened = true;
+    if (tabOpen) { tabOpen = false; tabUI.close(); releasePause(); return; }
+    holdPause(); RG.tabOpened = true; tabOpen = true;
     const P = DEFENSE_RESOURCE_PROFILE, d = session.world.defenseState;
     const hp = RG.live || modal === "wait" ? d.hp : (RG.hp ?? P.maxHp);
     const S = [["체력", `${u(hp)} / ${u(P.maxHp)}`], ["최대 MP", u(P.maxMp)], ["MP 회복", `${u(P.mpRegenerationPerCycle)} / 2초`],
@@ -11520,27 +11779,25 @@ kbd{font:inherit;font-size:10px;margin-left:6px;padding:1px 5px;border:1px solid
       ["요격 실패 (M / CIWS·RAM)", `${pct(RG.missMul)} / ${pct(RG.missMulC)}`], ["M 발사 쿨다운", `${RG.cd.toFixed(2)}초`], ["받는 피해", pct(RG.dmgMul)],
       ["일반 채널", 6 + RG.extraCh], ["예약 대기열", 4 + RG.queueExtra], ["3D 레이더 사거리", TRACKING_RADAR_RADIUS], ["CIWS 사거리", 800 + RG.ciwsRange], ["CIWS / RAM 수", `${1 + RG.extraCiws} / ${1 + RG.extraRam}`], ["점수 배율", `×${RG.scoreMul.toFixed(2)}`], ["카드 리롤", `${2 + RG.rerollBonus}회`]];
     const have = CARDS.filter(c => RG.cards[c.key]).reverse().sort((a, b) => GORDER.indexOf(b.g) - GORDER.indexOf(a.g));
-    tabEl.innerHTML = `<div class="rg-panel wide"><h2>UPGRADE STATUS <kbd>TAB</kbd></h2><div class="rg-grid">${S.map(s => `<div><span>${s[0]}</span><b>${s[1]}</b></div>`).join("")}</div>
-      <h3>보유 카드</h3>${have.length ? `<ul>${have.map(c => `<li class="g-${c.g}" style="--rc:${GRADE[c.g].c}"><b>${c.n} <i>${GRADE[c.g].ko}</i> ×${RG.cards[c.key]}</b><small>${c.d}</small></li>`).join("")}</ul>` : `<p class="rg-body">아직 획득한 카드가 없습니다.</p>`}</div>`;
-    tabEl.hidden = false;
+    tabUI.modal({ id: "tab", title: "UPGRADE STATUS <kbd>TAB</kbd>", w: 900, close: "tabClose",
+      body: `<div class="rg-grid">${S.map(s => `<div><span>${s[0]}</span><b>${s[1]}</b></div>`).join("")}</div><h3 class="ui-sub">보유 카드</h3>${have.length ? `<ul>${have.map(c => `<li class="g-${c.g}" style="--rc:${GRADE[c.g].c}"><b>${c.n} <i>${GRADE[c.g].ko}</i> ×${RG.cards[c.key]}</b><small>${c.d}</small></li>`).join("")}</ul>` : `<p class="rg-body">아직 획득한 카드가 없습니다.</p>`}` });
   }
-  const act = { hideGuide: () => { skipGuide(); const g = layer.querySelector(".rg-panel.guide"); if (g) g.remove(); }, toCards: () => { if (!RG.seen.cards) { RG.seen.cards = true; showGuide(["cards"], () => showCards(true), "카드 선택으로"); } else showCards(true); }, newRun, reroll, tutSkip: () => { skipGuide(); closeGuide(); }, tutPrev: () => { tutStep = Math.max(0, tutStep - 1); showGuide(); },
+  tabEl.addEventListener("click", e => { if (tabOpen && e.target.closest('[data-act="tabClose"]')) toggleTab(); });
+  const act = { hideGuide: () => layerUI.hideAside(), toCards: () => { if (!RG.seen.cards) { RG.seen.cards = true; showGuide(["cards"], () => showCards(true), "카드 선택으로"); } else showCards(true); }, newRun, reroll, tutSkip: closeGuide, tutPrev: () => { tutStep = Math.max(0, tutStep - 1); showGuide(); },
     tutNext: () => { if (tutStep >= guideSeq.length - 1) closeGuide(); else { tutStep++; showGuide(); } } };
-  layer.addEventListener("click", e => { const b = e.target.closest("[data-act]"); if (!b || b.disabled) return;
+  layer.addEventListener("click", e => { const b = e.target.closest("[data-act]"); if (!b || b.disabled) { if (!b && e.target.closest(".ui-body")) layerUI.skip(); return; }
     if (b.dataset.act === "pick") pick(+b.dataset.i); else act[b.dataset.act]?.(); });
   window.addEventListener("keydown", e => {
     const k = kk(e);
     if (k === "tab") { e.preventDefault(); e.stopImmediatePropagation(); if (!e.repeat && modal !== "tut") toggleTab(); return; }
     if (k === "r") { e.preventDefault(); e.stopImmediatePropagation(); if (!e.repeat && modal !== "tut") fullReset(); return; }
-    if (!tabEl.hidden) { e.stopImmediatePropagation(); if (k === "escape") toggleTab(); return; }
+    if (tabOpen) { e.stopImmediatePropagation(); if (k === "escape") toggleTab(); return; }
     if (modal) {
       e.stopImmediatePropagation();
-      if (k === "enter") e.preventDefault(); // Avoid native focused-button click after keydown.
+      if ((k === "enter" || k === " ") && layerUI.typing()) { e.preventDefault(); layerUI.skip(); return; }   // first press completes the typing, the next one acts
+      if (k === "enter") e.preventDefault();                       // no native click on a focused button after the keydown
       if (modal === "tut") {
-        if (["enter", " ", "arrowright", "arrowleft"].includes(k)) {
-          e.preventDefault();
-          if (e.repeat) return; // One page per physical keypress.
-        }
+        if (["enter", " ", "arrowright", "arrowleft"].includes(k)) { e.preventDefault(); if (e.repeat) return; }   // one page per physical keypress
         if (k === "enter" || k === " ") act.tutNext(); else if (k === "arrowright") act.tutNext(); else if (k === "arrowleft") act.tutPrev(); else if (k === "escape") closeGuide();
       }
       else if (modal === "res" && k === "enter") act.toCards();
@@ -11548,11 +11805,8 @@ kbd{font:inherit;font-size:10px;margin-left:6px;padding:1px 5px;border:1px solid
       else if (modal === "card") { if (k >= "1" && k <= String(offers.length)) pick(+k - 1); else if (k === "e") reroll(); }
       return;
     }
-    if (k === "h") { e.stopImmediatePropagation(); showGuide(["intro", "flow", "cards", "score"], null, null, true); }
-    if (k === "enter" && RG.co && !coachEl.hidden && !RG.co.finished) {
-      e.preventDefault(); e.stopImmediatePropagation();
-      if (!e.repeat) advanceCoach();
-    }
+    if (k === "h") { e.stopImmediatePropagation(); showGuide(["intro", "flow", "cards", "score"]); }
+    if (k === "enter" && RG.co && coachUI.visible() && !RG.co.finished) { e.preventDefault(); e.stopImmediatePropagation(); if (!e.repeat) advanceCoach(); }
   }, true);
 
   const rb = document.getElementById("restartBtn");               // a free round restart would break the run
@@ -11601,7 +11855,7 @@ kbd{font:inherit;font-size:10px;margin-left:6px;padding:1px 5px;border:1px solid
   window.addEventListener("keydown", e => { if (kk(e) === "m" && !e.repeat) BGM.toggle(); });
 
   // ---- Coach: practice rounds are taught through real play. Each step completes from actual game state ----
-  const coachEl = document.createElement("div"); coachEl.id = "rgCoach"; coachEl.hidden = true; gameRoot.appendChild(coachEl);
+  const coachEl = document.createElement("div"); coachEl.id = "rgCoach"; gameRoot.appendChild(coachEl); const coachUI = UI.popup(coachEl);
   const K = k => `<kbd>${k}</kbd>`;
   const COACH = {
     1: [["레이더 탐지", `Track이 뜨면 시작합니다,\n${K("W")} 로 배속할 수 있습니다.`, c => c.st >= 1],
@@ -11618,15 +11872,16 @@ kbd{font:inherit;font-size:10px;margin-left:6px;padding:1px 5px;border:1px solid
         ["업그레이드 현황", `${K("TAB")} 으로 얻은 카드와 능력치를 확인하세요.`, c => c.tabSeen],
         ["훈련 종료", "도착 순서를 TTI로 예측해 미리 예약하세요,\n다음부터는 실전입니다.", null]],
   };
+  let coachSkipped = false;
   function advanceCoach() {
     const c = RG.co, steps = COACH[RG.round];
-    if (!c || c.finished || !steps || coachEl.hidden) return;
-    if (c.idx >= steps.length - 1) { c.finished = true; coachEl.hidden = true; return; }
+    if (!c || c.finished || !steps || !coachUI.visible()) return;
+    if (c.idx >= steps.length - 1) { c.finished = true; coachUI.hide(); return; }     // Enter closes only on the last page
     c.idx++; c.shown = -1; c.stepT = 0;
   }
   function coachTick() {
-    const on = !coachSkipped && RG.co && !RG.co.finished && RG.round <= TUTORIAL_ROUNDS && RG.live && !modal && tabEl.hidden;
-    if (!on) { coachEl.hidden = true; return; }
+    const on = !coachSkipped && RG.co && !RG.co.finished && RG.round <= TUTORIAL_ROUNDS && RG.live && !modal && !tabOpen;
+    if (!on) { coachUI.hide(); return; }
     const w = session.world, c = RG.co;
     const st = w.scoreState.killCount > 0 ? 5 : (w.interceptors.length > 0 || w.pendingEngagements.some(p => p.fireAuthorized)) ? 4 : w.pendingEngagements.length > 0 ? 3 : w.reservationQueue.length > 0 ? 2 : w.tracks.some(t => t.visible) ? 1 : 0;
     c.st = Math.max(c.st, st);
@@ -11636,22 +11891,24 @@ kbd{font:inherit;font-size:10px;margin-left:6px;padding:1px 5px;border:1px solid
     if (session.autoFireEnabled) c.cOn = true;
     if (session.closeDefenseAutoEnabled !== c.v0) c.vTog = true;
     if (RG.tabOpened) c.tabSeen = true;
-    const steps = COACH[RG.round]; if (!steps) { coachEl.hidden = true; return; }
+    const steps = COACH[RG.round]; if (!steps) { coachUI.hide(); return; }
     c.stepT += 1 / 60;
     if (steps[c.idx] && steps[c.idx][2] && steps[c.idx][2](c)) { c.idx++; c.stepT = 0; }
     if (steps[c.idx - 1] && steps[c.idx] === undefined) c.idx = steps.length - 1;
     const cur = steps[Math.min(c.idx, steps.length - 1)];
     if (RG.round === 2 && c.idx === 4) c.mpT += 1 / 60;
+    if (!coachUI.visible()) c.shown = -1;
     if (c.shown !== c.idx) {
       c.shown = c.idx;
-      coachEl.innerHTML = `<div class="rg-coach-h"><i>훈련</i><span>${steps.map((_, i) => i < c.idx ? "●" : i === c.idx ? "◉" : "○").join(" ")}</span></div>
-        <strong>${cur[0]}</strong><p>${lines(cur[1])}</p><small>${K("ENTER")} ${c.idx === steps.length - 1 ? "닫기" : "다음 안내"} · ✕ 안내 건너뛰기</small><button class="rg-x" type="button" aria-label="안내 건너뛰기">✕</button>`;
+      const spec = { id: "coach", title: "훈련", close: "coachSkip", dots: steps.map((_, i) => i < c.idx ? "●" : i === c.idx ? "◉" : "○").join(" "),
+        body: `<div data-region="c" data-tw="std"><strong data-nt>${cur[0]}</strong><div class="rg-body">${lines(cur[1])}</div></div>`,
+        foot: `<span>${K("ENTER")} ${c.idx === steps.length - 1 ? "닫기" : "다음 안내"}</span>` };
+      coachUI.visible() ? coachUI.swap(spec) : coachUI.show(spec);
     }
-    coachEl.hidden = false;
   }
-  coachEl.addEventListener("click", e => { if (e.target.closest(".rg-x") && RG.co) skipCoach(); });
+  coachEl.addEventListener("click", e => { if (e.target.closest(".ui-x")) { coachSkipped = true; coachUI.hide(); } });   // X: the coach never comes back this session
   (function fxLoop() {                                   // hide the v155 cursor rings while a card/result/TAB panel is open
-    gameRoot.classList.toggle("rg-modal-open", !!modal || !tabEl.hidden);
+    gameRoot.classList.toggle("rg-modal-open", !!modal || tabOpen);
     coachTick(); BGM.tick(); requestAnimationFrame(fxLoop);
   })();
   RG.missMulFor = (tg, dist) => { const c = RG.pkScope === "C"; let m = c ? RG.missMulC : RG.missMul;
