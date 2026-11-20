@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>ZeroShingoNoTsukigasa_v2026.11.20.7</title>
-<meta property="og:title" content="ZeroShingoNoTsukigasa_v2026.11.20.7">
+<title>ZeroShingoNoTsukigasa_v2026.11.20.8</title>
+<meta property="og:title" content="ZeroShingoNoTsukigasa_v2026.11.20.8">
 <style>
   :root {
     color-scheme: dark;
@@ -1975,16 +1975,16 @@ html:lang(ko) .report-preview, html:lang(ja) .report-preview { max-height:148px;
 .rg-have i{font-style:normal;font-weight:400;color:#83b8c5;margin:0 4px}
 .rg-have small{display:block;margin-top:2px;font-size:var(--kr-small-size);color:#ddf7ff}
 
-#rgCoach{left:328.6px;top:596px;width:532.8px;z-index:50;min-width:0}
-#rgCoach .ship-info-titlebar{align-items:center}
-#rgCoach .ship-info-title{flex:1 1 auto}
+#rgGuidePopup{left:328.6px;top:596px;width:532.8px;z-index:50;min-width:0}
+#rgGuidePopup .ship-info-titlebar{align-items:center}
+#rgGuidePopup .ship-info-title{flex:1 1 auto}
 .ship-info-dots{font-size:var(--kr-small-size);letter-spacing:.2em;color:#83b8c5;font-weight:400}
 .ui-x{display:flex;align-items:center;justify-content:center;flex:0 0 16px;width:16px;height:18px;padding:0;border:0;cursor:pointer;pointer-events:auto;background:var(--img-close-slot) center/100% 100% no-repeat;clip-path:polygon(2px 0,100% 0,100% calc(100% - 2px),calc(100% - 2px) 100%,0 100%,0 2px)}
 .ui-x:hover{filter:brightness(1.5)}
 .ui-x img{display:block;width:11px;height:11px;pointer-events:none}
 .ship-info-body .ln{display:block}.ship-info-body .ln.gap{height:.6em}
 .ship-info-body kbd{font:inherit;margin:0 2px;padding:0 5px;border:1px solid rgba(112,222,236,.5)}
-.ship-info-body .rg-coach-hint{display:block;margin-top:8px;padding-top:6px;border-top:1px solid rgba(112,222,236,.3);color:#83b8c5}
+.ship-info-body .rg-guide-popup-hint{display:block;margin-top:8px;padding-top:6px;border-top:1px solid rgba(112,222,236,.3);color:#83b8c5}
 </style>
 </head>
 <body>
@@ -2471,7 +2471,7 @@ ${p2}
     "guide.11922": "작전 개요",
     "guide.11922.2": "적 미사일을 요격해 함선을 지키세요.\n체력(HP)이 0이 되면 실패입니다.\n커서 옆 링: <b style='color:#25c3cb'>바깥 청록 = MP</b>, <b style='color:#10e05e'>안쪽 초록 = HP</b>.",
     "guide.11923": "실전 훈련",
-    "guide.11923.2": "레이더에 잡힌 위협은 Track으로 표시됩니다.\n이제 코치를 따라 직접 요격해 보세요.\n훈련 중에는 함선이 격침되지 않습니다.",
+    "guide.11923.2": "레이더에 잡힌 위협은 Track으로 표시됩니다.\n이제 안내팝업창을 따라 직접 요격해 보세요.\n훈련 중에는 함선이 격침되지 않습니다.",
     "guide.11925": "교전 순서",
     "guide.11925.2": "<b>클릭</b> 표적 예약, <b>Q</b> 무장 등록, <b>A</b> 발사 승인.\n<b>C</b> 자동 승인, <b>Z / X</b> 예약 취소.",
     "guide.11926": "위협 종류",
@@ -2527,36 +2527,36 @@ ${p2}
     "upgrade.11997": "전체 초기화 (R)",
     "upgrade.11997.2": "전체 초기화 [R]",
     "control.12000": "업그레이드 현황 (TAB)",
-    "coach.12045": "레이더 탐지",
-    "coach.12045.2": (p0) => `Track이 뜨면 시작합니다,
+    "guidePopup.12045": "레이더 탐지",
+    "guidePopup.12045.2": (p0) => `Track이 뜨면 시작합니다,
 ${p0} 로 배속할 수 있습니다.`,
-    "coach.12046": "① 클릭 — 표적 예약",
-    "coach.12046.2": "Track을 <b>클릭</b>해 예약하세요.",
-    "coach.12047": "② Q — 무장 등록",
-    "coach.12047.2": (p0) => `${p0} 로 무장을 <b>등록</b>하세요.`,
-    "coach.12048": "③ A — 발사 승인",
-    "coach.12048.2": (p0) => `${p0} 로 <b>발사를 승인</b>하세요.`,
-    "coach.12049": "다음 표적을 미리",
-    "coach.12049.2": (p0) => `요격탄이 나는 동안 다음 표적이 뜹니다,
+    "guidePopup.12046": "① 클릭 — 표적 예약",
+    "guidePopup.12046.2": "Track을 <b>클릭</b>해 예약하세요.",
+    "guidePopup.12047": "② Q — 무장 등록",
+    "guidePopup.12047.2": (p0) => `${p0} 로 무장을 <b>등록</b>하세요.`,
+    "guidePopup.12048": "③ A — 발사 승인",
+    "guidePopup.12048.2": (p0) => `${p0} 로 <b>발사를 승인</b>하세요.`,
+    "guidePopup.12049": "다음 표적을 미리",
+    "guidePopup.12049.2": (p0) => `요격탄이 나는 동안 다음 표적이 뜹니다,
 TTI가 짧은 표적을 <b>미리 예약</b>(클릭 → ${p0})하세요.`,
-    "coach.12050": "좋습니다!",
-    "coach.12050.2": "다음 표적도 같은 순서로,\n한 발 쏘는 동안 다음 표적을 예약하세요.",
-    "coach.12051": "무장 선택",
-    "coach.12051.2": (p0, p1) => `${p0}~${p1} 로 무장을 바꿔 보세요,
+    "guidePopup.12050": "좋습니다!",
+    "guidePopup.12050.2": "다음 표적도 같은 순서로,\n한 발 쏘는 동안 다음 표적을 예약하세요.",
+    "guidePopup.12051": "무장 선택",
+    "guidePopup.12051.2": (p0, p1) => `${p0}~${p1} 로 무장을 바꿔 보세요,
 4번은 근접 RAM입니다.`,
-    "coach.12052": "연속 예약",
-    "coach.12052.2": "표적이 둘 이상이면 연달아 클릭하세요,\n예약 순서가 곧 교전 순서입니다.",
-    "coach.12053": "자동 승인",
-    "coach.12053.2": (p0) => `${p0} 를 켜면 등록한 교전을 <b>자동 승인</b>합니다.`,
-    "coach.12054": "근접 자동 방어",
-    "coach.12054.2": (p0) => `${p0} 로 CIWS·자동 RAM을 켜고 끕니다,
+    "guidePopup.12052": "연속 예약",
+    "guidePopup.12052.2": "표적이 둘 이상이면 연달아 클릭하세요,\n예약 순서가 곧 교전 순서입니다.",
+    "guidePopup.12053": "자동 승인",
+    "guidePopup.12053.2": (p0) => `${p0} 를 켜면 등록한 교전을 <b>자동 승인</b>합니다.`,
+    "guidePopup.12054": "근접 자동 방어",
+    "guidePopup.12054.2": (p0) => `${p0} 로 CIWS·자동 RAM을 켜고 끕니다,
 한 번 눌러 보세요.`,
-    "coach.12055": "MP 관리",
-    "coach.12055.2": "<b>청록 링 = MP</b>, 발사마다 줄고 2초마다 회복됩니다,\n다음 표적용 MP를 남겨 두세요.",
-    "coach.12056": (p0) => `${p0} 으로 얻은 카드와 능력치를 확인하세요.`,
-    "coach.12057": "훈련 종료",
-    "coach.12057.2": "도착 순서를 TTI로 예측해 미리 예약하세요,\n다음부터는 실전입니다.",
-    "coach.12087": "다음 안내",
+    "guidePopup.12055": "MP 관리",
+    "guidePopup.12055.2": "<b>청록 링 = MP</b>, 발사마다 줄고 2초마다 회복됩니다,\n다음 표적용 MP를 남겨 두세요.",
+    "guidePopup.12056": (p0) => `${p0} 으로 얻은 카드와 능력치를 확인하세요.`,
+    "guidePopup.12057": "훈련 종료",
+    "guidePopup.12057.2": "도착 순서를 TTI로 예측해 미리 예약하세요,\n다음부터는 실전입니다.",
+    "guidePopup.12087": "다음 안내",
     "display.12104": "훈련 시작",
     "offer.odds.first": "첫 카드",
     "offer.odds.other": "나머지",
@@ -11350,7 +11350,7 @@ TTI가 짧은 표적을 <b>미리 예약</b>(클릭 → ${p0})하세요.`,
     anchor0: 2.4, anchorPerP: 0.22, anchorMax: 6, flank0: 1.6, flankPerP: 0.1, flankMax: 4, flankP0: 0.4, flankPPerP: 0.06,
     slack0: 7, slackPerP: 0.8, slackMin: 1.2, fast0: 0.12, fastPerP: 0.04, fastMax: 0.45, slow: 0.15,
     low: 0.06, lowStep: 0.02, lowMax: 0.25, spec: 0.05, specStep: 0.015, specMax: 0.2, skim: 0.05, skimStep: 0.015, skimMax: 0.2,
-    fly: 0.05, flyStep: 0.015, flyMax: 0.2, bomberP: 0.3, hyperP: 0.3 };
+    fly: 0.05, flyStep: 0.015, flyMax: 0.2, bomberP: 0.3, hyperP: 0.3, hyperMax: 2 };
   const INTRO = [
     { at: 5, attrs: ["low", "special"], msg: "신규 위협 — 저고도 비행(레이더 포착이 늦음) · 특수탄(보라색, 피해 1400)" },
     { at: 8, attrs: ["skim", "fly"], msg: "신규 위협 — 해면 밀착(근접 시 급가속) · 웨이포인트 우회 비행(도착 시각 예측이 어려움)" },
@@ -11379,9 +11379,10 @@ TTI가 짧은 표적을 <b>미리 예약</b>(클릭 → ${p0})하세요.`,
       speed: it.speed, sensorProfile: it.sensor, damageProfile: it.damage, flightProfileOverride: it.flight, entityKind: it.ent, navigationProfile: it.nav,
       bearingDegrees: (it.bearing + 360) % 360 })).sort((x, y) => x.time - y.time);
   }
-  const mkBurst = (items, rnd, axis, n, time, kind, P, r) => {
-    const Dd = DIFF, pr = (b, st, mx) => Math.min(b + st * P, mx);
-    for (let q = 0; q < n; q++) {
+  const mkBurst = (items, rnd, n, time, kind, P, r) => {
+    const Dd = DIFF, pr = (b, st, mx) => Math.min(b + st * P, mx), axis = rnd() * 360;
+    const count = kind === "hyper" ? Math.min(n, Dd.hyperMax - items.filter(it => it.speed === ENEMY_SPEED_ULTRA_FAST).length) : n;
+    for (let q = 0; q < count; q++) {
       const it = { time: time + q * 0.3 + rnd() * 0.15, bearing: axis + (rnd() - 0.5) * 5, speed: ENEMY_SPEED_NORMAL, sensor: SensorProfile.NORMAL,
         flight: FlightProfile.DIRECT, damage: "NORMAL", nav: NavigationProfile.DIRECT, ent: HostileKind.MISSILE };
       if (kind === "main") {
@@ -11401,28 +11402,27 @@ TTI가 짧은 표적을 <b>미리 예약</b>(클릭 → ${p0})하세요.`,
   };
   function addWave(items, rnd, P, waveStart, r, showcase) {
     const Dd = DIFF, slack = Math.max(Dd.slackMin, Dd.slack0 - Dd.slackPerP * P), cl = (v, a, b) => Math.max(a, Math.min(b, v));
-    const ax0 = rnd() * 360, ax1 = ax0 + 100 + rnd() * 160, ax2 = ax0 + 50 + rnd() * 260, ax3 = ax0 + 30 + rnd() * 300;
     const nA = cl(Math.round(Dd.anchor0 + Dd.anchorPerP * P + (rnd() - 0.5)), 3, Dd.anchorMax);
     const nF = cl(Math.round(Dd.flank0 + Dd.flankPerP * P + (rnd() - 0.5)), 2, Dd.flankMax);
-    mkBurst(items, rnd, ax0, nA, waveStart, "main", P, r);
+    mkBurst(items, rnd, nA, waveStart, "main", P, r);
     if (showcase.length || rnd() < Math.min(0.9, Dd.flankP0 + Dd.flankPPerP * P))
-      mkBurst(items, rnd, ax1, nF, waveStart + (rnd() < 0.5 ? -1 : 1) * rnd() * slack, "main", P, r);
+      mkBurst(items, rnd, nF, waveStart + (rnd() < 0.5 ? -1 : 1) * rnd() * slack, "main", P, r);
     if (has("skim", r) && !showcase.includes("skim") && rnd() < Dd.skimStep * P)
-      mkBurst(items, rnd, ax2, 2, waveStart + 2 + rnd() * slack, "skim", P, r);
+      mkBurst(items, rnd, 2, waveStart + 2 + rnd() * slack, "skim", P, r);
     if (has("hyper", r) && !showcase.includes("hyper") && rnd() < Dd.hyperP)
-      mkBurst(items, rnd, ax3, 2, waveStart - 2 - rnd() * 3, "hyper", P, r);
+      mkBurst(items, rnd, Dd.hyperMax, waveStart - 2 - rnd() * 3, "hyper", P, r);
     if (has("bomber", r) && !showcase.includes("bomber") && rnd() < Dd.bomberP)
-      mkBurst(items, rnd, ax2, 1, waveStart + (rnd() - 0.5) * slack, "bomber", P, r);
+      mkBurst(items, rnd, 1, waveStart + (rnd() - 0.5) * slack, "bomber", P, r);
     showcase.forEach((attr, k) => {
-      const n = attr === "bomber" ? 1 : attr === "hyper" ? 2 : 3, tot = waveStart + (k % 2 ? 1 : -1) * (1.2 + rnd() * 2.4);
-      mkBurst(items, rnd, k % 2 ? ax3 : ax2, n, tot, attr, P, r);
+      const n = attr === "bomber" ? 1 : attr === "hyper" ? Dd.hyperMax : 3, tot = waveStart + (k % 2 ? 1 : -1) * (1.2 + rnd() * 2.4);
+      mkBurst(items, rnd, n, tot, attr, P, r);
     });
   }
   function tutorialOrders(r, sd) {
-    const items = [], rnd = rng(r * 7919), F = ENEMY_SPEED_FAST;
-    const B = (axis, n, time, mod) => { const s0 = items.length; mkBurst(items, rnd, axis, n, time, "plain", 0, r); if (mod) for (let q = s0; q < items.length; q++) mod(items[q]); };
-    if (r === 1) { B(30, 2, 0); B(210, 3, 26); }
-    else { B(60, 3, 0); B(150, 2, 24); B(240, 2, 24.5, m => { m.speed = F; m.sensor = SensorProfile.LOW_ALTITUDE; }); B(330, 2, 50); B(100, 2, 50.3); B(10, 2, 54, m => { m.speed = F; }); }
+    const items = [], rnd = rng(sd), F = ENEMY_SPEED_FAST;
+    const B = (n, time, mod) => { const s0 = items.length; mkBurst(items, rnd, n, time, "plain", 0, r); if (mod) for (let q = s0; q < items.length; q++) mod(items[q]); };
+    if (r === 1) { B(2, 0); B(3, 26); }
+    else { B(3, 0); B(2, 24); B(2, 24.5, m => { m.speed = F; m.sensor = SensorProfile.LOW_ALTITUDE; }); B(2, 50); B(2, 50.3); B(2, 54, m => { m.speed = F; }); }
     return toOrders(items, sd ?? 1);
   }
   function genOrders(r, seed) {
@@ -11434,7 +11434,7 @@ TTI가 짧은 표적을 <b>미리 예약</b>(클릭 → ${p0})하세요.`,
     if (spike && !intro) show = ["low", "special", "skim", "fly", "bomber", "hyper"].filter(a => has(a, r)).sort(() => rnd() - 0.5).slice(0, 2);
     let waveStart = 0;
     for (let w = 0; w < nW; w++) { addWave(items, rnd, P, waveStart, r, w === Math.min(1, nW - 1) ? show : []); waveStart += gap * (0.85 + rnd() * 0.3); }
-    if (spike && show.includes("bomber")) mkBurst(items, rnd, rnd() * 360, 1, waveStart - gap * 0.5, "bomber", P, r);
+    if (spike && show.includes("bomber")) mkBurst(items, rnd, 1, waveStart - gap * 0.5, "bomber", P, r);
     return toOrders(items, sd);
   }
   function makeSpec(r, seed) {
@@ -11448,7 +11448,7 @@ TTI가 짧은 표적을 <b>미리 예약</b>(클릭 → ${p0})하세요.`,
 
   const layer = document.createElement("div"); layer.id = "rgLayer";
   document.querySelector(".game-root").appendChild(layer);
-  const layerUI = UI.report(layer); let tabOpen = false, tabResume = null;
+  const layerUI = UI.report(layer); let tabOpen = false, tabResume = null, tabPage = 0;
   const scoreEl = document.getElementById("rgScore"), bestEl = document.getElementById("rgBest");
   let modal = null, holds = 0, prevPaused = false, tutStep = 0, offers = [], rerolls = 0, shownScore = -1;
   const holdPause = () => { if (holds++ === 0) { prevPaused = session.isPaused; session.isPaused = true; } };
@@ -11472,7 +11472,7 @@ TTI가 짧은 표적을 <b>미리 예약</b>(클릭 → ${p0})하세요.`,
     cameraCenter.x = DEFAULT_CAMERA_CENTER.x; cameraCenter.y = DEFAULT_CAMERA_CENTER.y;
     TRACKING_RADAR_RADIUS = BASE_TRACK + 200 * RG.radar3d;
     RG.rescueLeft = RG.rescue; RG.emergLeft = RG.emergUses; RG.droneLast = 0;
-    RG.co = { st: 0, idx: 0, shown: -1, finished: false, stepT: 0, mpT: 0, w0: session.selectedWeaponId, v0: session.closeDefenseAutoEnabled, wSwap: false, next: false, multi: false, cOn: false, vTog: false, tabSeen: RG.tabOpened };
+    RG.guidePopup = { st: 0, idx: 0, shown: -1, finished: false, stepT: 0, mpT: 0, w0: session.selectedWeaponId, v0: session.closeDefenseAutoEnabled, wSwap: false, next: false, multi: false, cOn: false, vTog: false, tabSeen: RG.tabOpened };
     RG.live = true; modal = null; layerUI.close(); refreshScore();
   }
   const _upd = session.update.bind(session);
@@ -11602,7 +11602,11 @@ TTI가 짧은 표적을 <b>미리 예약</b>(클릭 → ${p0})하세요.`,
   }
   function toggleTab() {
     if (tabOpen) { tabOpen = false; releasePause(); if (tabResume) { const r = tabResume; tabResume = null; layerUI.show(r); } else layerUI.close(); return; }
-    holdPause(); RG.tabOpened = true; tabOpen = true; tabResume = layerUI.current();   
+    holdPause(); RG.tabOpened = true; tabOpen = true; tabResume = layerUI.current();
+    showTab(0);
+  }
+  function showTab(page) {
+    tabPage = page;
     const P = DEFENSE_RESOURCE_PROFILE, d = session.world.defenseState;
     const hp = RG.live || modal === "wait" ? d.hp : (RG.hp ?? P.maxHp);
     const S = [[uiText("upgrade.11960"), `${u(hp)} / ${u(P.maxHp)}`], [uiText("upgrade.11960.2"), u(P.maxMp)], [uiText("upgrade.11960.3"), uiText("upgrade.11960.4", u(P.mpRegenerationPerCycle))],
@@ -11611,11 +11615,12 @@ TTI가 짧은 표적을 <b>미리 예약</b>(클릭 → ${p0})하세요.`,
       [uiText("upgrade.11963"), 6 + RG.extraCh], [uiText("upgrade.11963.2"), 4 + RG.queueExtra], [uiText("upgrade.11963.3"), TRACKING_RADAR_RADIUS], [uiText("upgrade.11963.4"), 800 + RG.ciwsRange], [uiText("upgrade.11963.5"), `${1 + RG.extraCiws} / ${1 + RG.extraRam}`], [uiText("report.11872"), `×${RG.scoreMul.toFixed(2)}`], [uiText("upgrade.11963.6"), uiText("upgrade.11963.7", 2 + RG.rerollBonus)]];
     const have = CARDS.filter(c => RG.cards[c.key]).reverse().sort((a, b) => GORDER.indexOf(b.g) - GORDER.indexOf(a.g));
     const half = Math.ceil(S.length / 2), tbl = r => `<table class="game-report-score-table"><tbody>${r.map(x => `<tr><th scope="row">${x[0]}</th><td>${x[1]}</td></tr>`).join("")}</tbody></table>`;
-    const extra = `<div class="game-report-score is-dual is-flat">${tbl(S.slice(0, half))}${tbl(S.slice(half))}</div>` +
-      (have.length ? `<div class="rg-have">${have.map(c => `<div style="--rc:${GRADE[c.g].c}"><b>${c.n}<i>${GRADE[c.g].ko}</i>×${RG.cards[c.key]}</b><small>${c.d}</small></div>`).join("")}</div>` : "");
-    layerUI.show({ id: "tab", title: uiText("upgrade.11968"), text: uiText("upgrade.11968.2", RG.round, fmt(RG.score), have.length), extra, buttons: [{ act: "tabClose", label: uiText("guide.11942") }] });
+    const statsTable = `<div class="game-report-score is-dual is-flat">${tbl(S.slice(0, half))}${tbl(S.slice(half))}</div>`;
+    const effects = have.length ? `<div class="rg-have">${have.map(c => `<div style="--rc:${GRADE[c.g].c}"><b>${c.n}<i>${GRADE[c.g].ko}</i>×${RG.cards[c.key]}</b><small>${c.d}</small></div>`).join("")}</div>` : "";
+    layerUI.show({ id: "tab", title: uiText("upgrade.11968"), text: page === 0 ? "" : uiText("upgrade.11968.2", RG.round, fmt(RG.score), have.length), extra: page === 0 ? statsTable : effects,
+      buttons: [page === 0 ? { act: "tabNext", label: uiText("guide.11948") } : { act: "tabPrev", label: uiText("guide.11948.2") }, { act: "tabClose", label: uiText("guide.11942") }] });
   }
-  const act = { tabClose: () => toggleTab(), toCards: () => showCards(true), cardsShow: () => { cardsStage = "pick"; showCards(false); }, newRun, reroll, tutSkip: closeGuide, tutPrev: () => { tutStep = Math.max(0, tutStep - 1); showGuide(); },
+  const act = { tabClose: () => toggleTab(), tabPrev: () => showTab(0), tabNext: () => showTab(1), toCards: () => showCards(true), cardsShow: () => { cardsStage = "pick"; showCards(false); }, newRun, reroll, tutSkip: closeGuide, tutPrev: () => { tutStep = Math.max(0, tutStep - 1); showGuide(); },
     tutNext: () => { if (tutStep >= guideSeq.length - 1) closeGuide(); else { tutStep++; showGuide(); } } };
   layer.addEventListener("click", e => { const b = e.target.closest("[data-act]"); if (!b || b.disabled) { if (!b && e.target.closest(".report-dialogue")) layerUI.skip(); return; }
     if (b.dataset.act === "pick") pick(+b.dataset.i); else act[b.dataset.act]?.(); });
@@ -11624,7 +11629,7 @@ TTI가 짧은 표적을 <b>미리 예약</b>(클릭 → ${p0})하세요.`,
     if (k === "tab") { e.preventDefault(); e.stopImmediatePropagation(); if (!e.repeat && modal !== "tut") toggleTab(); return; }
     if (k === "r") { e.preventDefault(); e.stopImmediatePropagation(); if (!e.repeat && modal !== "tut") fullReset(); return; }
     if ((k === "enter" || k === " ") && (tabOpen || modal) && layerUI.busy()) { e.preventDefault(); e.stopImmediatePropagation(); layerUI.skip(); return; }   
-    if (tabOpen) { e.stopImmediatePropagation(); if (k === "escape") toggleTab(); return; }
+    if (tabOpen) { e.stopImmediatePropagation(); if (k === "escape") toggleTab(); else if (k === "arrowright" && tabPage === 0) showTab(1); else if (k === "arrowleft" && tabPage === 1) showTab(0); return; }
     if (modal) {
       e.stopImmediatePropagation();
       if (k === "enter") e.preventDefault();                       
@@ -11638,7 +11643,7 @@ TTI가 짧은 표적을 <b>미리 예약</b>(클릭 → ${p0})하세요.`,
       return;
     }
     if (k === "h") { e.stopImmediatePropagation(); showGuide(["intro", "flow", "cards", "score"]); }
-    if (k === "enter" && RG.co && coachUI.visible() && !RG.co.finished) { e.preventDefault(); e.stopImmediatePropagation(); if (!e.repeat) advanceCoach(); }
+    if (k === "enter" && RG.guidePopup && guidePopupUI.visible() && !RG.guidePopup.finished) { e.preventDefault(); e.stopImmediatePropagation(); if (!e.repeat) advanceGuidePopup(); }
   }, true);
 
   const rb = document.getElementById("restartBtn");               
@@ -11685,34 +11690,34 @@ TTI가 짧은 표적을 <b>미리 예약</b>(클릭 → ${p0})하세요.`,
   ["pointerdown", "keydown"].forEach(ev => window.addEventListener(ev, BGM.start, true));
   window.addEventListener("keydown", e => { if (kk(e) === "m" && !e.repeat) BGM.toggle(); });
 
-  const coachEl = document.createElement("div"); coachEl.id = "rgCoach"; gameRoot.appendChild(coachEl); const coachUI = UI.info(coachEl);
+  const guidePopupEl = document.createElement("div"); guidePopupEl.id = "rgGuidePopup"; gameRoot.appendChild(guidePopupEl); const guidePopupUI = UI.info(guidePopupEl);
   const K = k => `<kbd>${k}</kbd>`;
-  const COACH = {
-    1: [[uiText("coach.12045"), uiText("coach.12045.2", K("W")), c => c.st >= 1],
-        [uiText("coach.12046"), uiText("coach.12046.2"), c => c.st >= 2],
-        [uiText("coach.12047"), uiText("coach.12047.2", K("Q")), c => c.st >= 3],
-        [uiText("coach.12048"), uiText("coach.12048.2", K("A")), c => c.st >= 4],
-        [uiText("coach.12049"), uiText("coach.12049.2", K("Q")), c => c.st >= 5 || c.next],
-        [uiText("coach.12050"), uiText("coach.12050.2"), null]],
-    2: [[uiText("coach.12051"), uiText("coach.12051.2", K("1"), K("4")), c => c.wSwap],
-        [uiText("coach.12052"), uiText("coach.12052.2"), c => c.multi],
-        [uiText("coach.12053"), uiText("coach.12053.2", K("C")), c => c.cOn],
-        [uiText("coach.12054"), uiText("coach.12054.2", K("V")), c => c.vTog],
-        [uiText("coach.12055"), uiText("coach.12055.2"), c => c.mpT >= 10],
-        [uiText("upgrade.11968"), uiText("coach.12056", K("TAB")), c => c.tabSeen],
-        [uiText("coach.12057"), uiText("coach.12057.2"), null]],
+  const GUIDE_POPUP_STEPS = {
+    1: [[uiText("guidePopup.12045"), uiText("guidePopup.12045.2", K("W")), c => c.st >= 1],
+        [uiText("guidePopup.12046"), uiText("guidePopup.12046.2"), c => c.st >= 2],
+        [uiText("guidePopup.12047"), uiText("guidePopup.12047.2", K("Q")), c => c.st >= 3],
+        [uiText("guidePopup.12048"), uiText("guidePopup.12048.2", K("A")), c => c.st >= 4],
+        [uiText("guidePopup.12049"), uiText("guidePopup.12049.2", K("Q")), c => c.st >= 5 || c.next],
+        [uiText("guidePopup.12050"), uiText("guidePopup.12050.2"), null]],
+    2: [[uiText("guidePopup.12051"), uiText("guidePopup.12051.2", K("1"), K("4")), c => c.wSwap],
+        [uiText("guidePopup.12052"), uiText("guidePopup.12052.2"), c => c.multi],
+        [uiText("guidePopup.12053"), uiText("guidePopup.12053.2", K("C")), c => c.cOn],
+        [uiText("guidePopup.12054"), uiText("guidePopup.12054.2", K("V")), c => c.vTog],
+        [uiText("guidePopup.12055"), uiText("guidePopup.12055.2"), c => c.mpT >= 10],
+        [uiText("upgrade.11968"), uiText("guidePopup.12056", K("TAB")), c => c.tabSeen],
+        [uiText("guidePopup.12057"), uiText("guidePopup.12057.2"), null]],
   };
-  let coachSkipped = false;
-  function advanceCoach() {
-    const c = RG.co, steps = COACH[RG.round];
-    if (!c || c.finished || !steps || !coachUI.visible()) return;
-    if (c.idx >= steps.length - 1) { c.finished = true; coachUI.hide(); return; }     
+  let guidePopupSkipped = false;
+  function advanceGuidePopup() {
+    const c = RG.guidePopup, steps = GUIDE_POPUP_STEPS[RG.round];
+    if (!c || c.finished || !steps || !guidePopupUI.visible()) return;
+    if (c.idx >= steps.length - 1) { c.finished = true; guidePopupUI.hide(); return; }     
     c.idx++; c.shown = -1; c.stepT = 0;
   }
-  function coachTick() {
-    const on = !coachSkipped && RG.co && !RG.co.finished && RG.round <= TUTORIAL_ROUNDS && RG.live && !modal && !tabOpen;
-    if (!on) { coachUI.hide(); return; }
-    const w = session.world, c = RG.co;
+  function guidePopupTick() {
+    const on = !guidePopupSkipped && RG.guidePopup && !RG.guidePopup.finished && RG.round <= TUTORIAL_ROUNDS && RG.live && !modal && !tabOpen;
+    if (!on) { guidePopupUI.hide(); return; }
+    const w = session.world, c = RG.guidePopup;
     const st = w.scoreState.killCount > 0 ? 5 : (w.interceptors.length > 0 || w.pendingEngagements.some(p => p.fireAuthorized)) ? 4 : w.pendingEngagements.length > 0 ? 3 : w.reservationQueue.length > 0 ? 2 : w.tracks.some(t => t.visible) ? 1 : 0;
     c.st = Math.max(c.st, st);
     if (c.st >= 4 && w.reservationQueue.length + w.pendingEngagements.filter(p => !p.fireAuthorized).length >= 1) c.next = true;
@@ -11721,22 +11726,22 @@ TTI가 짧은 표적을 <b>미리 예약</b>(클릭 → ${p0})하세요.`,
     if (session.autoFireEnabled) c.cOn = true;
     if (session.closeDefenseAutoEnabled !== c.v0) c.vTog = true;
     if (RG.tabOpened) c.tabSeen = true;
-    const steps = COACH[RG.round]; if (!steps) { coachUI.hide(); return; }
+    const steps = GUIDE_POPUP_STEPS[RG.round]; if (!steps) { guidePopupUI.hide(); return; }
     c.stepT += 1 / 60;
     if (steps[c.idx] && steps[c.idx][2] && steps[c.idx][2](c)) { c.idx++; c.stepT = 0; }
     if (steps[c.idx - 1] && steps[c.idx] === undefined) c.idx = steps.length - 1;
     const cur = steps[Math.min(c.idx, steps.length - 1)];
     if (RG.round === 2 && c.idx === 4) c.mpT += 1 / 60;
-    if (!coachUI.visible()) c.shown = -1;
+    if (!guidePopupUI.visible()) c.shown = -1;
     if (c.shown !== c.idx) {
       c.shown = c.idx;
-      coachUI.show(cur[0], `${lines(cur[1])}<span class="rg-coach-hint">${K("ENTER")} ${c.idx === steps.length - 1 ? uiText("guide.11942") : uiText("coach.12087")}</span>`, steps.map((_, i) => i < c.idx ? "●" : i === c.idx ? "◉" : "○").join(" "));
+      guidePopupUI.show(cur[0], `${lines(cur[1])}<span class="rg-guide-popup-hint">${K("ENTER")} ${c.idx === steps.length - 1 ? uiText("guide.11942") : uiText("guidePopup.12087")}</span>`, steps.map((_, i) => i < c.idx ? "●" : i === c.idx ? "◉" : "○").join(" "));
     }
   }
-  coachEl.addEventListener("click", e => { if (e.target.closest(".ui-x")) { coachSkipped = true; coachUI.hide(); } });   
+  guidePopupEl.addEventListener("click", e => { if (e.target.closest(".ui-x")) { guidePopupSkipped = true; guidePopupUI.hide(); } });   
   (function fxLoop() {                                   
     gameRoot.classList.toggle("rg-modal-open", !!modal || tabOpen);
-    coachTick(); BGM.tick(); requestAnimationFrame(fxLoop);
+    guidePopupTick(); BGM.tick(); requestAnimationFrame(fxLoop);
   })();
   RG.missMulFor = (tg, dist) => { const c = RG.pkScope === "C"; let m = c ? RG.missMulC : RG.missMul;
     if (tg) { if (tg.baseSpeed >= ENEMY_SPEED_FAST - 0.5) m *= c ? RG.fastMulC : RG.fastMul; if (tg.sensorProfile === SensorProfile.LOW_ALTITUDE || tg.flightProfile === FlightProfile.SEA_SKIMMING) m *= c ? RG.lowMulC : RG.lowMul; }
