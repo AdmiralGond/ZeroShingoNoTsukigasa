@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>ZeroShingoNoTsukigasa_v2026.11.22.9</title>
-<meta property="og:title" content="ZeroShingoNoTsukigasa_v2026.11.22.9">
+<title>ZeroShingoNoTsukigasa_v2026.11.23.10</title>
+<meta property="og:title" content="ZeroShingoNoTsukigasa_v2026.11.23.10">
 <style>
   :root {
     color-scheme: dark;
@@ -1958,6 +1958,7 @@ html:lang(ko) .report-preview, html:lang(ja) .report-preview { max-height:148px;
 .game-report-score-table td{width:38%}
 .game-report-score-table th,.game-report-score-table td{overflow:hidden;text-overflow:ellipsis}
 .game-report-score.is-flat .game-report-score-table th{white-space:normal}
+.game-report-score.is-flat .game-report-score-table th,.game-report-score.is-flat .game-report-score-table td{text-align:left;padding-left:2em}
 
 .rg-cards{display:grid;grid-template-columns:repeat(var(--n,3),1fr);gap:16px}
 .rg-card{position:relative;display:flex;flex-direction:column;align-items:flex-start;gap:6px;min-height:170px;margin:0;padding:10px 12px;text-align:left;cursor:pointer;color:#f4fcff;font:inherit;border:1px solid rgba(112,222,236,.28);border-left:4px solid var(--rc);border-radius:0;background:rgba(4,25,43,.16)}
@@ -2395,11 +2396,11 @@ html:lang(ko) .report-preview, html:lang(ja) .report-preview { max-height:148px;
     "card.seek.name.2": "정밀 시커",
     "card.seek.effect.2": (p0) => `M계열 요격 실패 확률 ${p0}% 감소`,
     "card.over.name.2": "시커 성능 개량 사업",
-    "card.over.effect.2": (p0, p1) => `M계열 미사일의 요격 실패 확률 ${p0}%<br>MP 소모량 +${p1}% 증가`,
+    "card.over.effect.2": (p0, p1) => `M계열 미사일의 요격 실패 확률 ${p0}% 감소<br>MP 소모량 +${p1}% 증가`,
     "card.overC.name": "CIWS 과열 사격",
     "card.overC.effect": (p0, p1) => `CIWS & RAM의 요격 실패 확률 ${p0}% 감소<br>MP 소모량 +${p1}% 증가`,
     "card.low.name.2": "저고도 미사일 대응 개선",
-    "card.low.effect.2": (p0) => `M계열 미사일의 저고도 요격 실패 확률 ${p0}%`,
+    "card.low.effect.2": (p0) => `M계열 미사일의 저고도 요격 실패 확률 ${p0}% 감소`,
     "card.eff.name.2": "미사일 성능 개선",
     "card.eff.effect.2": (p0) => `M계열 미사일의 MP 소모량 ${p0}% 감소`,
     "card.lite.name.2": "미사일 경량화",
@@ -2457,14 +2458,6 @@ ${p2}
     "guide.11923.2": "\"등록 대기\"상태에서는 요격 대상에 사용할 무장을 선택할 수 있으며 우클릭과 'Z키'등으로 할당 취소를 하여 교전 순서를 조정할 수 있습니다.<br>\n단, 무장 선택은 \"등록 대기\"상태인 요격 대상들이 일괄적으로 변경되어 주의가 필요합니다.<br>\n'Q키'나 하단의 'READY'버튼을 누를 시 \"발사 대기\"로 전환되며 \"발사 대기\"상태의 대기열은 다른 무장으로 변경할 수 없습니다.<br>\n그 외의 \"등록 대기\"상태의 대기열은 변경할 수 있습니다.<br>\n'A키'나 하단의 'FIRE'버튼을 누를 시 \"채널 대기\"로 전환되며 \"채널 대기\"상태인 대기열은 사용 가능한 교전 채널이 있으면 자동으로 발사됩니다.<br>\n'C키'로 통해 발사 시퀸스를 \"자동 모드\"로 전환할 수 있으며 \"자동 모드\"시 'A키' 절차를 시스템이 자동으로 수행합니다.<br>",
     "guide.11924": "함선 개요",
     "guide.11924.2": "함선의 현재 내구도는 'HP'로 표기되며 0이 되면 작전 실패입니다.<br>\n'MP'는 함선의 연산 자원 및 에너지 보호막 자원이며 미사일 발사 시에 소모됩니다.<br>\n단, CIWS등 근접 자동 방공에는 미사일 발사보다 더 크게 'MP'를 소모합니다.<br>\n'에너지 보호막'은 함선을 보호하는 쉴드이며 MP가 모두 소모되면 자동으로 보호막이 제거됩니다.(추후 GUI추가 예정)",
-    "guide.11925": "교전 순서",
-    "guide.11925.2": "<b>클릭</b> 표적 예약, <b>Q</b> 무장 등록, <b>A</b> 발사 승인.\n<b>C</b> 자동 승인, <b>Z / X</b> 예약 취소.",
-    "guide.11926": "위협 종류",
-    "guide.11926.2": "속도는 느림 40, 보통 55, 빠름 75.\n\n새 속성은 일정 라운드마다 하나씩 추가됩니다.\n추가 직전, 카드 선택 뒤에 안내가 나옵니다.",
-    "guide.11927": "무장과 MP",
-    "guide.11927.2": "<b>1~4</b> 무장 선택 (4번 = RAM).\n\n발사마다 MP 소모, 2초마다 회복,\nMP가 0이면 실드가 꺼집니다.",
-    "guide.11928": "조작 키",
-    "guide.11928.2": "<b>V</b> 근접 자동 방어, <b>S</b> 정지, <b>W</b> 배속,\n<b>F</b> 기본 시점, <b>TAB</b> 업그레이드 현황,\n<b>R</b> 전체 초기화, <b>H</b> 가이드.",
     "guide.11930": "카드 등급",
     "guide.11930.2": "등급은 <b style='color:#4da3ff'>노말</b> &lt; <b style='color:#b36bff'>에픽</b> &lt; <b style='color:#ffd23f'>유니크</b> &lt; <b style='color:#3ee08a'>레어</b> 순입니다.\n\n첫 카드는 랭크가 등급을 확정합니다,\n(C 노말, B 에픽, A 유니크, S 레어).",
     "guide.11931": "나머지 카드는 확률로 나옵니다.\n<b>E</b> 리롤, <b>TAB</b> 업그레이드 현황.",
@@ -11286,7 +11279,7 @@ ${p2}
   family("scout", uiText("card.scout.name"), 1, { U:[1] }, () => uiText("card.scout.effect"), () => { RG.extraOffer = 1; });
   family("sup", uiText("card.sup.name"), 3, { E:[1], U:[2] }, v => uiText("card.sup.effect", v), v => { RG.rerollBonus += v; });
   family("overC", uiText("card.overC.name"), 2, { N:[8,15], E:[14,10], U:[22,5] }, (a, b) => uiText("card.overC.effect", a, b), (a, b) => { RG.missMulC = cut(RG.missMulC, a, 0.5); RG.closeCostMul *= 1 + b / 100; });
-  family("liteC", uiText("card.liteC.name"), 2, { E:[10,5], U:[16,5], R:[24,5] }, (a, b) => uiText("card.liteC.effect", a, b), (a, b) => { RG.closeCostMul = cut(RG.closeCostMul, a, 0.35); RG.missMulC *= 1 + b / 100; });
+  family("liteC", uiText("card.liteC.name"), 2, { E:[10,5], U:[16,5] }, (a, b) => uiText("card.liteC.effect", a, b), (a, b) => { RG.closeCostMul = cut(RG.closeCostMul, a, 0.35); RG.missMulC *= 1 + b / 100; });
   family("liteCNoMiss", uiText("card.liteC.name"), 2, { R:[24] }, v => uiText("card.liteC.effect.2", v), v => { RG.closeCostMul = cut(RG.closeCostMul, v, 0.35); });
   family("killmpC", uiText("card.killmpC.name"), 5, { N:[100], E:[200], U:[400], R:[700] }, v => uiText("card.killmpC.effect", u(v)), v => { RG.killMpC += v; });
 
@@ -11455,7 +11448,7 @@ ${p2}
     cameraCenter.x = DEFAULT_CAMERA_CENTER.x; cameraCenter.y = DEFAULT_CAMERA_CENTER.y;
     TRACKING_RADAR_RADIUS = BASE_TRACK + 200 * RG.radar3d;
     RG.rescueLeft = RG.rescue; RG.emergLeft = RG.emergUses; RG.droneLast = 0;
-    RG.guidePopup = { idx: 0, shown: -1, finished: false, stepT: 0 };
+    RG.guidePopup = { guide: RG.round, idx: 0, shown: -1, finished: false, stepT: 0 };
     RG.live = true; modal = null; modalUI.close(); refreshScore();
   }
   const _upd = session.update.bind(session);
@@ -11542,11 +11535,7 @@ ${p2}
   }
   function reroll() { if (rerolls > 0) { rerolls--; offers = drawOffers(); showCardModal(false); } }
   function newRun() { resetRun(); startRound(); }
-  function fullReset() {                         
-    RG.token++; RG.best = Math.max(RG.best, RG.score);
-    tabModalOpen = false; tabModalResume = null; holds = 0; prevPaused = false; session.isPaused = false;
-    modal = null; modalUI.close(); shownScore = -1; newRun();
-  }
+  function fullReset() { location.reload(); }
 
   const lines = s => String(s).split("\n").map(l => l === "" ? `<span class="ln gap"></span>` : `<span class="ln">${l}</span>`).join("");   
   const TUTORIAL_MODAL_SLIDES = {
@@ -11554,11 +11543,6 @@ ${p2}
       [uiText("guide.11922"), uiText("guide.11922.2")],
       [uiText("guide.11923"), uiText("guide.11923.2")],
       [uiText("guide.11924"), uiText("guide.11924.2")] ],
-    flow: [
-      [uiText("guide.11925"), uiText("guide.11925.2")],
-      [uiText("guide.11926"), uiText("guide.11926.2")],
-      [uiText("guide.11927"), uiText("guide.11927.2")],
-      [uiText("guide.11928"), uiText("guide.11928.2")] ],
     cards: [
       [uiText("guide.11930"), uiText("guide.11930.2")],
       [uiText("offer.11889"), uiText("guide.11931")] ],
@@ -11594,10 +11578,13 @@ ${p2}
     const P = DEFENSE_RESOURCE_PROFILE, d = session.world.defenseState;
     const hp = RG.live || modal === "wait" ? d.hp : (RG.hp ?? P.maxHp);
     const mp = RG.live || modal === "wait" ? d.mp : P.maxMp;
-    const S = [[uiText("upgrade.11960"), `${u(hp)} / ${u(P.maxHp)}`], [uiText("upgrade.11960.2"), `${u(mp)} / ${u(P.maxMp)}`], [uiText("upgrade.11960.3"), uiText("upgrade.11960.4", u(P.mpRegenerationPerCycle))],
-      [uiText("upgrade.11961"), u(P.shieldReactivationMp)], [uiText("upgrade.11961.2"), uiText("upgrade.11961.3", P.recoveryLockSeconds)], [uiText("upgrade.11961.4"), `${pct(RG.mpCostMul)} / ${pct(RG.closeCostMul)}`],
-      [uiText("upgrade.11962"), `${pct(RG.missMul)} / ${pct(RG.missMulC)}`], [uiText("upgrade.11963.9"), u(P.stageStartHpRecovery + RG.repair)], [uiText("upgrade.11963.10"), uiText("upgrade.11960.4", u(RG.droneHp))], [uiText("upgrade.11962.2"), uiText("upgrade.11962.3", RG.cd.toFixed(2))], [uiText("upgrade.11962.4"), pct(RG.dmgMul)],
-      [uiText("upgrade.11963"), 6 + RG.extraCh], [uiText("upgrade.11963.2"), 4 + RG.queueExtra], [uiText("upgrade.11963.3"), TRACKING_RADAR_RADIUS], [uiText("upgrade.11963.4"), 800 + RG.ciwsRange], [uiText("upgrade.11963.5"), `${1 + RG.extraCiws} / ${1 + RG.extraRam}`], [uiText("upgrade.11963.8"), `×${RG.scoreMul.toFixed(2)}`], [uiText("upgrade.11963.6"), uiText("upgrade.11963.7", 2 + RG.rerollBonus)]];
+    const S = [
+      [uiText("upgrade.11960"), `${u(hp)} / ${u(P.maxHp)}`], [uiText("upgrade.11963.10"), uiText("upgrade.11960.4", u(RG.droneHp))], [uiText("upgrade.11963.9"), u(P.stageStartHpRecovery + RG.repair)], [uiText("upgrade.11962.4"), pct(RG.dmgMul)],
+      [uiText("upgrade.11960.2"), `${u(mp)} / ${u(P.maxMp)}`], [uiText("upgrade.11960.3"), uiText("upgrade.11960.4", u(P.mpRegenerationPerCycle))], [uiText("upgrade.11961.4"), `${pct(RG.mpCostMul)} / ${pct(RG.closeCostMul)}`],
+      [uiText("upgrade.11961"), u(P.shieldReactivationMp)], [uiText("upgrade.11961.2"), uiText("upgrade.11961.3", P.recoveryLockSeconds)],
+      [uiText("upgrade.11962"), `${pct(RG.missMul)} / ${pct(RG.missMulC)}`], [uiText("upgrade.11962.2"), uiText("upgrade.11962.3", RG.cd.toFixed(2))], [uiText("upgrade.11963"), 6 + RG.extraCh], [uiText("upgrade.11963.2"), 4 + RG.queueExtra],
+      [uiText("upgrade.11963.3"), TRACKING_RADAR_RADIUS], [uiText("upgrade.11963.4"), 800 + RG.ciwsRange], [uiText("upgrade.11963.5"), `${1 + RG.extraCiws} / ${1 + RG.extraRam}`],
+      [uiText("upgrade.11963.8"), `×${RG.scoreMul.toFixed(2)}`], [uiText("upgrade.11963.6"), uiText("upgrade.11963.7", 2 + RG.rerollBonus)]];
     const have = CARDS.filter(c => RG.cards[c.key]).reverse().sort((a, b) => GORDER.indexOf(b.g) - GORDER.indexOf(a.g));
     const half = Math.ceil(S.length / 2), tbl = r => `<table class="game-report-score-table"><tbody>${r.map(x => `<tr><th scope="row">${x[0]}</th><td>${x[1]}</td></tr>`).join("")}</tbody></table>`;
     const statsTable = `<div class="game-report-score is-dual is-flat">${tbl(S.slice(0, half))}${tbl(S.slice(half))}</div>`;
@@ -11627,7 +11614,7 @@ ${p2}
       else if (modal === "card") { if (cardModalStage === "guide") { if ((k === "enter" || k === " ") && !e.repeat) act.cardModalReveal(); } else if (k >= "1" && k <= String(offers.length)) pick(+k - 1); else if (k === "e") reroll(); }
       return;
     }
-    if (k === "h") { e.stopImmediatePropagation(); showTutorialModal(["intro", "flow", "cards", "score"]); }
+    if (k === "h") { e.stopImmediatePropagation(); openGuidePopup(); }
     if (k === "enter" && RG.guidePopup && guidePopupUI.visible() && !RG.guidePopup.finished) { e.preventDefault(); e.stopImmediatePropagation(); if (!e.repeat) advanceGuidePopup(); }
   }, true);
 
@@ -11683,18 +11670,22 @@ ${p2}
     2: [1, 2, 3, 4].map(n => [uiText(`guidePopup.r2.${n}`), uiText(`guidePopup.r2.${n}.2`)]),
   };
   let guidePopupSkipped = false, guidePopupLastMs = performance.now();
+  function openGuidePopup() {
+    if (!GUIDE_POPUP_STEPS[RG.round]) return;
+    guidePopupSkipped = false;
+    RG.guidePopup = { guide: RG.round, idx: 0, shown: -1, finished: false, stepT: 0 };
+  }
   function advanceGuidePopup() {
-    const c = RG.guidePopup, steps = GUIDE_POPUP_STEPS[RG.round];
+    const c = RG.guidePopup, steps = c && GUIDE_POPUP_STEPS[c.guide];
     if (!c || c.finished || !steps || !guidePopupUI.visible()) return;
     if (c.idx >= steps.length - 1) { c.finished = true; guidePopupUI.hide(); return; }
     c.idx++; c.shown = -1; c.stepT = 0;
   }
   function guidePopupTick() {
     const nowMs = performance.now(), elapsedSeconds = Math.min(0.1, (nowMs - guidePopupLastMs) / 1000); guidePopupLastMs = nowMs;
-    const on = !guidePopupSkipped && RG.guidePopup && !RG.guidePopup.finished && RG.round <= TUTORIAL_ROUNDS && RG.live && !modal && !tabModalOpen;
+    const c = RG.guidePopup, steps = c && GUIDE_POPUP_STEPS[c.guide];
+    const on = !guidePopupSkipped && steps && !c.finished && RG.live && !modal && !tabModalOpen;
     if (!on) { guidePopupUI.hide(); return; }
-    const c = RG.guidePopup, steps = GUIDE_POPUP_STEPS[RG.round];
-    if (!steps) { guidePopupUI.hide(); return; }
     c.stepT += elapsedSeconds;
     if (c.idx < steps.length - 1 && c.stepT >= GUIDE_POPUP_AUTO_SECONDS) { c.idx++; c.stepT = 0; }
     const cur = steps[c.idx];
