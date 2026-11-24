@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>ZeroShingoNoTsukigasa_v2026.11.23.10</title>
-<meta property="og:title" content="ZeroShingoNoTsukigasa_v2026.11.23.10">
+<title>ZeroShingoNoTsukigasa_v2026.11.24.11</title>
+<meta property="og:title" content="ZeroShingoNoTsukigasa_v2026.11.24.11">
 <style>
   :root {
     color-scheme: dark;
@@ -168,7 +168,7 @@
     overflow: hidden;
   }
 
-  .hud {
+  .tactical-screen {
     width: 100%;
     
     min-width: 0;
@@ -221,7 +221,7 @@
     font-weight: 900;
   }
 
-  .engagement-board-stack {
+  .engagement-popup-stack {
     position: absolute;
     
     
@@ -235,11 +235,11 @@
   }
 
   
-  .engagement-card-header {
+  .engagement-popup-header {
     min-height: 24px;
     
   }
-  .engagement-toggle {
+  .engagement-popup-toggle {
     width: 100%;
     min-height: 24px;
     display: flex;
@@ -257,13 +257,13 @@
     cursor: pointer;
     pointer-events: auto;
   }
-  .engagement-toggle:hover,
-  .engagement-toggle:focus-visible {
+  .engagement-popup-toggle:hover,
+  .engagement-popup-toggle:focus-visible {
     
     
     outline: none;
   }
-  .engagement-toggle-icon {
+  .engagement-popup-toggle-icon {
     display: inline-block;
     width: 11px;
     flex: 0 0 11px;
@@ -271,7 +271,7 @@
     font-size: var(--font-micro);
     letter-spacing: 0;
   }
-  .engagement-card-body[hidden] {
+  .engagement-popup-body[hidden] {
     display: none !important;
   }
 
@@ -385,7 +385,7 @@
     column-gap: 4px;
   }
 
-  .side-hud {
+  .side-info-menu-column {
     
     min-width: 0;
     min-height: 0;
@@ -709,7 +709,7 @@
     column-gap: 10px;
   }
 
-  .hud {
+  .tactical-screen {
     height: var(--game-main-height);
     position: relative;
     border: var(--strong-line) solid rgba(11,218,248,.90);
@@ -751,13 +751,13 @@
     color: #83b8c5;
   }
 
-  .engagement-board-stack {
+  .engagement-popup-stack {
     top: 38px;
     left: 44px;
     gap: 6px;
   }
 
-  .engagement-card {
+  .engagement-popup {
     width: 312px;
     border: 2px solid rgba(37,195,203,.72);
     border-radius: 0;
@@ -773,17 +773,17 @@
   }
 
 
-  .engagement-card-header {
+  .engagement-popup-header {
     border-bottom: 1px solid rgba(112,222,236,.13);
     background: linear-gradient(90deg, rgba(25,56,226,.06), transparent 48%);
   }
 
-  .engagement-toggle {
+  .engagement-popup-toggle {
     color: #cbe9f1;
   }
 
-  .engagement-toggle:hover,
-  .engagement-toggle:focus-visible {
+  .engagement-popup-toggle:hover,
+  .engagement-popup-toggle:focus-visible {
     color: var(--cyan-peak);
     background: rgba(11,218,248,.045);
   }
@@ -792,7 +792,7 @@
     border-left-color: rgba(244,252,255,.58);
   }
 
-  .side-hud {
+  .side-info-menu-column {
     width: var(--sidebar-width);
     height: var(--game-main-height);
     display: grid;
@@ -816,12 +816,12 @@
     --ui-guide-header-right: 28px;
   }
 
-  .right-gap {
+  .side-info-menu-gap {
     min-width: 0;
     min-height: 0;
   }
 
-  .hud-card-shell {
+  .side-info-menu-frame {
     min-width: 0;
     min-height: 0;
     filter:
@@ -829,7 +829,7 @@
       drop-shadow(0 0 18px rgba(18,25,225,.14));
   }
 
-  .hud-card {
+  .side-info-menu {
     width: 100%;
     height: 100%;
     position: relative;
@@ -855,7 +855,7 @@
     );
   }
 
-  .hud-card::before {
+  .side-info-menu::before {
     content: "";
     position: absolute;
     inset: 4px;
@@ -864,7 +864,7 @@
     border: 1px solid rgba(37,195,203,.20);
   }
 
-  .hud-card::after {
+  .side-info-menu::after {
     content: "";
     position: absolute;
     inset: 0;
@@ -877,7 +877,7 @@
     filter: drop-shadow(0 0 4px rgba(12,251,249,.36));
   }
 
-  .card-header {
+  .side-info-menu-header {
     position: relative;
     z-index: 5;
     height: 38px;
@@ -893,21 +893,21 @@
     font-weight: 900;
   }
 
-  .card-header-title {
+  .side-info-menu-header-title {
     display: inline-flex;
     align-items: center;
     gap: 7px;
   }
 
-  .header-glyph {
+  .side-info-menu-header-glyph {
     width: 11px;
     height: 11px;
     position: relative;
     flex: 0 0 11px;
   }
 
-  .header-glyph::before,
-  .header-glyph::after {
+  .side-info-menu-header-glyph::before,
+  .side-info-menu-header-glyph::after {
     content: "";
     position: absolute;
     left: 50%;
@@ -917,23 +917,23 @@
     box-shadow: 0 0 7px rgba(12,251,249,.52);
   }
 
-  .header-glyph::before { width: 9px; height: 1px; }
-  .header-glyph::after { width: 1px; height: 9px; }
+  .side-info-menu-header-glyph::before { width: 9px; height: 1px; }
+  .side-info-menu-header-glyph::after { width: 1px; height: 9px; }
 
-  .dialogue-card {
+  .comm-log-menu {
     padding: 0;
     display: grid;
     grid-template-rows: 38px minmax(0, 1fr);
   }
 
-  .communication-header {
+  .comm-log-menu-header {
     height: 38px;
     min-height: 38px;
     padding: 0 var(--ui-guide-header-right) 0 var(--ui-guide-header-left);
     font-size: var(--font-small);
   }
 
-  .dialogue-box {
+  .comm-log-box {
     min-width: 0;
     min-height: 0;
     margin: 3px var(--ui-guide-right) 6px var(--ui-guide-left);
@@ -1029,7 +1029,7 @@
       0 0 7px rgba(74,191,220,.16);
   }
 
-  .dialogue-text-panel {
+  .comm-log-text-panel {
     min-width: 0;
     height: 100%;
     box-sizing: border-box;
@@ -1040,7 +1040,7 @@
     clip-path: none;
   }
 
-  .dialogue-text {
+  .comm-log-text {
     min-width: 0;
     height: 100%;
     display: flex;
@@ -1056,13 +1056,13 @@
     text-align: left;
   }
 
-  .weapon-card {
+  .weapon-select-menu {
     padding: 4px var(--ui-visual-guide-right) 4px var(--ui-visual-guide-left);
     display: flex;
     align-items: center;
   }
 
-  .weapon-strip {
+  .weapon-select-strip {
     width: 100%;
     height: 100%;
     display: grid;
@@ -1155,18 +1155,18 @@
     clip-path: polygon(5px 0, 100% 0, 100% calc(100% - 5px), calc(100% - 5px) 100%, 0 100%, 0 5px);
   }
 
-  .weapon-choice {
+  .weapon-select-button {
     color: var(--friendly-white);
     font-size: var(--font-small);
     font-weight: 900;
     cursor: pointer;
     text-align: center;
   }
-  .weapon-choice:focus-visible {
+  .weapon-select-button:focus-visible {
     outline: 1px solid var(--cyan-peak);
     outline-offset: -3px;
   }
-  .weapon-choice.selected {
+  .weapon-select-button.selected {
     border-color: var(--cyan-peak);
     color: var(--cyan-peak);
     background: linear-gradient(180deg, rgba(12,64,92,.9), rgba(5,34,56,.9));
@@ -1183,7 +1183,7 @@
     display: inline-block;
   }
 
-  .current-status-card .battle-status-slot {
+  .current-status-menu .battle-status-slot {
     position: absolute;
     top: 50%;
     right: calc(50% + 9px);
@@ -1192,7 +1192,7 @@
     width: auto;
   }
 
-  .current-status-card .info-grid {
+  .current-status-menu .info-grid {
     height: calc(100% - 38px);
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -1202,7 +1202,7 @@
     align-content: stretch;
   }
 
-  .current-status-card .stacked-stat {
+  .current-status-menu .stacked-stat {
     min-width: 0;
     display: grid;
     grid-template-columns: minmax(0,1fr) auto;
@@ -1212,19 +1212,19 @@
     border-bottom: 1px solid rgba(112,222,236,.09);
   }
 
-  .current-status-card .stacked-stat:nth-child(3),
-  .current-status-card .stacked-stat:nth-child(4) {
+  .current-status-menu .stacked-stat:nth-child(3),
+  .current-status-menu .stacked-stat:nth-child(4) {
     border-bottom: 0;
   }
 
-  .current-status-card .stacked-stat .stat-label {
+  .current-status-menu .stacked-stat .stat-label {
     margin: 0;
     color: #8fbac7;
     font-size: var(--font-tiny);
     font-weight: 800;
   }
 
-  .current-status-card .stacked-stat .stat-value {
+  .current-status-menu .stacked-stat .stat-value {
     color: var(--friendly-white);
     font-size: var(--font-body);
     font-weight: 900;
@@ -1241,7 +1241,7 @@
     box-shadow: inset 0 0 8px rgba(16,224,94,.05);
   }
 
-  .radar-tech-decoration {
+  .minimap-tech-decoration {
     position: absolute;
     left: var(--ui-guide-left);
     top: 31.5px;
@@ -1252,7 +1252,7 @@
     overflow: visible;
   }
 
-  .radar-tech-decoration .glow {
+  .minimap-tech-decoration .glow {
     fill: none;
     stroke: rgba(18,25,225,.70);
     stroke-width: 4;
@@ -1261,7 +1261,7 @@
     opacity: .58;
   }
 
-  .radar-tech-decoration .core {
+  .minimap-tech-decoration .core {
     fill: none;
     stroke: rgba(11,218,248,.76);
     stroke-width: 1.5;
@@ -1269,14 +1269,14 @@
     filter: drop-shadow(0 0 3px rgba(12,251,249,.26));
   }
 
-  .radar-tech-decoration .fine {
+  .minimap-tech-decoration .fine {
     fill: none;
     stroke: rgba(37,195,203,.40);
     stroke-width: 1;
     vector-effect: non-scaling-stroke;
   }
 
-  .radar-stage {
+  .minimap-stage {
     position: relative;
     height: calc(100% - 38px);
     display: flex;
@@ -1311,7 +1311,7 @@
     border-radius: 50%;
   }
 
-  .radar-scale-overlay {
+  .minimap-scale-overlay {
     position: absolute;
     left: 0;
     top: 0;
@@ -1322,21 +1322,21 @@
     overflow: visible;
   }
 
-  .radar-scale-overlay .axis-main {
+  .minimap-scale-overlay .axis-main {
     stroke: rgba(80,206,238,.40);
     stroke-width: .88;
     vector-effect: non-scaling-stroke;
     filter: drop-shadow(0 0 2px rgba(11,218,248,.16));
   }
 
-  .radar-scale-overlay .axis-secondary {
+  .minimap-scale-overlay .axis-secondary {
     stroke: rgba(68,193,232,.27);
     stroke-width: .78;
     vector-effect: non-scaling-stroke;
     filter: drop-shadow(0 0 1.6px rgba(25,56,226,.14));
   }
 
-  .radar-scale-overlay .tick-minor {
+  .minimap-scale-overlay .tick-minor {
     stroke: rgba(244,252,255,.76);
     stroke-width: .78;
     stroke-linecap: butt;
@@ -1344,7 +1344,7 @@
     filter: drop-shadow(0 0 1.2px rgba(112,222,236,.14));
   }
 
-  .radar-scale-overlay .tick-medium {
+  .minimap-scale-overlay .tick-medium {
     stroke: rgba(244,252,255,.90);
     stroke-width: .94;
     stroke-linecap: butt;
@@ -1352,7 +1352,7 @@
     filter: drop-shadow(0 0 1.5px rgba(112,222,236,.17));
   }
 
-  .radar-scale-overlay .tick-major {
+  .minimap-scale-overlay .tick-major {
     stroke: rgba(244,252,255,.98);
     stroke-width: 1.10;
     stroke-linecap: butt;
@@ -1360,7 +1360,7 @@
     filter: drop-shadow(0 0 1.8px rgba(112,222,236,.20));
   }
 
-  .radar-scale-overlay .azimuth-label {
+  .minimap-scale-overlay .azimuth-label {
     fill: rgba(244,252,255,.96);
     font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "Malgun Gothic", monospace;
     font-size: var(--font-tiny);
@@ -1374,7 +1374,7 @@
     filter: drop-shadow(0 0 2px rgba(112,222,236,.18));
   }
 
-  .radar-bezel {
+  .minimap-bezel {
     position: absolute;
     z-index: 5;
     left: 11px;
@@ -1390,7 +1390,7 @@
     pointer-events: none;
   }
 
-  .radar-bezel::before {
+  .minimap-bezel::before {
     content: "";
     position: absolute;
     inset: 6px;
@@ -1399,7 +1399,7 @@
     box-shadow: inset 0 0 8px rgba(11,218,248,.06);
   }
 
-  .radar-bezel::after {
+  .minimap-bezel::after {
     content: "";
     position: absolute;
     inset: -2px;
@@ -1421,7 +1421,7 @@
     overflow: hidden;
   }
 
-  .bottom-controls .control-btn {
+  .bottom-controls .control-button {
     width: 100%;
     min-width: 0;
     min-height: 62px;
@@ -1448,22 +1448,22 @@
       0 0 16px rgba(18,25,225,.08);
   }
 
-  .bottom-controls .control-btn:disabled {
+  .bottom-controls .control-button:disabled {
     cursor: not-allowed;
   }
 
-  .bottom-controls #fireBtn:disabled,
-  .bottom-controls #readyBtn:disabled,
-  .bottom-controls #ciwsAutoBtn:disabled {
+  .bottom-controls #fireButton:disabled,
+  .bottom-controls #readyButton:disabled,
+  .bottom-controls #ciwsAutoButton:disabled {
     cursor: default;
   }
 
-  .bottom-controls .control-btn:hover:not(:disabled) {
+  .bottom-controls .control-button:hover:not(:disabled) {
     border-color: #20f3f2;
     color: #ffffff;
   }
 
-  .bottom-controls .control-btn.fire {
+  .bottom-controls .control-button.fire {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -1484,12 +1484,12 @@
       0 0 6px rgba(248,21,65,.10);
   }
 
-  .bottom-controls .control-btn.fire .fire-main {
+  .bottom-controls .control-button.fire .fire-main {
     display: block;
     line-height: 1.05;
   }
 
-  .bottom-controls .control-btn.fire .fire-auto-mode {
+  .bottom-controls .control-button.fire .fire-auto-mode {
     display: block;
     color: rgba(242,154,164,.90);
     font-size: var(--font-tiny);
@@ -1498,7 +1498,7 @@
     line-height: 1;
   }
 
-  .bottom-controls .control-btn.fire .fire-cooldown {
+  .bottom-controls .control-button.fire .fire-cooldown {
     display: block;
     color: rgba(217,139,148,.72);
     font-size: var(--font-micro);
@@ -1507,7 +1507,7 @@
     line-height: 1;
   }
 
-  .bottom-controls .control-btn.fire:disabled {
+  .bottom-controls .control-button.fire:disabled {
     opacity: 1;
     border-color: #b72a43;
     color: #d98b94;
@@ -1524,21 +1524,21 @@
       0 0 4px rgba(183,42,67,.07);
   }
 
-  .bottom-controls .control-btn.fire:disabled .fire-auto-mode {
+  .bottom-controls .control-button.fire:disabled .fire-auto-mode {
     color: rgba(217,139,148,.82);
   }
 
-  .bottom-controls .control-btn.fire:disabled .fire-cooldown {
+  .bottom-controls .control-button.fire:disabled .fire-cooldown {
     color: rgba(217,139,148,.62);
   }
 
-  .bottom-controls .control-btn.fire:hover:not(:disabled) {
+  .bottom-controls .control-button.fire:hover:not(:disabled) {
     border-color: #ff3152;
     color: #ffc0c7;
   }
 
-  .bottom-controls .control-btn.fire:active,
-  .bottom-controls .control-btn.fire.auto-fire-on {
+  .bottom-controls .control-button.fire:active,
+  .bottom-controls .control-button.fire.auto-fire-on {
     opacity: 1;
     border-color: #f81541;
     color: #ffc0c7;
@@ -1556,26 +1556,26 @@
       0 0 16px rgba(248,21,65,.10);
   }
 
-  .bottom-controls .control-btn.fire.auto-fire-on .fire-auto-mode,
-  .bottom-controls .control-btn.fire:active .fire-auto-mode {
+  .bottom-controls .control-button.fire.auto-fire-on .fire-auto-mode,
+  .bottom-controls .control-button.fire:active .fire-auto-mode {
     color: #ffc0c7;
   }
 
-  .bottom-controls .control-btn.fire.auto-fire-on .fire-cooldown,
-  .bottom-controls .control-btn.fire:active .fire-cooldown {
+  .bottom-controls .control-button.fire.auto-fire-on .fire-cooldown,
+  .bottom-controls .control-button.fire:active .fire-cooldown {
     color: rgba(255,192,199,.80);
   }
 
-  .bottom-controls .control-btn.fire.auto-fire-on:hover:not(:disabled) {
+  .bottom-controls .control-button.fire.auto-fire-on:hover:not(:disabled) {
     border-color: #ff3152;
     color: #ffd0d5;
   }
 
-  .bottom-controls .control-btn.fire.auto-fire-on:disabled {
+  .bottom-controls .control-button.fire.auto-fire-on:disabled {
     opacity: 1;
   }
 
-  .bottom-controls .control-btn.time-scale {
+  .bottom-controls .control-button.time-scale {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -1592,12 +1592,12 @@
       0 0 6px rgba(201,158,50,.10);
   }
 
-  .bottom-controls .control-btn.time-scale:hover:not(:disabled) {
+  .bottom-controls .control-button.time-scale:hover:not(:disabled) {
     border-color: #e6bb52;
     color: #ffe7a0;
   }
 
-  .bottom-controls .control-btn.ready {
+  .bottom-controls .control-button.ready {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -1616,7 +1616,7 @@
       0 0 6px rgba(201,158,50,.10);
   }
 
-  .bottom-controls .control-btn.ready:disabled {
+  .bottom-controls .control-button.ready:disabled {
     opacity: 1;
     border-color: #9c7d34;
     color: #b6a068;
@@ -1629,15 +1629,15 @@
       linear-gradient(180deg, #302813, #201a0f);
   }
 
-  .bottom-controls .control-btn.ready:hover:not(:disabled),
-  .bottom-controls .control-btn.ready:active {
+  .bottom-controls .control-button.ready:hover:not(:disabled),
+  .bottom-controls .control-button.ready:active {
     border-color: #e6bb52;
     color: #ffe7a0;
   }
 
-  .bottom-controls #ciwsAutoBtn.is-off,
-  .bottom-controls #ciwsAutoBtn.is-off:hover:not(:disabled),
-  .bottom-controls #ciwsAutoBtn.is-off:active {
+  .bottom-controls #ciwsAutoButton.is-off,
+  .bottom-controls #ciwsAutoButton.is-off:hover:not(:disabled),
+  .bottom-controls #ciwsAutoButton.is-off:active {
     border-color: #9c7d34;
     color: #b6a068;
     background:
@@ -1651,7 +1651,7 @@
 
   
 
-  .bottom-controls .control-btn.state-toggle {
+  .bottom-controls .control-button.state-toggle {
     border-color: #145d65;
     color: #9bc1cd;
     background:
@@ -1663,7 +1663,7 @@
       0 0 4px rgba(20,93,101,.08);
   }
 
-  .bottom-controls .control-btn.state-toggle.is-active {
+  .bottom-controls .control-button.state-toggle.is-active {
     border-color: var(--cyan-peak-alt);
     color: var(--friendly-white);
     background:
@@ -1676,17 +1676,17 @@
       0 0 16px rgba(18,25,225,.08);
   }
 
-  .bottom-controls .control-btn.state-toggle.is-inactive {
+  .bottom-controls .control-button.state-toggle.is-inactive {
     border-color: #145d65;
     color: #86aebc;
   }
 
-  .bottom-controls .control-btn.state-toggle.is-inactive:hover:not(:disabled) {
+  .bottom-controls .control-button.state-toggle.is-inactive:hover:not(:disabled) {
     border-color: var(--cyan-structure);
     color: #b8d5de;
   }
 
-  .bottom-controls .control-btn.state-toggle.is-active:hover:not(:disabled) {
+  .bottom-controls .control-button.state-toggle.is-active:hover:not(:disabled) {
     border-color: var(--cyan-peak);
     color: #ffffff;
   }
@@ -1780,7 +1780,7 @@
   --ship-management-button-width: 181px;
 }
 :root{--img-close-slot:url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNiIgaGVpZ2h0PSIxOCIgdmlld0JveD0iMCAwIDE2IDE4Ij48ZGVmcz48cmFkaWFsR3JhZGllbnQgaWQ9InNsb3RHbG93IiBjeD0iNTAlIiBjeT0iNDUlIiByPSI2MiUiPjxzdG9wIHN0b3AtY29sb3I9IiMwYmRhZjgiIHN0b3Atb3BhY2l0eT0iLjA0NSIvPjxzdG9wIG9mZnNldD0iMSIgc3RvcC1jb2xvcj0iIzBiZGFmOCIgc3RvcC1vcGFjaXR5PSIwIi8+PC9yYWRpYWxHcmFkaWVudD48Y2xpcFBhdGggaWQ9InNsb3RDb3JuZXJDbGlwIj48cGF0aCBkPSJNMiAwIEgxNiBWMTYgTDE0IDE4IEgwIFYyIFoiLz48L2NsaXBQYXRoPjwvZGVmcz48ZyBjbGlwLXBhdGg9InVybCgjc2xvdENvcm5lckNsaXApIj48cG9seWdvbiBwb2ludHM9IjIsMCAxNiwwIDE2LDE2IDE0LDE4IDAsMTggMCwyIiBmaWxsPSIjMDUxZjMyIiBmaWxsLW9wYWNpdHk9Ii41NCIvPjxwb2x5Z29uIHBvaW50cz0iMiwwIDE2LDAgMTYsMTYgMTQsMTggMCwxOCAwLDIiIGZpbGw9InVybCgjc2xvdEdsb3cpIi8+PHJlY3QgeD0iLjUiIHk9Ii41IiB3aWR0aD0iMTUiIGhlaWdodD0iMTciIGZpbGw9Im5vbmUiIHN0cm9rZT0iIzI1YzNjYiIgc3Ryb2tlLW9wYWNpdHk9Ii41MCIgc3Ryb2tlLXdpZHRoPSIxIi8+PHJlY3QgeD0iMS41IiB5PSIxLjUiIHdpZHRoPSIxMyIgaGVpZ2h0PSIxNSIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjNzBkZWVjIiBzdHJva2Utb3BhY2l0eT0iLjA1IiBzdHJva2Utd2lkdGg9IjEiLz48L2c+PC9zdmc+Cg==")}
-.info-panel-frame {
+.popup-frame {
   position:absolute; z-index:15; left:10.5px; top:6.5px; width:438px;
   border:2px solid transparent; border-radius:0;
   border-image-source:url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0MzgiIGhlaWdodD0iMTIwIiB2aWV3Qm94PSIwIDAgNDM4IDEyMCI+PGRlZnM+PGxpbmVhckdyYWRpZW50IGlkPSJ3cEJhY2siIHgxPSIwIiB5MT0iMCIgeDI9IjAiIHkyPSIxIj48c3RvcCBzdG9wLWNvbG9yPSIjMGUyMDUxIiBzdG9wLW9wYWNpdHk9Ii4zOCIvPjxzdG9wIG9mZnNldD0iLjM0IiBzdG9wLWNvbG9yPSIjMDgyODNkIiBzdG9wLW9wYWNpdHk9Ii43MiIvPjxzdG9wIG9mZnNldD0iMSIgc3RvcC1jb2xvcj0iIzA1MWYzMiIgc3RvcC1vcGFjaXR5PSIuNzkiLz48L2xpbmVhckdyYWRpZW50PjxsaW5lYXJHcmFkaWVudCBpZD0id3BMZWZ0IiB4MT0iMCIgeTE9IjAiIHgyPSIxIiB5Mj0iMCI+PHN0b3Agc3RvcC1jb2xvcj0iIzBiZGFmOCIgc3RvcC1vcGFjaXR5PSIuMDUiLz48c3RvcCBvZmZzZXQ9Ii40OCIgc3RvcC1jb2xvcj0iIzBiZGFmOCIgc3RvcC1vcGFjaXR5PSIwIi8+PC9saW5lYXJHcmFkaWVudD48L2RlZnM+PHJlY3Qgd2lkdGg9IjQzOCIgaGVpZ2h0PSIxMjAiIGZpbGw9InVybCgjd3BCYWNrKSIvPjxyZWN0IHdpZHRoPSI0MzgiIGhlaWdodD0iMTIwIiBmaWxsPSJ1cmwoI3dwTGVmdCkiLz48cmVjdCB4PSIxIiB5PSIxIiB3aWR0aD0iNDM2IiBoZWlnaHQ9IjExOCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjMjVjM2NiIiBzdHJva2Utb3BhY2l0eT0iLjcyIiBzdHJva2Utd2lkdGg9IjIiLz48cmVjdCB4PSIyLjUiIHk9IjIuNSIgd2lkdGg9IjQzMyIgaGVpZ2h0PSIxMTUiIGZpbGw9Im5vbmUiIHN0cm9rZT0iIzcwZGVlYyIgc3Ryb2tlLW9wYWNpdHk9Ii4wNyIvPjwvc3ZnPgo=");
@@ -1790,7 +1790,7 @@
   color:#FFFFFF; pointer-events:none;
   --weapon-specs-columns:42px 88px 48px 48px 64px minmax(0,1fr);
 }
-.info-panel-titlebar {
+.popup-titlebar {
   display:flex; align-items:center; gap:6px; min-height:24px; padding:3px 8px;
   border-bottom:1px solid transparent;
   background:url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0MzgiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCA0MzggMjQiPjxkZWZzPjxsaW5lYXJHcmFkaWVudCBpZD0iaGVhZGVyR3JhZGllbnQiIHgxPSIwIiB5MT0iMCIgeDI9IjEiIHkyPSIwIj48c3RvcCBzdG9wLWNvbG9yPSIjMTkzOGUyIiBzdG9wLW9wYWNpdHk9Ii4wNiIvPjxzdG9wIG9mZnNldD0iLjQ4IiBzdG9wLWNvbG9yPSIjMTkzOGUyIiBzdG9wLW9wYWNpdHk9IjAiLz48L2xpbmVhckdyYWRpZW50PjwvZGVmcz48cmVjdCB3aWR0aD0iNDM4IiBoZWlnaHQ9IjI0IiBmaWxsPSJ1cmwoI2hlYWRlckdyYWRpZW50KSIvPjxwYXRoIGQ9Ik0wIDIzLjUgSDQzOCIgc3Ryb2tlPSIjNzBkZWVjIiBzdHJva2Utb3BhY2l0eT0iLjEzIiBzdHJva2Utd2lkdGg9IjEiLz48L3N2Zz4K") center / 100% 100% no-repeat;
@@ -1804,37 +1804,36 @@
   cursor:pointer; text-align:left; appearance:none; pointer-events:auto;
 }
 .weapon-specs-toggle:focus-visible { outline:1px solid #FFFFFF; outline-offset:-2px; }
-.info-panel-toggle-icon {
+.popup-toggle-icon {
   display:inline-block; width:11px; flex:0 0 11px; text-align:center;
   font:inherit; color:#FFFFFF;
 }
-.info-panel-collapse {
+.popup-collapse {
   display:grid; grid-template-rows:1fr; opacity:1;
   transition:grid-template-rows 240ms ease, opacity 240ms ease;
 }
-.info-panel-collapse.is-collapsed { grid-template-rows:0fr; opacity:0; }
-.info-panel-body { min-height:0; overflow:hidden; }
-.info-panel-inner { padding:2px 8px 8px; }
+.popup-collapse.is-collapsed { grid-template-rows:0fr; opacity:0; }
+.popup-body { min-height:0; overflow:hidden; }
 
-.ship-info-popup {
+.guide-popup {
   z-index:20; width:max-content; pointer-events:none;
 }
-.ship-info-titlebar {
+.guide-popup-titlebar {
   width:100%; white-space:nowrap; gap:12px;
   font-family:var(--kr-button-family); font-size:var(--kr-button-size);
   font-weight:var(--kr-button-weight); line-height:var(--kr-button-leading);
   letter-spacing:var(--kr-button-tracking);
 }
-.ship-info-titlebar .info-panel-toggle-icon {
+.guide-popup-titlebar .popup-toggle-icon {
   width:16px; flex:0 0 16px;
 }
-.ship-info-body {
+.guide-popup-body {
   min-height:44px; padding:8px var(--kr-space-16); white-space:nowrap;
   font-family:var(--kr-small-family); font-size:var(--kr-small-size);
   font-weight:var(--kr-small-weight); line-height:var(--kr-small-leading);
   letter-spacing:var(--kr-small-tracking); color:#FFFFFF;
 }
-.ship-info-popup.is-open .info-panel-collapse {
+.guide-popup.is-open .popup-collapse {
   grid-template-rows:1fr; opacity:1;
 }
 .report-modal { position:absolute; inset:0; z-index:var(--z-modal); pointer-events:auto; isolation:isolate; }
@@ -1957,7 +1956,8 @@ html:lang(ko) .report-preview, html:lang(ja) .report-preview { max-height:148px;
 .game-report-score-table th{width:62%}
 .game-report-score-table td{width:38%}
 .game-report-score-table th,.game-report-score-table td{overflow:hidden;text-overflow:ellipsis}
-.game-report-score.is-flat .game-report-score-table th{white-space:normal}
+.game-report-score.is-flat .game-report-score-table th{white-space:normal;width:70%}
+.game-report-score.is-flat .game-report-score-table td{width:30%}
 .game-report-score.is-flat .game-report-score-table th,.game-report-score.is-flat .game-report-score-table td{text-align:left;padding-left:2em}
 
 .rg-cards{display:grid;grid-template-columns:repeat(var(--n,3),1fr);gap:16px}
@@ -1978,15 +1978,15 @@ html:lang(ko) .report-preview, html:lang(ja) .report-preview { max-height:148px;
 .rg-have small{display:block;margin-top:2px;font-size:var(--kr-small-size);color:#ddf7ff}
 
 #rgGuidePopup{left:328.6px;top:596px;width:532.8px;z-index:50;min-width:0}
-#rgGuidePopup .ship-info-titlebar{align-items:center}
-#rgGuidePopup .ship-info-title{flex:1 1 auto}
-.ship-info-dots{font-size:var(--kr-small-size);letter-spacing:.2em;color:#83b8c5;font-weight:400}
+#rgGuidePopup .guide-popup-titlebar{align-items:center}
+#rgGuidePopup .guide-popup-title{flex:1 1 auto}
+.guide-popup-dots{font-size:var(--kr-small-size);letter-spacing:.2em;color:#83b8c5;font-weight:400}
 .ui-x{display:flex;align-items:center;justify-content:center;flex:0 0 16px;width:16px;height:18px;padding:0;border:0;cursor:pointer;pointer-events:auto;background:var(--img-close-slot) center/100% 100% no-repeat;clip-path:polygon(2px 0,100% 0,100% calc(100% - 2px),calc(100% - 2px) 100%,0 100%,0 2px)}
 .ui-x:hover{filter:brightness(1.5)}
 .ui-x img{display:block;width:11px;height:11px;pointer-events:none}
-.ship-info-body .ln{display:block}.ship-info-body .ln.gap{height:.6em}
-.ship-info-body kbd{font:inherit;margin:0 2px;padding:0 5px;border:1px solid rgba(112,222,236,.5)}
-.ship-info-body .rg-guide-popup-hint{display:block;margin-top:8px;padding-top:6px;border-top:1px solid rgba(112,222,236,.3);color:#83b8c5}
+.guide-popup-body .ln{display:block}.guide-popup-body .ln.gap{height:.6em}
+.guide-popup-body kbd{font:inherit;margin:0 2px;padding:0 5px;border:1px solid rgba(112,222,236,.5)}
+.guide-popup-body .rg-guide-popup-hint{display:block;margin-top:8px;padding-top:6px;border-top:1px solid rgba(112,222,236,.3);color:#83b8c5}
 </style>
 </head>
 <body>
@@ -2010,37 +2010,37 @@ html:lang(ko) .report-preview, html:lang(ja) .report-preview { max-height:148px;
   </div>
 
   <div class="main-layout" data-game-region="main-layout">
-    <div class="hud" data-game-region="tactical">
+    <div class="tactical-screen" data-game-region="tactical">
       <div class="canvas-wrap">
         <canvas id="game" width="960" height="540" data-resolution-mode="layout-derived-once" aria-label="STAGE 01 전술 화면"></canvas>
-        <div class="engagement-board-stack" aria-label="현재 및 미래 교전 현황">
-          <section class="engagement-card" aria-label="교전 채널">
-            <div class="engagement-card-header">
+        <div class="engagement-popup-stack" aria-label="현재 및 미래 교전 현황">
+          <section class="engagement-popup" aria-label="교전 채널">
+            <div class="engagement-popup-header">
               <button
                 id="engagementChannelPopupToggle"
-                class="engagement-toggle"
+                class="engagement-popup-toggle"
                 type="button"
                 aria-expanded="true"
                 aria-controls="engagementChannelPopupBody"
-              ><span class="engagement-toggle-icon" aria-hidden="true">▼</span><span data-ui-text="html.label.07"></span></button>
+              ><span class="engagement-popup-toggle-icon" aria-hidden="true">▼</span><span data-ui-text="html.label.07"></span></button>
             </div>
-            <div id="engagementChannelPopupBody" class="engagement-card-body channel-board">
+            <div id="engagementChannelPopupBody" class="engagement-popup-body channel-board">
               <div id="channelRows"></div>
               <div id="finalChannelRows" aria-label="종말 유도 채널 현황"></div>
             </div>
           </section>
 
-          <section class="engagement-card" aria-label="예약 큐">
-            <div class="engagement-card-header">
+          <section class="engagement-popup" aria-label="예약 큐">
+            <div class="engagement-popup-header">
               <button
                 id="reserveQueuePopupToggle"
-                class="engagement-toggle"
+                class="engagement-popup-toggle"
                 type="button"
                 aria-expanded="true"
                 aria-controls="reserveQueuePopupBody"
-              ><span class="engagement-toggle-icon" aria-hidden="true">▼</span><span data-ui-text="html.label.08"></span></button>
+              ><span class="engagement-popup-toggle-icon" aria-hidden="true">▼</span><span data-ui-text="html.label.08"></span></button>
             </div>
-            <div id="reserveQueuePopupBody" class="engagement-card-body reserve-board">
+            <div id="reserveQueuePopupBody" class="engagement-popup-body reserve-board">
               <div class="reserve-header" aria-hidden="true">
                 <span data-ui-text="html.label.09"></span><span data-ui-text="html.label.10"></span><span data-ui-text="html.label.11"></span><span class="reserve-weapon" data-ui-text="html.label.12"></span><span class="reserve-tti" data-ui-text="html.label.13"></span>
               </div>
@@ -2071,17 +2071,17 @@ html:lang(ko) .report-preview, html:lang(ja) .report-preview { max-height:148px;
       </div>
     </div>
 
-    <aside class="side-hud" data-game-region="sidebar" aria-label="게임 사이드바">
-      <div class="hud-card-shell">
-      <section class="hud-card dialogue-card" aria-label="통신 로그">
-        <div class="card-header communication-header">
-          <span class="card-header-title">
-            <span class="header-glyph" aria-hidden="true"></span>
+    <aside class="side-info-menu-column" data-game-region="sidebar" aria-label="게임 사이드바">
+      <div class="side-info-menu-frame">
+      <section class="side-info-menu comm-log-menu" aria-label="통신 로그">
+        <div class="side-info-menu-header comm-log-menu-header">
+          <span class="side-info-menu-header-title">
+            <span class="side-info-menu-header-glyph" aria-hidden="true"></span>
             <span data-ui-text="html.label.16"></span>
           </span>
           <span></span>
         </div>
-        <div class="dialogue-box">
+        <div class="comm-log-box">
           <div class="character-face" aria-label="캐릭터 이미지 영역">
             <svg class="portrait-device" viewBox="0 0 120 120" aria-hidden="true">
               <defs>
@@ -2134,18 +2134,18 @@ html:lang(ko) .report-preview, html:lang(ja) .report-preview { max-height:148px;
             </svg>
             <div class="portrait-content" data-ui-text="html.label.17"></div>
           </div>
-          <div class="dialogue-text-panel">
-            <div class="dialogue-text" data-ui-text="html.label.18"></div>
+          <div class="comm-log-text-panel">
+            <div class="comm-log-text" data-ui-text="html.label.18"></div>
           </div>
         </div>
       </section>
       </div>
 
-      <div class="right-gap" aria-hidden="true"></div>
+      <div class="side-info-menu-gap" aria-hidden="true"></div>
 
-      <div class="hud-card-shell">
-      <section class="hud-card weapon-card" aria-label="무장 선택 UI">
-        <div class="weapon-strip">
+      <div class="side-info-menu-frame">
+      <section class="side-info-menu weapon-select-menu" aria-label="무장 선택 UI">
+        <div class="weapon-select-strip">
           <div class="tap-key" aria-label="무장 전환 표시">
             <span data-ui-text="html.label.19"></span>
             <span class="tap-switch-icon" aria-hidden="true">
@@ -2153,22 +2153,22 @@ html:lang(ko) .report-preview, html:lang(ja) .report-preview { max-height:148px;
               <i class="arrow-bottom"></i>
             </span>
           </div>
-          <button type="button" class="weapon-slot weapon-choice selected" data-weapon="WEAPON_1" aria-label="1번 무장 선택" aria-pressed="true">1</button>
-          <button type="button" class="weapon-slot weapon-choice" data-weapon="WEAPON_2" aria-label="2번 무장 선택" aria-pressed="false">2</button>
-          <button type="button" class="weapon-slot weapon-choice" data-weapon="WEAPON_3" aria-label="3번 무장 M3 선택" aria-pressed="false">3</button>
-          <button type="button" class="weapon-slot weapon-choice" data-weapon="WEAPON_4" aria-label="4번 무장 M4 선택" aria-pressed="false">4</button>
+          <button type="button" class="weapon-slot weapon-select-button selected" data-weapon="WEAPON_1" aria-label="1번 무장 선택" aria-pressed="true">1</button>
+          <button type="button" class="weapon-slot weapon-select-button" data-weapon="WEAPON_2" aria-label="2번 무장 선택" aria-pressed="false">2</button>
+          <button type="button" class="weapon-slot weapon-select-button" data-weapon="WEAPON_3" aria-label="3번 무장 M3 선택" aria-pressed="false">3</button>
+          <button type="button" class="weapon-slot weapon-select-button" data-weapon="WEAPON_4" aria-label="4번 무장 M4 선택" aria-pressed="false">4</button>
           <div class="weapon-slot" aria-hidden="true"></div>
           <div class="weapon-slot" aria-hidden="true"></div>
         </div>
       </section>
       </div>
 
-      <div class="right-gap" aria-hidden="true"></div>
+      <div class="side-info-menu-gap" aria-hidden="true"></div>
 
-      <div class="hud-card-shell">
-      <section class="hud-card current-status-card" aria-label="현재 상태">
-        <div class="card-header">
-          <span class="card-header-title"><span class="header-glyph" aria-hidden="true"></span><span data-ui-text="html.label.20"></span></span>
+      <div class="side-info-menu-frame">
+      <section class="side-info-menu current-status-menu" aria-label="현재 상태">
+        <div class="side-info-menu-header">
+          <span class="side-info-menu-header-title"><span class="side-info-menu-header-glyph" aria-hidden="true"></span><span data-ui-text="html.label.20"></span></span>
           <span class="battle-status-slot" id="battleStatusSlot" data-ui-text="html.label.21"></span>
         </div>
         <div class="info-grid">
@@ -2192,30 +2192,30 @@ html:lang(ko) .report-preview, html:lang(ja) .report-preview { max-height:148px;
       </section>
       </div>
 
-      <div class="right-gap" aria-hidden="true"></div>
+      <div class="side-info-menu-gap" aria-hidden="true"></div>
 
-      <div class="hud-card-shell">
-      <section class="hud-card radar-card" aria-label="전술 레이더 미니맵">
-        <div class="card-header">
-          <span class="card-header-title"><span class="header-glyph" aria-hidden="true"></span><span data-ui-text="html.label.27"></span></span>
+      <div class="side-info-menu-frame">
+      <section class="side-info-menu minimap-menu" aria-label="전술 레이더 미니맵">
+        <div class="side-info-menu-header">
+          <span class="side-info-menu-header-title"><span class="side-info-menu-header-glyph" aria-hidden="true"></span><span data-ui-text="html.label.27"></span></span>
           <span class="sweep-badge" id="minimapNextUpdate">SWEEP 0.5s</span>
         </div>
 
-        <svg class="radar-tech-decoration" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+        <svg class="minimap-tech-decoration" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
           <path class="glow" d="M3 22 L3 9 L8 4 L22 4 M78 4 L92 4 L97 9 L97 22 M3 78 L3 91 L8 96 L22 96 M78 96 L92 96 L97 91 L97 78"/>
           <path class="core" d="M3 22 L3 9 L8 4 L22 4 M78 4 L92 4 L97 9 L97 22 M3 78 L3 91 L8 96 L22 96 M78 96 L92 96 L97 91 L97 78"/>
           <path class="fine" d="M6 30 L6 42 M6 46 L6 54 M6 58 L6 70 M94 30 L94 42 M94 46 L94 54 M94 58 L94 70 M12 11 L20 11 M80 11 L88 11 M12 89 L20 89 M80 89 L88 89"/>
         </svg>
 
-        <div class="radar-stage">
-          <div class="minimap-shell" id="radarInstrument">
+        <div class="minimap-stage">
+          <div class="minimap-shell" id="minimapInstrument">
             <canvas id="minimap" width="187" height="187" aria-label="전술 미니맵"></canvas>
-            <svg id="radarScaleOverlay" class="radar-scale-overlay" viewBox="0 0 207 207" aria-hidden="true">
-              <g id="radarAxisLines"></g>
-              <g id="radarTickLines"></g>
-              <g id="radarAzimuthLabels"></g>
+            <svg id="minimapScaleOverlay" class="minimap-scale-overlay" viewBox="0 0 207 207" aria-hidden="true">
+              <g id="minimapAxisLines"></g>
+              <g id="minimapTickLines"></g>
+              <g id="minimapAzimuthLabels"></g>
             </svg>
-            <div class="radar-bezel" aria-hidden="true"></div>
+            <div class="minimap-bezel" aria-hidden="true"></div>
           </div>
         </div>
       </section>
@@ -2224,14 +2224,14 @@ html:lang(ko) .report-preview, html:lang(ja) .report-preview { max-height:148px;
   </div>
 
   <div class="bottom-controls" data-game-region="bottom-controls" aria-label="플레이어 조작">
-    <button id="fireBtn" class="control-btn fire" disabled>
+    <button id="fireButton" class="control-button fire" disabled>
       <span class="fire-main" data-ui-text="html.label.29"></span>
       <span id="fireAutoModeLabel" class="fire-auto-mode" data-ui-text="html.label.30"></span>
       <span id="fireCooldownLabel" class="fire-cooldown">(0.5s)</span>
     </button>
-    <button id="readyBtn" class="control-btn ready" type="button" disabled data-ui-text="html.label.32"></button>
-    <button id="ciwsAutoBtn" class="control-btn ready" type="button" aria-pressed="true" aria-label="CIWS 및 자동 RAM ON OFF V키" data-ui-text="html.label.33"></button>
-    <button id="timeScaleBtn" class="control-btn time-scale" type="button" aria-label="배속 변경 W키">
+    <button id="readyButton" class="control-button ready" type="button" disabled data-ui-text="html.label.32"></button>
+    <button id="ciwsAutoButton" class="control-button ready" type="button" aria-pressed="true" aria-label="CIWS 및 자동 RAM ON OFF V키" data-ui-text="html.label.33"></button>
+    <button id="timeScaleButton" class="control-button time-scale" type="button" aria-label="배속 변경 W키">
       <span id="timeScaleLabel" class="time-scale-main" data-ui-text="html.label.34"></span>
       <span class="time-scale-steps" aria-hidden="true">
         <span class="speed-triangle level-1 active"></span>
@@ -2239,16 +2239,16 @@ html:lang(ko) .report-preview, html:lang(ja) .report-preview { max-height:148px;
         <span class="speed-triangle level-3"></span>
       </span>
     </button>
-    <button id="pauseBtn" class="control-btn state-toggle is-inactive" type="button" aria-label="일시정지 S키" aria-pressed="false" data-ui-text="html.label.35"></button>
-    <button id="restartBtn" class="control-btn">RESTART [R]</button>
-    <button id="soundBtn" class="control-btn state-toggle sound-control is-active" type="button" aria-pressed="true">
+    <button id="pauseButton" class="control-button state-toggle is-inactive" type="button" aria-label="일시정지 S키" aria-pressed="false" data-ui-text="html.label.35"></button>
+    <button id="restartButton" class="control-button">RESTART [R]</button>
+    <button id="soundButton" class="control-button state-toggle sound-control is-active" type="button" aria-pressed="true">
       <span class="sound-wave" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></span>
       <span id="soundLabel" data-ui-text="html.label.37"></span>
     </button>
   </div>
 
   <div class="instructions" id="instructions" data-game-region="instructions">
-    <div class="instruction-row" data-ui-html-list="combat.9113 combat.9114 combat.9115 combat.9116 combat.9117 combat.9118 combat.9119 hud.footer.tab hud.footer.guide hud.footer.bgm">
+    <div class="instruction-row" data-ui-html-list="combat.9113 combat.9114 combat.9115 combat.9116 combat.9117 combat.9118 combat.9119 tactical-screen.footer.tab tactical-screen.footer.guide tactical-screen.footer.bgm">
     </div>
   </div>
 </div>
@@ -2463,12 +2463,8 @@ ${p2}
     "guide.11931": "나머지 카드는 확률로 나옵니다.\n<b>E</b> 리롤, <b>TAB</b> 업그레이드 현황.",
     "guide.11933": "점수와 랭크",
     "guide.11933.2": "요격 = 1000점 + 속성 보너스, 가까이서 격추할수록 감점.\n\n클리어 +500, 무피해 +1000, 체력 최대 +500.\n합계로 랭크(C/B/A/S)가 정해집니다.",
-    "guide.11936": "저고도 비행",
-    "guide.11936.2": "<b>저고도 비행</b>: 레이더에 늦게 잡힙니다, 격추 +200.",
     "guide.11937": "특수탄",
     "guide.11937.2": "<b>특수탄(보라)</b>: 피해 1400, 격추 +350.",
-    "guide.11938": "해면 밀착",
-    "guide.11938.2": "<b>해면 밀착</b>: 근접 시 급가속, 격추 +250.",
     "guide.11939": "웨이포인트",
     "guide.11939.2": "<b>웨이포인트</b>: 경유점을 돌아 와 도착 예측이 어렵습니다.",
     "guide.11940": "전폭기",
@@ -2542,9 +2538,9 @@ ${p2}
     "combat.track.tti": (ttiSeconds) => `TTI ${ttiSeconds}s`,
     "ui.state.on": "ON",
     "ui.state.off": "OFF",
-    "hud.footer.tab": "<span class=\"instruction-item\"><span class=\"kbd\">TAB</span> 업그레이드 현황</span>",
-    "hud.footer.guide": "<span class=\"instruction-item\"><span class=\"kbd\">H</span> 가이드</span>",
-    "hud.footer.bgm": "<span class=\"instruction-item\"><span class=\"kbd\">M</span> BGM</span>",
+    "tactical-screen.footer.tab": "<span class=\"instruction-item\"><span class=\"kbd\">TAB</span> 업그레이드 현황</span>",
+    "tactical-screen.footer.guide": "<span class=\"instruction-item\"><span class=\"kbd\">H</span> 가이드</span>",
+    "tactical-screen.footer.bgm": "<span class=\"instruction-item\"><span class=\"kbd\">M</span> BGM</span>",
   });
   function uiText(key, ...args) {
     const copy = UI_TEXT_CATALOG[key];
@@ -2809,21 +2805,21 @@ ${p2}
   const battleTimeEl = document.getElementById("battleTime");
   const minimapNextUpdateEl = document.getElementById("minimapNextUpdate");
   const battleStatusSlotEl = document.getElementById("battleStatusSlot");
-  const fireBtn = document.getElementById("fireBtn");
-  const readyBtn = document.getElementById("readyBtn");
-  const ciwsAutoBtn = document.getElementById("ciwsAutoBtn");
+  const fireButton = document.getElementById("fireButton");
+  const readyButton = document.getElementById("readyButton");
+  const ciwsAutoButton = document.getElementById("ciwsAutoButton");
   const fireAutoModeLabel = document.getElementById("fireAutoModeLabel");
   const fireCooldownLabel = document.getElementById("fireCooldownLabel");
-  const restartBtn = document.getElementById("restartBtn");
-  const soundBtn = document.getElementById("soundBtn");
+  const restartButton = document.getElementById("restartButton");
+  const soundButton = document.getElementById("soundButton");
   const soundLabelEl = document.getElementById("soundLabel");
   const deviceClockEl = document.getElementById("deviceClockValue");
-  const radarScaleOverlayEl = document.getElementById("radarScaleOverlay");
-  const radarAxisLinesEl = document.getElementById("radarAxisLines");
-  const radarTickLinesEl = document.getElementById("radarTickLines");
-  const radarAzimuthLabelsEl = document.getElementById("radarAzimuthLabels");
-  const timeScaleBtn = document.getElementById("timeScaleBtn");
-  const pauseBtn = document.getElementById("pauseBtn");
+  const minimapScaleOverlayEl = document.getElementById("minimapScaleOverlay");
+  const minimapAxisLinesEl = document.getElementById("minimapAxisLines");
+  const minimapTickLinesEl = document.getElementById("minimapTickLines");
+  const minimapAzimuthLabelsEl = document.getElementById("minimapAzimuthLabels");
+  const timeScaleButton = document.getElementById("timeScaleButton");
+  const pauseButton = document.getElementById("pauseButton");
   const timeScaleLabel = document.getElementById("timeScaleLabel");
   const timeScaleTriangles = [...document.querySelectorAll(".speed-triangle")];
   const channelRowsEl = document.getElementById("channelRows");
@@ -8790,18 +8786,18 @@ ${p2}
     }
   });
 
-  const weaponButtons=Array.from(document.querySelectorAll(".weapon-choice"));
+  const weaponSelectButtons=Array.from(document.querySelectorAll(".weapon-select-button"));
   function chooseWeapon(weaponId) {
     if (!session.selectWeapon(weaponId)) return;
-    for (const button of weaponButtons) {
+    for (const button of weaponSelectButtons) {
       const selected=button.dataset.weapon===weaponId;
       button.classList.toggle("selected",selected);
       button.setAttribute("aria-pressed",String(selected));
     }
   }
-  weaponButtons.forEach(button=>button.addEventListener("click",()=>chooseWeapon(button.dataset.weapon)));
-  function syncWeaponButtons() {
-    for (const button of weaponButtons) {
+  weaponSelectButtons.forEach(button=>button.addEventListener("click",()=>chooseWeapon(button.dataset.weapon)));
+  function syncWeaponSelectButtons() {
+    for (const button of weaponSelectButtons) {
       const selected=button.dataset.weapon===session.selectedWeaponId;
       button.classList.toggle("selected",selected);
       button.setAttribute("aria-pressed",String(selected));
@@ -8826,12 +8822,12 @@ ${p2}
     deviceClockEl.textContent = `${hh}:${mm}:${ss}`;
   }
 
-  function buildRadarScale() {
+  function buildMinimapScale() {
     if (
-      !radarScaleOverlayEl ||
-      !radarAxisLinesEl ||
-      !radarTickLinesEl ||
-      !radarAzimuthLabelsEl
+      !minimapScaleOverlayEl ||
+      !minimapAxisLinesEl ||
+      !minimapTickLinesEl ||
+      !minimapAzimuthLabelsEl
     ) return;
 
     const NS = "http://www.w3.org/2000/svg";
@@ -8848,9 +8844,9 @@ ${p2}
 
     const labelEdgeGap = 4.0;
 
-    radarAxisLinesEl.replaceChildren();
-    radarTickLinesEl.replaceChildren();
-    radarAzimuthLabelsEl.replaceChildren();
+    minimapAxisLinesEl.replaceChildren();
+    minimapTickLinesEl.replaceChildren();
+    minimapAzimuthLabelsEl.replaceChildren();
 
     const point = (angleRadians, radius) => ({
       x: center + Math.cos(angleRadians) * radius,
@@ -8870,7 +8866,7 @@ ${p2}
         "class",
         axisDegrees % 90 === 0 ? "axis-main" : "axis-secondary"
       );
-      radarAxisLinesEl.appendChild(line);
+      minimapAxisLinesEl.appendChild(line);
     }
 
     for (let degrees = 0; degrees < 360; degrees += 2) {
@@ -8901,7 +8897,7 @@ ${p2}
             ? "tick-medium"
             : "tick-minor"
       );
-      radarTickLinesEl.appendChild(tick);
+      minimapTickLinesEl.appendChild(tick);
     }
 
     const pendingLabels = [];
@@ -8914,7 +8910,7 @@ ${p2}
 
       label.setAttribute("x", center);
       label.setAttribute("y", center);
-      radarAzimuthLabelsEl.appendChild(label);
+      minimapAzimuthLabelsEl.appendChild(label);
       pendingLabels.push({ label, angle });
     }
 
@@ -8973,7 +8969,7 @@ ${p2}
   }
 
   function bindCollapsiblePopup(toggleEl, bodyEl) {
-    const iconEl = toggleEl.querySelector(".engagement-toggle-icon");
+    const iconEl = toggleEl.querySelector(".engagement-popup-toggle-icon");
 
     const applyState = expanded => {
       toggleEl.setAttribute("aria-expanded", String(expanded));
@@ -8996,21 +8992,21 @@ ${p2}
     button.addEventListener("click", () => switchStage(button.dataset.stage));
   }
 
-  fireBtn.addEventListener("click", tryFire);
-  readyBtn.addEventListener("click", tryRegister);
-  ciwsAutoBtn.addEventListener("click", () => session.toggleCloseDefenseAuto());
-  timeScaleBtn.addEventListener("click", () => {
+  fireButton.addEventListener("click", tryFire);
+  readyButton.addEventListener("click", tryRegister);
+  ciwsAutoButton.addEventListener("click", () => session.toggleCloseDefenseAuto());
+  timeScaleButton.addEventListener("click", () => {
     session.cycleTimeScale();
   });
-  pauseBtn.addEventListener("click", () => {
+  pauseButton.addEventListener("click", () => {
     session.togglePause();
   });
-  restartBtn.addEventListener("click", () => {
+  restartButton.addEventListener("click", () => {
     AudioSystem.ensure();
     AudioSystem.stopMissileWarning();
     session.restart();
   });
-  soundBtn.addEventListener("click", () => AudioSystem.toggle());
+  soundButton.addEventListener("click", () => AudioSystem.toggle());
 
   window.addEventListener("keydown", (e) => {
     if (e.repeat) return;
@@ -10866,7 +10862,7 @@ ${p2}
         })
       );
 
-    syncWeaponButtons();
+    syncWeaponSelectButtons();
     if (snapshot.reservationQueue.length) {
       reserveRowsEl.replaceChildren(
         ...snapshot.reservationQueue.map(reservation => {
@@ -10920,11 +10916,11 @@ ${p2}
           cooldownReady
         );
 
-    fireBtn.disabled = !canFire;
-    readyBtn.disabled =
+    fireButton.disabled = !canFire;
+    readyButton.disabled =
       snapshot.battleState !== BattleState.RUNNING ||
       snapshot.uncommittedReservationCount === 0;
-    fireBtn.classList.toggle(
+    fireButton.classList.toggle(
       "auto-fire-on",
       snapshot.autoFireEnabled
     );
@@ -10935,9 +10931,9 @@ ${p2}
       ? uiText("combat.11243", snapshot.fireCooldownSeconds.toFixed(1))
       : uiText("combat.11244", snapshot.fireCooldownRemaining.toFixed(1));
 
-    ciwsAutoBtn.textContent = uiText("combat.11246", uiText(snapshot.closeDefenseAutoEnabled ? "ui.state.on" : "ui.state.off"));
-    ciwsAutoBtn.setAttribute("aria-pressed", String(snapshot.closeDefenseAutoEnabled));
-    ciwsAutoBtn.classList.toggle("is-off", !snapshot.closeDefenseAutoEnabled);
+    ciwsAutoButton.textContent = uiText("combat.11246", uiText(snapshot.closeDefenseAutoEnabled ? "ui.state.on" : "ui.state.off"));
+    ciwsAutoButton.setAttribute("aria-pressed", String(snapshot.closeDefenseAutoEnabled));
+    ciwsAutoButton.classList.toggle("is-off", !snapshot.closeDefenseAutoEnabled);
     timeScaleLabel.textContent = uiText("combat.11249", snapshot.timeScale);
     for (let index = 0; index < timeScaleTriangles.length; index++) {
       timeScaleTriangles[index].classList.toggle(
@@ -10947,24 +10943,24 @@ ${p2}
     }
 
     const pauseActive = !!snapshot.paused;
-    pauseBtn.classList.toggle("is-active", pauseActive);
-    pauseBtn.classList.toggle("is-inactive", !pauseActive);
-    pauseBtn.setAttribute("aria-pressed", String(pauseActive));
-    pauseBtn.textContent = pauseActive
+    pauseButton.classList.toggle("is-active", pauseActive);
+    pauseButton.classList.toggle("is-inactive", !pauseActive);
+    pauseButton.setAttribute("aria-pressed", String(pauseActive));
+    pauseButton.textContent = pauseActive
       ? uiText("combat.11262")
       : uiText("html.label.35");
 
     const soundActive = !!AudioSystem.enabled;
-    soundBtn.classList.toggle("is-active", soundActive);
-    soundBtn.classList.toggle("is-inactive", !soundActive);
-    soundBtn.setAttribute("aria-pressed", String(soundActive));
+    soundButton.classList.toggle("is-active", soundActive);
+    soundButton.classList.toggle("is-inactive", !soundActive);
+    soundButton.setAttribute("aria-pressed", String(soundActive));
     soundLabelEl.textContent = uiText("combat.11269", uiText(soundActive ? "ui.state.on" : "ui.state.off"));
 
   }
 
   updateDeviceClock();
   window.setInterval(updateDeviceClock, 1000);
-  buildRadarScale();
+  buildMinimapScale();
 
   let last = performance.now() / 1000;
   let acc = 0;
@@ -11195,10 +11191,10 @@ ${p2}
     }
 
     function popup(el) {
-      el.className = "info-panel-frame ship-info-popup"; el.hidden = true;
-      el.innerHTML = `<header class="info-panel-titlebar ship-info-titlebar"><span class="info-panel-toggle-icon" aria-hidden="true">▼</span><span class="ship-info-title"></span><span class="ship-info-dots"></span><button class="ui-x" type="button" aria-label="닫기"><img alt="" src="${XICON}"></button></header>
-        <div class="info-panel-collapse is-collapsed" aria-hidden="true"><div class="info-panel-body"><div class="ship-info-body"></div></div></div>`;
-      const collapse = el.querySelector(".info-panel-collapse"), titleEl = el.querySelector(".ship-info-title"), dotsEl = el.querySelector(".ship-info-dots"), bodyEl = el.querySelector(".ship-info-body");
+      el.className = "popup-frame guide-popup"; el.hidden = true;
+      el.innerHTML = `<header class="popup-titlebar guide-popup-titlebar"><span class="popup-toggle-icon" aria-hidden="true">▼</span><span class="guide-popup-title"></span><span class="guide-popup-dots"></span><button class="ui-x" type="button" aria-label="닫기"><img alt="" src="${XICON}"></button></header>
+        <div class="popup-collapse is-collapsed" aria-hidden="true"><div class="popup-body"><div class="guide-popup-body"></div></div></div>`;
+      const collapse = el.querySelector(".popup-collapse"), titleEl = el.querySelector(".guide-popup-title"), dotsEl = el.querySelector(".guide-popup-dots"), bodyEl = el.querySelector(".guide-popup-body");
       let open = false, timer = 0;
       return {
         show(title, html, dots) {                                 
@@ -11308,113 +11304,219 @@ ${p2}
   }
   function rng(seed) { return () => { seed |= 0; seed = seed + 0x6D2B79F5 | 0; let t = Math.imul(seed ^ seed >>> 15, 1 | seed);
     t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; }; }
-  const TUTORIAL_ROUNDS = 2;
+  const TUTORIAL_ROUNDS = 2, SCRIPTED_ROUND = 2, BASE_THREAT_ROUND = 2;
   const DIFF = RG.DIFF = { spikeFrom: 5, spikeEvery: 3, spikeBonus: 1.0, waves0: 2, wavesPerP: 0.3, wavesMax: 6, gap0: 26, gapPerP: 1.1, gapMin: 12,
     anchor0: 2.4, anchorPerP: 0.22, anchorMax: 6, companion0: 1.6, companionPerP: 0.1, companionMax: 4, companionP0: 0.4, companionPPerP: 0.06,
     slack0: 7, slackPerP: 0.8, slackMin: 1.2, fast0: 0.12, fastPerP: 0.04, fastMax: 0.45, slow: 0.15,
     low: 0.06, lowStep: 0.02, lowMax: 0.25, spec: 0.05, specStep: 0.015, specMax: 0.2, skim: 0.05, skimStep: 0.015, skimMax: 0.2,
-    fly: 0.05, flyStep: 0.015, flyMax: 0.2, bomberP: 0.3, hyperMin: 1, hyperMax: 2 };
-  const INTRO = [
-    { at: 5, attrs: ["low", "special"], msg: "신규 위협 — 저고도 비행(레이더 포착이 늦음) · 특수탄(보라색, 피해 1400)" },
-    { at: 8, attrs: ["skim", "fly"], msg: "신규 위협 — 해면 밀착(근접 시 급가속) · 웨이포인트 우회 비행(도착 시각 예측이 어려움)" },
-    { at: 11, attrs: ["bomber"], msg: "신규 위협 — 전폭기: 접근해 미사일을 발사합니다. 발사 전에 격추하면 +500" },
-    { at: 14, attrs: ["hyper"], msg: "신규 위협 — 초고속탄(속도 " + ENEMY_SPEED_ULTRA_FAST + "): 가장 빠른 위협입니다" } ];
-  const has = (a, r) => INTRO.some(x => x.at <= r && x.attrs.includes(a));
-  const introOf = r => INTRO.find(x => x.at === r) || null;
-  const isSpike = r => r >= DIFF.spikeFrom && (r - DIFF.spikeFrom) % DIFF.spikeEvery === 0;
-  const pressure = r => (r - TUTORIAL_ROUNDS) + (isSpike(r) ? DIFF.spikeBonus : 0);
+    fly: 0.05, flyStep: 0.015, flyMax: 0.2, flyShareLimit: 0.2, bomberMin: 1, bomberMax: 4, hyperMin: 1, hyperMax: 2 };
   const DRONE_REPAIR_INTERVAL_SECONDS = 2;
   const NORMAL_SPAWN_OFFSETS = Object.freeze([0, -0.25, -0.51, -0.76, -1.02]);
   const BOMBER_SPAWN_OFFSETS = Object.freeze([1.4, 1.12, 0.84, 0.56, 0.28]);
-  function spawnPlacementOf(it, index) {
-    const slot = index % NORMAL_SPAWN_OFFSETS.length, extra = 380 + slot * 14;
-    if (it.ent === HostileKind.BOMBER) return { extra, offset: BOMBER_SPAWN_OFFSETS[slot] };
-    if (it.speed === ENEMY_SPEED_ULTRA_FAST) return { extra: 800, offset: 24.18 };
-    if (it.speed >= ENEMY_SPEED_FAST) return { extra: 500, offset: 13.33 };
-    if (it.speed <= ENEMY_SPEED_SLOW) return { extra: 350, offset: -20.25 };
-    return { extra, offset: NORMAL_SPAWN_OFFSETS[slot] };
+  const MIN_OBJECT_DISTANCE = 90;
+  function spawnTimeForMinObjectDistance(leader, follower) {
+    const gap = (leader.bearing - follower.bearing) * Math.PI / 180, lateral = follower.radius * Math.sin(gap);
+    if (Math.abs(lateral) >= MIN_OBJECT_DISTANCE || Math.cos(gap) <= 0) return follower.time;
+    const clearRadius = follower.radius * Math.cos(gap) - Math.sqrt(MIN_OBJECT_DISTANCE ** 2 - lateral ** 2);
+    return Math.max(follower.time, leader.time + (leader.radius - clearRadius) / leader.speed);
   }
-  function toOrders(items, sd) {
+  function delaySpawnsForMinObjectDistance(items, placements, spawnTimes) {
+    const bursts = new Map();
+    const objects = items.map((it, k) => ({ burstId: it.burstId, bearing: it.bearing, speed: it.speed, time: spawnTimes[k],
+      radius: MIN_ENEMY_SPAWN_DISTANCE + placements[k].extra }));
+    objects.forEach(o => bursts.set(o.burstId, [...(bursts.get(o.burstId) ?? []), o]));
+    for (const burst of bursts.values()) for (let settled = false; !settled;) {
+      settled = true;
+      for (const leader of burst) for (const follower of burst) {
+        if (leader === follower || leader.time > follower.time) continue;
+        const required = spawnTimeForMinObjectDistance(leader, follower);
+        if (required <= follower.time + 1e-9) continue;
+        follower.time += Math.ceil((required - follower.time) * 100) / 100; settled = false;
+      }
+    }
+    return objects.map(o => o.time);
+  }
+  const sample = (list, k, rnd) => { const a = list.slice(); for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(rnd() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a.slice(0, k); };
+
+  class HostileSpawn {
+    constructor(burstId, time, bearing) {
+      this.burstId = burstId; this.time = time; this.bearing = bearing;
+      this.speed = ENEMY_SPEED_NORMAL; this.sensor = SensorProfile.NORMAL; this.flight = FlightProfile.DIRECT; this.damage = "NORMAL"; this.nav = NavigationProfile.DIRECT;
+    }
+    get acceptsTraits() { return false; }
+    get profile() { return { speed: this.speed, sensorProfile: this.sensor, damageProfile: this.damage, flightProfileOverride: this.flight, entityKind: this.ent, navigationProfile: this.nav }; }
+    placement(index) { const slot = index % NORMAL_SPAWN_OFFSETS.length; return this.placeAt(slot, 380 + slot * 14); }
+    placeAt() { throw new Error(`${this.constructor.name} must implement placeAt`); }
+  }
+  class MissileSpawn extends HostileSpawn {
+    ent = HostileKind.MISSILE;
+    placeAt(slot, extra) {
+      if (this.speed === ENEMY_SPEED_ULTRA_FAST) return { extra: 800, offset: 24.18 };
+      if (this.speed >= ENEMY_SPEED_FAST) return { extra: 500, offset: 13.33 };
+      if (this.speed <= ENEMY_SPEED_SLOW) return { extra: 350, offset: -20.25 };
+      return { extra, offset: NORMAL_SPAWN_OFFSETS[slot] };
+    }
+  }
+  class OrdinaryMissile extends MissileSpawn {
+    get acceptsTraits() { return true; }
+    rollSpeed(rnd, difficulty) { const roll = rnd(); if (roll < difficulty.fastChance) this.speed = ENEMY_SPEED_FAST; else if (roll > 1 - DIFF.slow) this.speed = ENEMY_SPEED_SLOW; }
+  }
+  class BomberSpawn extends HostileSpawn {
+    ent = HostileKind.BOMBER;
+    constructor(burstId, time, bearing) { super(burstId, time, bearing); this.nav = NavigationProfile.FLY_OVER; this.speed = BOMBER_SPEED; }
+    placeAt(slot, extra) { return { extra, offset: BOMBER_SPAWN_OFFSETS[slot] }; }
+  }
+
+  class Threat {
+    constructor(unlockRound, { announced = false, slideKeys = null } = {}) { this.unlockRound = unlockRound; this.announced = announced; this.slideKeys = slideKeys; }
+    get showcaseable() { return true; }
+    get spawnClass() { return MissileSpawn; }
+    get slide() { return [uiText(this.slideKeys[0]), uiText(this.slideKeys[1])]; }
+    isActiveIn(round) { return round >= this.unlockRound; }
+    showcaseSize() { return 3; }
+    tag() {}
+    tagShowcase(spawn, q, rnd) { this.tag(spawn); }
+  }
+  class TraitThreat extends Threat {
+    #rateKey;
+    constructor(unlockRound, rateKey, options) { super(unlockRound, options); this.#rateKey = rateKey; }
+    get exclusive() { return false; }
+    get capped() { return false; }
+    rate(pressure) { return Math.min(DIFF[this.#rateKey] + DIFF[this.#rateKey + "Step"] * pressure, DIFF[this.#rateKey + "Max"]); }
+  }
+  class LowAltitude extends TraitThreat {
+    get exclusive() { return true; }
+    tag(spawn) { spawn.sensor = SensorProfile.LOW_ALTITUDE; }
+  }
+  class SpecialWarhead extends TraitThreat {
+    tag(spawn) { spawn.damage = "SPECIAL"; }
+    tagShowcase(spawn, q) { if (q % 2 === 0) this.tag(spawn); }
+  }
+  class SeaSkimmer extends TraitThreat {
+    get exclusive() { return true; }
+    tag(spawn) { spawn.flight = FlightProfile.SEA_SKIMMING; }
+    tagShowcase(spawn, q, rnd) { this.tag(spawn); spawn.speed = rnd() < 0.5 ? ENEMY_SPEED_FAST : ENEMY_SPEED_NORMAL; }
+  }
+  class Waypoint extends TraitThreat {
+    get exclusive() { return true; }
+    get capped() { return true; }
+    tag(spawn) { spawn.nav = NavigationProfile.FLY_OVER; }
+    capacity(missiles) { return Math.max(0, Math.ceil(missiles.length * DIFF.flyShareLimit) - 1 - missiles.filter(m => m.nav === NavigationProfile.FLY_OVER).length); }
+  }
+  class WaveThreat extends Threat {
+    get countRange() { return [1, 1]; }
+    countIn(rnd) { const [lo, hi] = this.countRange; return lo + Math.floor(rnd() * (hi - lo + 1)); }
+  }
+  class HyperSonic extends WaveThreat {
+    get countRange() { return [DIFF.hyperMin, DIFF.hyperMax]; }
+    get slide() { return [uiText("guide.11941"), uiText("guide.11941.2") + ENEMY_SPEED_ULTRA_FAST + uiText("guide.11941.3")]; }
+    showcaseSize(rnd) { return this.countIn(rnd); }
+    tag(spawn) { spawn.speed = ENEMY_SPEED_ULTRA_FAST; }
+  }
+  class Bomber extends WaveThreat {
+    get countRange() { return [DIFF.bomberMin, DIFF.bomberMax]; }
+    get showcaseable() { return false; }
+    get spawnClass() { return BomberSpawn; }
+  }
+
+  const LOW = new LowAltitude(BASE_THREAT_ROUND, "low");
+  const SPECIAL = new SpecialWarhead(5, "spec", { announced: true, slideKeys: ["guide.11937", "guide.11937.2"] });
+  const SKIM = new SeaSkimmer(BASE_THREAT_ROUND, "skim");
+  const WAYPOINT = new Waypoint(8, "fly", { announced: true, slideKeys: ["guide.11939", "guide.11939.2"] });
+  const BOMBER = new Bomber(11, { announced: true, slideKeys: ["guide.11940", "guide.11940.2"] });
+  const HYPER = new HyperSonic(14, { announced: true });
+  const THREATS = [LOW, SPECIAL, SKIM, WAYPOINT, BOMBER, HYPER];
+  const TRAIT_ROLL_ORDER = [SPECIAL, LOW, SKIM, WAYPOINT];
+  const SHOWCASE_AT = { 5: [LOW, SPECIAL], 8: [SKIM, WAYPOINT], 14: [HYPER] };
+  const announcedAt = round => THREATS.filter(t => t.announced && t.unlockRound === round);
+
+  class Difficulty {
+    static #SOURCE_ROUND = { 1: 3, 2: 2, 3: 4, 4: 6, 5: 8, 6: 8, 7: 8 };
+    #round;
+    constructor(round) { this.#round = round; }
+    get isSpike() { return this.#round >= DIFF.spikeFrom && (this.#round - DIFF.spikeFrom) % DIFF.spikeEvery === 0; }
+    get pressure() { return (Difficulty.#SOURCE_ROUND[this.#round] ?? this.#round) - TUTORIAL_ROUNDS + (this.isSpike ? DIFF.spikeBonus : 0); }
+    get waveCount() { return Math.max(2, Math.min(DIFF.wavesMax, Math.round(DIFF.waves0 + DIFF.wavesPerP * this.pressure))); }
+    get waveGap() { return Math.max(DIFF.gapMin, DIFF.gap0 - DIFF.gapPerP * this.pressure); }
+    get slack() { return Math.max(DIFF.slackMin, DIFF.slack0 - DIFF.slackPerP * this.pressure); }
+    get fastChance() { return Math.min(DIFF.fast0 + DIFF.fastPerP * this.pressure, DIFF.fastMax); }
+    get companionChance() { return Math.min(0.9, DIFF.companionP0 + DIFF.companionPPerP * this.pressure); }
+    anchorSize(rnd) { return clamp(Math.round(DIFF.anchor0 + DIFF.anchorPerP * this.pressure + (rnd() - 0.5)), 3, DIFF.anchorMax); }
+    companionSize(rnd) { return clamp(Math.round(DIFF.companion0 + DIFF.companionPerP * this.pressure + (rnd() - 0.5)), 2, DIFF.companionMax); }
+  }
+
+  function buildOrders(spawns, sd) {
     const stage = { stageId: "RG", stageSeed: (sd % 1000000) || 1, seaSkimmingChance: 0 };
-    const placements = items.map((it, k) => spawnPlacementOf(it, k + 1));
-    const spawnTimes = items.map((it, k) => it.time + placements[k].offset);
+    const placements = spawns.map((sp, k) => sp.placement(k + 1));
+    const spawnTimes = spawns.map((sp, k) => sp.time + placements[k].offset);
     const firstSpawn = Math.min(...spawnTimes);
-    return items.map((it, k) => buildSpawnInstruction(stage, { time: +(spawnTimes[k] - firstSpawn).toFixed(2), index: k + 1, extra: placements[k].extra,
-      speed: it.speed, sensorProfile: it.sensor, damageProfile: it.damage, flightProfileOverride: it.flight, entityKind: it.ent, navigationProfile: it.nav,
-      bearingDegrees: (it.bearing + 360) % 360 })).sort((x, y) => x.time - y.time);
+    const times = delaySpawnsForMinObjectDistance(spawns, placements, spawnTimes.map(t => +(t - firstSpawn).toFixed(2)));
+    return spawns.map((sp, k) => buildSpawnInstruction(stage, { ...sp.profile, time: +times[k].toFixed(2), index: k + 1, extra: placements[k].extra,
+      bearingDegrees: (sp.bearing + 360) % 360 })).sort((x, y) => x.time - y.time);
   }
-  const BURST_SPACING_MIN = 90;
-  const BURST_SPACING_MAX = ACTIVE_SEEKER.searchRadius / 2;
-  function secureBurstSpacing(burst) {
-    const R = TRACKING_RADAR_RADIUS, lateralCapDeg = BURST_SPACING_MIN / 2 * Math.tan(ACTIVE_SEEKER.halfAngleRadians) / R * 180 / Math.PI, prevBySpeed = {};
-    for (const it of burst) {
-      const prev = prevBySpeed[it.speed]; prevBySpeed[it.speed] = it;
-      if (!prev) continue;
-      it.bearing = prev.bearing + clamp(it.bearing - prev.bearing, -lateralCapDeg, lateralCapDeg);
-      const lateral = R * (it.bearing - prev.bearing) * Math.PI / 180;
-      it.time = prev.time + clamp((it.time - prev.time) * it.speed, BURST_SPACING_MIN, Math.sqrt(BURST_SPACING_MAX ** 2 - lateral ** 2)) / it.speed;
+
+  class RoundPlan {
+    #round; #seed; #rnd; #difficulty; #spawns = [];
+    static ordersFor(round, seed) { return new RoundPlan(round, seed).#orders(); }
+    constructor(round, seed) {
+      this.#round = round; this.#seed = seed ?? ((Math.random() * 2 ** 31) | 0);
+      this.#rnd = rng(this.#seed); this.#difficulty = new Difficulty(round);
     }
-  }
-  const mkBurst = (items, rnd, n, time, kind, P, r) => {
-    const Dd = DIFF, pr = (b, st, mx) => Math.min(b + st * P, mx), axis = rnd() * 360;
-    for (let q = 0; q < n; q++) {
-      const it = { time: time + q * 0.3 + rnd() * 0.15, bearing: axis + (rnd() - 0.5) * 5, speed: ENEMY_SPEED_NORMAL, sensor: SensorProfile.NORMAL,
-        flight: FlightProfile.DIRECT, damage: "NORMAL", nav: NavigationProfile.DIRECT, ent: HostileKind.MISSILE };
-      if (kind === "main") {
-        const sr = rnd(); if (sr < pr(Dd.fast0, Dd.fastPerP, Dd.fastMax)) it.speed = ENEMY_SPEED_FAST; else if (sr > 1 - Dd.slow) it.speed = ENEMY_SPEED_SLOW;
-        if (has("low", r) && rnd() < pr(Dd.low, Dd.lowStep, Dd.lowMax)) it.sensor = SensorProfile.LOW_ALTITUDE;
-        if (has("special", r) && rnd() < pr(Dd.spec, Dd.specStep, Dd.specMax)) it.damage = "SPECIAL";
-        if (has("skim", r) && rnd() < pr(Dd.skim, Dd.skimStep, Dd.skimMax)) it.flight = FlightProfile.SEA_SKIMMING;
-        else if (has("fly", r) && rnd() < pr(Dd.fly, Dd.flyStep, Dd.flyMax)) it.nav = NavigationProfile.FLY_OVER;
-      } else if (kind === "low") it.sensor = SensorProfile.LOW_ALTITUDE;
-      else if (kind === "special") { if (q % 2 === 0) it.damage = "SPECIAL"; }
-      else if (kind === "skim") { it.flight = FlightProfile.SEA_SKIMMING; it.speed = rnd() < 0.5 ? ENEMY_SPEED_FAST : ENEMY_SPEED_NORMAL; }
-      else if (kind === "fly") it.nav = NavigationProfile.FLY_OVER;
-      else if (kind === "hyper") it.speed = ENEMY_SPEED_ULTRA_FAST;
-      else if (kind === "bomber") { it.ent = HostileKind.BOMBER; it.nav = NavigationProfile.FLY_OVER; it.speed = BOMBER_SPEED; }
-      items.push(it);
+    #orders() { return buildOrders(this.#round === SCRIPTED_ROUND ? this.#scripted() : this.#generated(), this.#seed); }
+    #burst(count, time, build) {
+      const axis = this.#rnd() * 360, burstId = this.#spawns.length;
+      for (let q = 0; q < count; q++) this.#spawns.push(build(burstId, time + q * 0.3 + this.#rnd() * 0.15, axis + (this.#rnd() - 0.5) * 5, q));
     }
-    secureBurstSpacing(items.slice(items.length - n));
-  };
-  function addWave(items, rnd, P, waveStart, r, showcase, withHyper) {
-    const Dd = DIFF, slack = Math.max(Dd.slackMin, Dd.slack0 - Dd.slackPerP * P), cl = (v, a, b) => Math.max(a, Math.min(b, v)), hyperN = () => Dd.hyperMin + Math.floor(rnd() * (Dd.hyperMax - Dd.hyperMin + 1));
-    const nA = cl(Math.round(Dd.anchor0 + Dd.anchorPerP * P + (rnd() - 0.5)), 3, Dd.anchorMax);
-    const nCompanion = cl(Math.round(Dd.companion0 + Dd.companionPerP * P + (rnd() - 0.5)), 2, Dd.companionMax);
-    mkBurst(items, rnd, nA, waveStart, "main", P, r);
-    if (showcase.length || rnd() < Math.min(0.9, Dd.companionP0 + Dd.companionPPerP * P))
-      mkBurst(items, rnd, nCompanion, waveStart + (rnd() < 0.5 ? -1 : 1) * rnd() * slack, "main", P, r);
-    if (has("skim", r) && !showcase.includes("skim") && rnd() < Dd.skimStep * P)
-      mkBurst(items, rnd, 2, waveStart + 2 + rnd() * slack, "skim", P, r);
-    if (withHyper) mkBurst(items, rnd, hyperN(), waveStart - 2 - rnd() * 3, "hyper", P, r);
-    if (has("bomber", r) && !showcase.includes("bomber") && rnd() < Dd.bomberP)
-      mkBurst(items, rnd, 1, waveStart + (rnd() - 0.5) * slack, "bomber", P, r);
-    showcase.forEach((attr, k) => {
-      const n = attr === "bomber" ? 1 : attr === "hyper" ? hyperN() : 3, tot = waveStart + (k % 2 ? 1 : -1) * (1.2 + rnd() * 2.4);
-      mkBurst(items, rnd, n, tot, attr, P, r);
-    });
-  }
-  function tutorialOrders(r, sd) {
-    const items = [], rnd = rng(sd), F = ENEMY_SPEED_FAST;
-    const B = (n, time, mod) => { const s0 = items.length; mkBurst(items, rnd, n, time, "plain", 0, r); if (mod) for (let q = s0; q < items.length; q++) mod(items[q]); };
-    if (r === 1) { B(2, 0); B(3, 26); }
-    else { B(3, 0); B(2, 24); B(2, 24.5, m => { m.speed = F; m.sensor = SensorProfile.LOW_ALTITUDE; }); B(2, 38, m => { m.flight = FlightProfile.SEA_SKIMMING; }); B(2, 50); B(2, 50.3); B(2, 54, m => { m.speed = F; }); }
-    return toOrders(items, sd ?? 1);
-  }
-  function genOrders(r, seed) {
-    const sd = seed ?? (Math.random() * 2 ** 31) | 0;
-    if (r <= TUTORIAL_ROUNDS) return tutorialOrders(r, sd);
-    const rnd = rng(sd), Dd = DIFF, P = pressure(r), items = [], spike = isSpike(r), intro = introOf(r);
-    const nW = Math.max(2, Math.min(Dd.wavesMax, Math.round(Dd.waves0 + Dd.wavesPerP * P))), gap = Math.max(Dd.gapMin, Dd.gap0 - Dd.gapPerP * P);
-    let show = intro ? intro.attrs.slice() : [];
-    if (spike && !intro) show = ["low", "special", "skim", "fly", "bomber", "hyper"].filter(a => has(a, r)).sort(() => rnd() - 0.5).slice(0, 2);
-    const hyperWave = has("hyper", r) && !show.includes("hyper") ? Math.floor(rnd() * nW) : -1;
-    let waveStart = 0;
-    for (let w = 0; w < nW; w++) { addWave(items, rnd, P, waveStart, r, w === Math.min(1, nW - 1) ? show : [], w === hyperWave); waveStart += gap * (0.85 + rnd() * 0.3); }
-    if (spike && show.includes("bomber")) mkBurst(items, rnd, 1, waveStart - gap * 0.5, "bomber", P, r);
-    return toOrders(items, sd);
+    #ordinaryBurst(count, time) {
+      this.#burst(count, time, (id, t, bearing) => { const spawn = new OrdinaryMissile(id, t, bearing); spawn.rollSpeed(this.#rnd, this.#difficulty); return spawn; });
+    }
+    #threatBurst(threat, count, time) {
+      this.#burst(count, time, (id, t, bearing, q) => { const spawn = new threat.spawnClass(id, t, bearing); threat.tagShowcase(spawn, q, this.#rnd); return spawn; });
+    }
+    #scripted() {
+      const fast = { speed: ENEMY_SPEED_FAST };
+      const script = [[3, 0], [2, 24], [2, 24.5, { ...fast, sensor: SensorProfile.LOW_ALTITUDE }], [2, 38, { flight: FlightProfile.SEA_SKIMMING }], [2, 50], [2, 50.3], [2, 54, fast]];
+      for (const [count, time, traits] of script) this.#burst(count, time, (id, t, bearing) => Object.assign(new MissileSpawn(id, t, bearing), traits));
+      return this.#spawns;
+    }
+    #generated() {
+      const round = this.#round, rnd = this.#rnd, D = this.#difficulty, nW = D.waveCount, intro = announcedAt(round).length > 0;
+      let show = intro ? SHOWCASE_AT[round] ?? [] : [];
+      if (D.isSpike && !intro) show = THREATS.filter(t => t.showcaseable && t.isActiveIn(round)).sort(() => rnd() - 0.5).slice(0, 2);
+      const hyperWave = HYPER.isActiveIn(round) && !show.includes(HYPER) ? Math.floor(rnd() * nW) : -1;
+      const bomberWaves = BOMBER.isActiveIn(round) ? sample([...Array(nW).keys()], BOMBER.countIn(rnd), rnd) : [];
+      let waveStart = 0;
+      for (let w = 0; w < nW; w++) { this.#addWave(waveStart, w === Math.min(1, nW - 1) ? show : [], w === hyperWave, bomberWaves.includes(w)); waveStart += D.waveGap * (0.85 + rnd() * 0.3); }
+      this.#rollTraits();
+      return this.#spawns;
+    }
+    #addWave(waveStart, showcase, withHyper, withBomber) {
+      const rnd = this.#rnd, D = this.#difficulty, slack = D.slack, nA = D.anchorSize(rnd), nCompanion = D.companionSize(rnd);
+      this.#ordinaryBurst(nA, waveStart);
+      if (showcase.length || rnd() < D.companionChance) this.#ordinaryBurst(nCompanion, waveStart + (rnd() < 0.5 ? -1 : 1) * rnd() * slack);
+      if (SKIM.isActiveIn(this.#round) && !showcase.includes(SKIM) && rnd() < DIFF.skimStep * D.pressure) this.#threatBurst(SKIM, 2, waveStart + 2 + rnd() * slack);
+      if (withHyper) this.#threatBurst(HYPER, HYPER.countIn(rnd), waveStart - 2 - rnd() * 3);
+      if (withBomber) this.#threatBurst(BOMBER, 1, waveStart + (rnd() - 0.5) * slack);
+      showcase.forEach((threat, k) => { const count = threat.showcaseSize(rnd); this.#threatBurst(threat, count, waveStart + (k % 2 ? 1 : -1) * (1.2 + rnd() * 2.4)); });
+    }
+    #rollTraits() {
+      const rnd = this.#rnd, pressure = this.#difficulty.pressure, missiles = this.#spawns.filter(sp => sp.ent === HostileKind.MISSILE);
+      const active = TRAIT_ROLL_ORDER.filter(t => t.isActiveIn(this.#round)), picks = new Map(active.filter(t => t.capped).map(t => [t, []]));
+      const capacity = new Map([...picks.keys()].map(t => [t, t.capacity(missiles)]));
+      for (const spawn of this.#spawns.filter(sp => sp.acceptsTraits)) {
+        let claimed = false;
+        for (const threat of active) {
+          if (claimed && threat.exclusive) continue;
+          if (rnd() >= threat.rate(pressure)) continue;
+          if (threat.capped) picks.get(threat).push(spawn); else threat.tag(spawn);
+          claimed = claimed || threat.exclusive;
+        }
+      }
+      picks.forEach((list, threat) => sample(list, capacity.get(threat), rnd).forEach(spawn => threat.tag(spawn)));
+    }
   }
   function makeSpec(r, seed) {
-    const orders = genOrders(r, seed);
+    const orders = RoundPlan.ordersFor(r, seed);
     const spec = { stageId: "RG_" + r, displayName: "DEFENSE OPERATION", channelCount: 6 + RG.extraCh,
       stageSeed: seed != null ? seed % 1000000 : (Math.random() * 1e6) | 0, seaSkimmingChance: 0, total: orders.length,
       createWorld() { const w = new WorldState(); w.spawnQueue = orders.map(o => ({ ...o }));
@@ -11424,9 +11526,9 @@ ${p2}
 
   const modalEl = document.createElement("div"); modalEl.id = "rgModal";
   document.querySelector(".game-root").appendChild(modalEl);
-  const modalUI = UI.modal(modalEl); let tabModalOpen = false, tabModalResume = null, tabModalPage = 0;
+  const modalUI = UI.modal(modalEl);
   const scoreEl = document.getElementById("rgScore"), bestEl = document.getElementById("rgBest");
-  let modal = null, holds = 0, prevPaused = false, tutorialModalStep = 0, offers = [], rerolls = 0, shownScore = -1;
+  let holds = 0, prevPaused = false, shownScore = -1;
   const holdPause = () => { if (holds++ === 0) { prevPaused = session.isPaused; session.isPaused = true; } };
   const releasePause = () => { if (--holds === 0) session.isPaused = prevPaused; };
   function liveRound() { const s = session.world.scoreState; return s ? Math.round((s.roundScore + (s.cardRestore || 0)) * RG.scoreMul) : 0; }
@@ -11449,7 +11551,7 @@ ${p2}
     TRACKING_RADAR_RADIUS = BASE_TRACK + 200 * RG.radar3d;
     RG.rescueLeft = RG.rescue; RG.emergLeft = RG.emergUses; RG.droneLast = 0;
     RG.guidePopup = { guide: RG.round, idx: 0, shown: -1, finished: false, stepT: 0 };
-    RG.live = true; modal = null; modalUI.close(); refreshScore();
+    RG.live = true; flow.clear(); refreshScore();
   }
   const _upd = session.update.bind(session);
   session.update = function (dt) {
@@ -11468,7 +11570,7 @@ ${p2}
       RG.emergLeft--; d.mp = Math.round(PF.maxMp * RG.emergPct / 100); d.shieldActive = true; d.recoveryLockTicks = 0; w.events.push({ type: "ShieldReactivated" });
     }
     if (w.battleState !== BattleState.RUNNING) {
-      RG.live = false; if (RG.noEnd) return; modal = "wait";
+      RG.live = false; if (RG.noEnd) return; flow.open(new RoundEndWait(flow));
       const win = w.battleState === BattleState.SUCCESS, hp = w.defenseState.hp;
       const tok = RG.token;
       setTimeout(() => { if (tok === RG.token) endRound(win, hp); }, win ? 1500 : 1800);
@@ -11503,40 +11605,11 @@ ${p2}
     rows.push([uiText("report.11876"), "+" + fmt(total)], [uiText("report.11876.2"), fmt(RG.score)], win ? [uiText("report.11876.3"), rank, RANKC[rank]] : [uiText("report.11876.4"), fmt(RG.best)]);
     const firstScore = win && !RG.seen.score; if (firstScore) RG.seen.score = true;
     const scoreGuide = firstScore ? "\n" + UI.plain(TUTORIAL_MODAL_SLIDES.score[0][1]).replace(/\n\n/g, "\n") : "";          
-    modal = win ? "res" : "over";
-    modalUI.show({ id: win ? "res" : "over", title: win ? uiText("report.11880") : uiText("report.11880.2"),
+    const report = { id: win ? "roundResult" : "gameOver", title: win ? uiText("report.11880") : uiText("report.11880.2"),
       text: (win ? uiText("report.11881", rank, Math.round(sc.ratio * 100)) : uiText("report.11881.2")) + scoreGuide,
-      score: rows, buttons: [win ? { act: "cardModalOpen", label: uiText("report.11882") } : { act: "newRun", label: uiText("report.11882.2") }] });
+      score: rows, buttons: [win ? { act: "cardSelectModalOpen", label: uiText("report.11882") } : { act: "newRun", label: uiText("report.11882.2") }] };
+    flow.open(win ? new RoundResultScreen(flow, report) : new GameOverScreen(flow, report));
   }
-  let cardModalStage = "pick";                                    
-  function showCardModal(fresh) {
-    if (fresh) { rerolls = 2 + RG.rerollBonus; offers = drawOffers(); cardModalStage = RG.seen.cards ? "pick" : "guide"; RG.seen.cards = true; }
-    modal = "card";
-    if (cardModalStage === "guide") {                             
-      modalUI.show({ id: "card", title: uiText("offer.11889"), text: uiText("offer.11889.2") + UI.plain(TUTORIAL_MODAL_SLIDES.cards[0][1]) + "\n\n" + UI.plain(TUTORIAL_MODAL_SLIDES.cards[1][1]),
-        buttons: [{ act: "cardModalReveal", label: uiText("offer.11890") }] });
-      return;
-    }
-    const rk = RG.rank || "C";
-    const odds = uiText("offer.11894", GRADE[FIRSTG[rk]].ko, GORDER.map(g => `${GRADE[g].ko} ${RANKW[rk][g]}%`).join(" "));
-    const cards = offers.map((c, i) => { const G = GRADE[c.g];
-      return `<button type="button" class="rg-card" style="--rc:${G.c}" data-act="pick" data-i="${i}"><span class="rg-card-head"><b>${G.t} · ${G.ko}</b>${i === 0 ? `<em>${uiText('offer.card.rankLocked', rk)}</em>` : ""}<kbd>${i + 1}</kbd></span><strong>${c.n}</strong><p>${c.d}</p><small>${uiText('offer.card.owned', famOwned(c.F), c.F.max >= 99 ? "∞" : c.F.max)}</small></button>`; }).join("");
-    modalUI.show({ id: "card", title: uiText("offer.11889"), text: uiText("offer.11897", rk, fmt(RG.lastTotal || 0), odds),
-      extra: `<div class="rg-cards" style="--n:${offers.length}">${cards}</div>`, buttons: [{ act: "reroll", label: uiText("offer.11898", rerolls), disabled: rerolls <= 0 }] });
-  }
-  function pick(i) {
-    const c = offers[i]; if (!c) return;
-    c.F.f(...c.p); RG.cards[c.key] = (RG.cards[c.key] || 0) + 1;
-    const intro = introOf(RG.round + 1);                          
-    if (intro && RG.round + 1 > TUTORIAL_ROUNDS) {
-      TUTORIAL_MODAL_SLIDES.threat = [[uiText("offer.11905") + intro.attrs.map(a => THREAT[a][0]).join(" · "), intro.attrs.map(a => THREAT[a][1]).join("\n\n")]];
-      showTutorialModal(["threat"], startRound, uiText("offer.11906"));
-    } else startRound();
-  }
-  function reroll() { if (rerolls > 0) { rerolls--; offers = drawOffers(); showCardModal(false); } }
-  function newRun() { resetRun(); startRound(); }
-  function fullReset() { location.reload(); }
-
   const lines = s => String(s).split("\n").map(l => l === "" ? `<span class="ln gap"></span>` : `<span class="ln">${l}</span>`).join("");   
   const TUTORIAL_MODAL_SLIDES = {
     intro: [
@@ -11549,81 +11622,147 @@ ${p2}
     score: [
       [uiText("guide.11933"), uiText("guide.11933.2")] ],
   };
-  const THREAT = {
-    low: [uiText("guide.11936"), uiText("guide.11936.2")],
-    special: [uiText("guide.11937"), uiText("guide.11937.2")],
-    skim: [uiText("guide.11938"), uiText("guide.11938.2")],
-    fly: [uiText("guide.11939"), uiText("guide.11939.2")],
-    bomber: [uiText("guide.11940"), uiText("guide.11940.2")],
-    hyper: [uiText("guide.11941"), uiText("guide.11941.2") + ENEMY_SPEED_ULTRA_FAST + uiText("guide.11941.3")] };
-  let tutorialModalSlides = [], tutorialModalDone = null, tutorialModalHold = false, tutorialModalLastLabel = uiText("guide.11942");
-  function showTutorialModal(keys, done, last) {
-    if (modal !== "tut") { tutorialModalHold = !modal; if (tutorialModalHold) holdPause(); tutorialModalSlides = keys.flatMap(k => TUTORIAL_MODAL_SLIDES[k]); tutorialModalStep = 0; tutorialModalDone = done || null; tutorialModalLastLabel = last || uiText("guide.11942"); }
-    modal = "tut";
-    const [h, b] = tutorialModalSlides[tutorialModalStep], lastSlide = tutorialModalStep === tutorialModalSlides.length - 1;
-    modalUI.show({ id: "tut", title: uiText("guide.11947"), text: `${h} (${tutorialModalStep + 1}/${tutorialModalSlides.length})\n\n` + UI.plain(b),
-      buttons: [{ act: "tutorialModalPrev", label: uiText("guide.11948.2"), disabled: !tutorialModalStep }, { act: "tutorialModalNext", label: lastSlide ? tutorialModalLastLabel : uiText("guide.11948") }, { act: "tutorialModalSkip", label: uiText("guide.11948.3") }] });
+  class ModalScreen {
+    constructor(flow) { this.flow = flow; }
+    get locksShortcuts() { return false; }
+    show() {}
+    onKey() {}
+    onAction() {}
   }
-  function closeTutorialModal() {
-    modal = null; modalUI.close(); if (tutorialModalHold) { tutorialModalHold = false; releasePause(); }
-    const d = tutorialModalDone; tutorialModalDone = null; if (d) d();
+  class ModalFlow {
+    #current = null;
+    get current() { return this.#current; }
+    open(screen) { this.#current = screen; screen.show(); }
+    clear() { this.#current = null; modalUI.close(); }
+    dispatchAction(name, index) { (upgradeStatus.isOpen ? upgradeStatus : this.#current)?.onAction(name, index); }
   }
-  function toggleTabModal() {
-    if (tabModalOpen) { tabModalOpen = false; releasePause(); if (tabModalResume) { const r = tabModalResume; tabModalResume = null; modalUI.show(r); } else modalUI.close(); return; }
-    holdPause(); tabModalOpen = true; tabModalResume = modalUI.current();
-    showTabModal(0);
+  const flow = new ModalFlow();
+
+  class RoundEndWait extends ModalScreen {}
+  class ReportScreen extends ModalScreen {
+    #report;
+    constructor(flow, report) { super(flow); this.#report = report; }
+    show() { modalUI.show(this.#report); }
   }
-  function showTabModal(page) {
-    tabModalPage = page;
-    const P = DEFENSE_RESOURCE_PROFILE, d = session.world.defenseState;
-    const hp = RG.live || modal === "wait" ? d.hp : (RG.hp ?? P.maxHp);
-    const mp = RG.live || modal === "wait" ? d.mp : P.maxMp;
-    const S = [
-      [uiText("upgrade.11960"), `${u(hp)} / ${u(P.maxHp)}`], [uiText("upgrade.11963.10"), uiText("upgrade.11960.4", u(RG.droneHp))], [uiText("upgrade.11963.9"), u(P.stageStartHpRecovery + RG.repair)], [uiText("upgrade.11962.4"), pct(RG.dmgMul)],
-      [uiText("upgrade.11960.2"), `${u(mp)} / ${u(P.maxMp)}`], [uiText("upgrade.11960.3"), uiText("upgrade.11960.4", u(P.mpRegenerationPerCycle))], [uiText("upgrade.11961.4"), `${pct(RG.mpCostMul)} / ${pct(RG.closeCostMul)}`],
-      [uiText("upgrade.11961"), u(P.shieldReactivationMp)], [uiText("upgrade.11961.2"), uiText("upgrade.11961.3", P.recoveryLockSeconds)],
-      [uiText("upgrade.11962"), `${pct(RG.missMul)} / ${pct(RG.missMulC)}`], [uiText("upgrade.11962.2"), uiText("upgrade.11962.3", RG.cd.toFixed(2))], [uiText("upgrade.11963"), 6 + RG.extraCh], [uiText("upgrade.11963.2"), 4 + RG.queueExtra],
-      [uiText("upgrade.11963.3"), TRACKING_RADAR_RADIUS], [uiText("upgrade.11963.4"), 800 + RG.ciwsRange], [uiText("upgrade.11963.5"), `${1 + RG.extraCiws} / ${1 + RG.extraRam}`],
-      [uiText("upgrade.11963.8"), `×${RG.scoreMul.toFixed(2)}`], [uiText("upgrade.11963.6"), uiText("upgrade.11963.7", 2 + RG.rerollBonus)]];
-    const have = CARDS.filter(c => RG.cards[c.key]).reverse().sort((a, b) => GORDER.indexOf(b.g) - GORDER.indexOf(a.g));
-    const half = Math.ceil(S.length / 2), tbl = r => `<table class="game-report-score-table"><tbody>${r.map(x => `<tr><th scope="row">${x[0]}</th><td>${x[1]}</td></tr>`).join("")}</tbody></table>`;
-    const statsTable = `<div class="game-report-score is-dual is-flat">${tbl(S.slice(0, half))}${tbl(S.slice(half))}</div>`;
-    const effects = have.length ? `<div class="rg-have">${have.map(c => `<div style="--rc:${GRADE[c.g].c}"><b>${c.n}<i>${GRADE[c.g].ko}</i>×${RG.cards[c.key]}</b><small>${c.d}</small></div>`).join("")}</div>` : "";
-    modalUI.show({ id: "tab", title: uiText("upgrade.11968"), text: page === 0 ? "" : uiText("upgrade.11968.2", RG.round, fmt(RG.score), have.length), extra: page === 0 ? statsTable : effects,
-      buttons: [page === 0 ? { act: "tabModalNext", label: uiText("guide.11948") } : { act: "tabModalPrev", label: uiText("guide.11948.2") }, { act: "tabModalClose", label: uiText(page === 0 ? "guide.11942" : "upgrade.11968.3") }] });
+  class RoundResultScreen extends ReportScreen {
+    onKey(k) { if (k === "enter") this.#openCards(); }
+    onAction(name) { if (name === "cardSelectModalOpen") this.#openCards(); }
+    #openCards() { this.flow.open(new CardSelectScreen(this.flow)); }
   }
-  const act = { tabModalClose: () => toggleTabModal(), tabModalPrev: () => showTabModal(0), tabModalNext: () => showTabModal(1), cardModalOpen: () => showCardModal(true), cardModalReveal: () => { cardModalStage = "pick"; showCardModal(false); }, newRun, reroll, tutorialModalSkip: closeTutorialModal, tutorialModalPrev: () => { tutorialModalStep = Math.max(0, tutorialModalStep - 1); showTutorialModal(); },
-    tutorialModalNext: () => { if (tutorialModalStep >= tutorialModalSlides.length - 1) closeTutorialModal(); else { tutorialModalStep++; showTutorialModal(); } } };
+  class GameOverScreen extends ReportScreen {
+    onKey(k) { if (k === "enter") newRun(); }
+    onAction(name) { if (name === "newRun") newRun(); }
+  }
+  class TutorialScreen extends ModalScreen {
+    #slides; #done; #lastLabel; #holdsPause; #step = 0;
+    constructor(flow, slides, done, lastLabel) {
+      super(flow); this.#slides = slides; this.#done = done; this.#lastLabel = lastLabel || uiText("guide.11942"); this.#holdsPause = !flow.current;
+      if (this.#holdsPause) holdPause();
+    }
+    get locksShortcuts() { return true; }
+    show() {
+      const [h, b] = this.#slides[this.#step], last = this.#step === this.#slides.length - 1;
+      modalUI.show({ id: "tutorial", title: uiText("guide.11947"), text: `${h} (${this.#step + 1}/${this.#slides.length})\n\n` + UI.plain(b),
+        buttons: [{ act: "tutorialModalPrev", label: uiText("guide.11948.2"), disabled: !this.#step }, { act: "tutorialModalNext", label: last ? this.#lastLabel : uiText("guide.11948") }, { act: "tutorialModalSkip", label: uiText("guide.11948.3") }] });
+    }
+    next() { if (this.#step >= this.#slides.length - 1) this.finish(); else { this.#step++; this.show(); } }
+    prev() { this.#step = Math.max(0, this.#step - 1); this.show(); }
+    finish() { this.flow.clear(); if (this.#holdsPause) releasePause(); this.#done?.(); }
+    onKey(k, e) {
+      if (["enter", " ", "arrowright", "arrowleft"].includes(k)) { e.preventDefault(); if (e.repeat) return; }
+      if (k === "enter" || k === " " || k === "arrowright") this.next(); else if (k === "arrowleft") this.prev(); else if (k === "escape") this.finish();
+    }
+    onAction(name) { if (name === "tutorialModalNext") this.next(); else if (name === "tutorialModalPrev") this.prev(); else if (name === "tutorialModalSkip") this.finish(); }
+  }
+  class CardSelectScreen extends ModalScreen {
+    #offers = drawOffers(); #rerolls = 2 + RG.rerollBonus; #stage = RG.seen.cards ? "pick" : "guide";
+    constructor(flow) { super(flow); RG.seen.cards = true; }
+    show() {
+      if (this.#stage === "guide") {
+        modalUI.show({ id: "cardSelect", title: uiText("offer.11889"), text: uiText("offer.11889.2") + UI.plain(TUTORIAL_MODAL_SLIDES.cards[0][1]) + "\n\n" + UI.plain(TUTORIAL_MODAL_SLIDES.cards[1][1]),
+          buttons: [{ act: "cardSelectModalReveal", label: uiText("offer.11890") }] });
+        return;
+      }
+      const rk = RG.rank || "C";
+      const odds = uiText("offer.11894", GRADE[FIRSTG[rk]].ko, GORDER.map(g => `${GRADE[g].ko} ${RANKW[rk][g]}%`).join(" "));
+      const cards = this.#offers.map((c, i) => { const G = GRADE[c.g];
+        return `<button type="button" class="rg-card" style="--rc:${G.c}" data-act="pick" data-i="${i}"><span class="rg-card-head"><b>${G.t} · ${G.ko}</b>${i === 0 ? `<em>${uiText('offer.card.rankLocked', rk)}</em>` : ""}<kbd>${i + 1}</kbd></span><strong>${c.n}</strong><p>${c.d}</p><small>${uiText('offer.card.owned', famOwned(c.F), c.F.max >= 99 ? "∞" : c.F.max)}</small></button>`; }).join("");
+      modalUI.show({ id: "cardSelect", title: uiText("offer.11889"), text: uiText("offer.11897", rk, fmt(RG.lastTotal || 0), odds),
+        extra: `<div class="rg-cards" style="--n:${this.#offers.length}">${cards}</div>`, buttons: [{ act: "reroll", label: uiText("offer.11898", this.#rerolls), disabled: this.#rerolls <= 0 }] });
+
+    }
+    reveal() { this.#stage = "pick"; this.show(); }
+    reroll() { if (this.#rerolls > 0) { this.#rerolls--; this.#offers = drawOffers(); this.show(); } }
+    pick(i) {
+      const c = this.#offers[i]; if (!c) return;
+      c.F.f(...c.p); RG.cards[c.key] = (RG.cards[c.key] || 0) + 1;
+      const threats = announcedAt(RG.round + 1);
+      if (threats.length) this.flow.open(new TutorialScreen(this.flow, [[uiText("offer.11905") + threats.map(t => t.slide[0]).join(" · "), threats.map(t => t.slide[1]).join("\n\n")]], startRound, uiText("offer.11906")));
+      else startRound();
+    }
+    onKey(k, e) {
+      if (this.#stage === "guide") { if ((k === "enter" || k === " ") && !e.repeat) this.reveal(); }
+      else if (k >= "1" && k <= String(this.#offers.length)) this.pick(+k - 1); else if (k === "e") this.reroll();
+    }
+    onAction(name, index) {
+      if (name === "cardSelectModalReveal") this.reveal();
+      else if (this.#stage === "pick" && name === "reroll") this.reroll();
+      else if (this.#stage === "pick" && name === "pick") this.pick(index);
+    }
+  }
+  class UpgradeStatusOverlay {
+    #open = false; #resume = null; #page = 0;
+    get isOpen() { return this.#open; }
+    toggle() {
+      if (this.#open) { this.#open = false; releasePause(); if (this.#resume) { const r = this.#resume; this.#resume = null; modalUI.show(r); } else modalUI.close(); return; }
+      holdPause(); this.#open = true; this.#resume = modalUI.current();
+      this.showPage(0);
+    }
+    showPage(page) {
+      this.#page = page;
+      const P = DEFENSE_RESOURCE_PROFILE, d = session.world.defenseState;
+      const hp = RG.live || flow.current instanceof RoundEndWait ? d.hp : (RG.hp ?? P.maxHp);
+      const mp = RG.live || flow.current instanceof RoundEndWait ? d.mp : P.maxMp;
+      const S = [
+        [uiText("upgrade.11960"), `${u(hp)} / ${u(P.maxHp)}`], [uiText("upgrade.11963.10"), uiText("upgrade.11960.4", u(RG.droneHp))], [uiText("upgrade.11963.9"), u(P.stageStartHpRecovery + RG.repair)], [uiText("upgrade.11962.4"), pct(RG.dmgMul)],
+        [uiText("upgrade.11960.2"), `${u(mp)} / ${u(P.maxMp)}`], [uiText("upgrade.11960.3"), uiText("upgrade.11960.4", u(P.mpRegenerationPerCycle))], [uiText("upgrade.11961.4"), `${pct(RG.mpCostMul)} / ${pct(RG.closeCostMul)}`],
+        [uiText("upgrade.11961"), u(P.shieldReactivationMp)], [uiText("upgrade.11961.2"), uiText("upgrade.11961.3", P.recoveryLockSeconds)],
+        [uiText("upgrade.11962"), `${pct(RG.missMul)} / ${pct(RG.missMulC)}`], [uiText("upgrade.11962.2"), uiText("upgrade.11962.3", RG.cd.toFixed(2))], [uiText("upgrade.11963"), 6 + RG.extraCh], [uiText("upgrade.11963.2"), 4 + RG.queueExtra],
+        [uiText("upgrade.11963.3"), TRACKING_RADAR_RADIUS], [uiText("upgrade.11963.4"), 800 + RG.ciwsRange], [uiText("upgrade.11963.5"), `${1 + RG.extraCiws} / ${1 + RG.extraRam}`],
+        [uiText("upgrade.11963.8"), `×${RG.scoreMul.toFixed(2)}`], [uiText("upgrade.11963.6"), uiText("upgrade.11963.7", 2 + RG.rerollBonus)]];
+      const have = CARDS.filter(c => RG.cards[c.key]).reverse().sort((a, b) => GORDER.indexOf(b.g) - GORDER.indexOf(a.g));
+      const half = Math.ceil(S.length / 2), tbl = r => `<table class="game-report-score-table"><tbody>${r.map(x => `<tr><th scope="row">${x[0]}</th><td>${x[1]}</td></tr>`).join("")}</tbody></table>`;
+      const statsTable = `<div class="game-report-score is-dual is-flat">${tbl(S.slice(0, half))}${tbl(S.slice(half))}</div>`;
+      const effects = have.length ? `<div class="rg-have">${have.map(c => `<div style="--rc:${GRADE[c.g].c}"><b>${c.n}<i>${GRADE[c.g].ko}</i>×${RG.cards[c.key]}</b><small>${c.d}</small></div>`).join("")}</div>` : "";
+      modalUI.show({ id: "upgradeStatus", title: uiText("upgrade.11968"), text: page === 0 ? "" : uiText("upgrade.11968.2", RG.round, fmt(RG.score), have.length), extra: page === 0 ? statsTable : effects,
+        buttons: [page === 0 ? { act: "upgradeStatusModalNext", label: uiText("guide.11948") } : { act: "upgradeStatusModalPrev", label: uiText("guide.11948.2") }, { act: "upgradeStatusModalClose", label: uiText(page === 0 ? "guide.11942" : "upgrade.11968.3") }] });
+
+    }
+    onKey(k) { if (k === "escape") this.toggle(); else if (k === "arrowright" && this.#page === 0) this.showPage(1); else if (k === "arrowleft" && this.#page === 1) this.showPage(0); }
+    onAction(name) { if (name === "upgradeStatusModalClose") this.toggle(); else if (name === "upgradeStatusModalPrev") this.showPage(0); else if (name === "upgradeStatusModalNext") this.showPage(1); }
+  }
+  const upgradeStatus = new UpgradeStatusOverlay();
+  function newRun() { resetRun(); startRound(); }
+  function fullReset() { location.reload(); }
   modalEl.addEventListener("click", e => { const b = e.target.closest("[data-act]"); if (!b || b.disabled) { if (!b && e.target.closest(".report-dialogue")) modalUI.skip(); return; }
-    if (b.dataset.act === "pick") pick(+b.dataset.i); else act[b.dataset.act]?.(); });
+    flow.dispatchAction(b.dataset.act, +b.dataset.i); });
   window.addEventListener("keydown", e => {
     const k = kk(e);
-    if (k === "tab") { e.preventDefault(); e.stopImmediatePropagation(); if (!e.repeat && modal !== "tut") toggleTabModal(); return; }
-    if (k === "r") { e.preventDefault(); e.stopImmediatePropagation(); if (!e.repeat && modal !== "tut") fullReset(); return; }
-    if ((k === "enter" || k === " ") && (tabModalOpen || modal) && modalUI.busy()) { e.preventDefault(); e.stopImmediatePropagation(); modalUI.skip(); return; }   
-    if (tabModalOpen) { e.stopImmediatePropagation(); if (k === "escape") toggleTabModal(); else if (k === "arrowright" && tabModalPage === 0) showTabModal(1); else if (k === "arrowleft" && tabModalPage === 1) showTabModal(0); return; }
-    if (modal) {
-      e.stopImmediatePropagation();
-      if (k === "enter") e.preventDefault();                       
-      if (modal === "tut") {
-        if (["enter", " ", "arrowright", "arrowleft"].includes(k)) { e.preventDefault(); if (e.repeat) return; }   
-        if (k === "enter" || k === " ") act.tutorialModalNext(); else if (k === "arrowright") act.tutorialModalNext(); else if (k === "arrowleft") act.tutorialModalPrev(); else if (k === "escape") closeTutorialModal();
-      }
-      else if (modal === "res" && k === "enter") act.cardModalOpen();
-      else if (modal === "over" && k === "enter") newRun();
-      else if (modal === "card") { if (cardModalStage === "guide") { if ((k === "enter" || k === " ") && !e.repeat) act.cardModalReveal(); } else if (k >= "1" && k <= String(offers.length)) pick(+k - 1); else if (k === "e") reroll(); }
-      return;
-    }
+    if (k === "tab") { e.preventDefault(); e.stopImmediatePropagation(); if (!e.repeat && !flow.current?.locksShortcuts) upgradeStatus.toggle(); return; }
+    if (k === "r") { e.preventDefault(); e.stopImmediatePropagation(); if (!e.repeat && !flow.current?.locksShortcuts) fullReset(); return; }
+    if ((k === "enter" || k === " ") && (upgradeStatus.isOpen || flow.current) && modalUI.busy()) { e.preventDefault(); e.stopImmediatePropagation(); modalUI.skip(); return; }
+    if (upgradeStatus.isOpen) { e.stopImmediatePropagation(); upgradeStatus.onKey(k); return; }
+    if (flow.current) { e.stopImmediatePropagation(); if (k === "enter") e.preventDefault(); flow.current.onKey(k, e); return; }
     if (k === "h") { e.stopImmediatePropagation(); openGuidePopup(); }
     if (k === "enter" && RG.guidePopup && guidePopupUI.visible() && !RG.guidePopup.finished) { e.preventDefault(); e.stopImmediatePropagation(); if (!e.repeat) advanceGuidePopup(); }
   }, true);
 
-  const rb = document.getElementById("restartBtn");               
+  const rb = document.getElementById("restartButton");               
   rb.title = uiText("upgrade.11997"); rb.textContent = uiText("upgrade.11997.2");
-  document.addEventListener("click", e => { if (e.target.closest("#restartBtn")) { e.stopImmediatePropagation(); e.preventDefault(); fullReset(); } }, true);
+  document.addEventListener("click", e => { if (e.target.closest("#restartButton")) { e.stopImmediatePropagation(); e.preventDefault(); fullReset(); } }, true);
   const tk = document.querySelector(".tap-key");                  
   tk.style.cursor = "pointer"; tk.title = uiText("control.12000");
-  tk.addEventListener("click", () => { if (modal !== "tut") toggleTabModal(); });
+  tk.addEventListener("click", () => { if (!flow.current?.locksShortcuts) upgradeStatus.toggle(); });
   const BGM = (() => {
     let ac, master, noise, step = 0, nextT = 0, on = true;
     const SP = 60 / 92 / 4, CH = [[57,60,64],[53,57,60],[50,53,57],[52,56,59]], BS = [33,29,26,28], hz = m => 440 * Math.pow(2, (m - 69) / 12);
@@ -11684,7 +11823,7 @@ ${p2}
   function guidePopupTick() {
     const nowMs = performance.now(), elapsedSeconds = Math.min(0.1, (nowMs - guidePopupLastMs) / 1000); guidePopupLastMs = nowMs;
     const c = RG.guidePopup, steps = c && GUIDE_POPUP_STEPS[c.guide];
-    const on = !guidePopupSkipped && steps && !c.finished && RG.live && !modal && !tabModalOpen;
+    const on = !guidePopupSkipped && steps && !c.finished && RG.live && !flow.current && !upgradeStatus.isOpen;
     if (!on) { guidePopupUI.hide(); return; }
     c.stepT += elapsedSeconds;
     if (c.idx < steps.length - 1 && c.stepT >= GUIDE_POPUP_AUTO_SECONDS) { c.idx++; c.stepT = 0; }
@@ -11697,7 +11836,7 @@ ${p2}
   }
   guidePopupEl.addEventListener("click", e => { if (e.target.closest(".ui-x")) { guidePopupSkipped = true; guidePopupUI.hide(); } });   
   (function fxLoop() {                                   
-    gameRoot.classList.toggle("rg-modal-open", !!modal || tabModalOpen);
+    gameRoot.classList.toggle("rg-modal-open", !!flow.current || upgradeStatus.isOpen);
     guidePopupTick(); BGM.tick(); requestAnimationFrame(fxLoop);
   })();
   RG.missMulFor = (tg, dist) => { const c = RG.pkScope === "C"; let m = c ? RG.missMulC : RG.missMul;
@@ -11707,7 +11846,7 @@ ${p2}
   RG.regenMulFor = d => d.hp <= DEFENSE_RESOURCE_PROFILE.maxHp * 0.3 ? RG.crisisMul : 1;
   RG.tryRescue = d => { if (RG.round <= TUTORIAL_ROUNDS) { d.hp = Math.round(DEFENSE_RESOURCE_PROFILE.maxHp * 0.5); return true; } if (RG.rescueLeft > 0) { RG.rescueLeft--; d.hp = Math.max(1, Math.round(DEFENSE_RESOURCE_PROFILE.maxHp * RG.rescuePct / 100)); return true; } return false; };
   startRound();
-  showTutorialModal(["intro"], null, uiText("display.12104"));
+  flow.open(new TutorialScreen(flow, TUTORIAL_MODAL_SLIDES.intro, null, uiText("display.12104")));
 
   render(getSnapshot(session.world, session.stageSpec));
   requestAnimationFrame(frame);
