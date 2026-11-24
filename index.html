@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>ZeroShingoNoTsukigasa_v2026.11.24.11</title>
-<meta property="og:title" content="ZeroShingoNoTsukigasa_v2026.11.24.11">
+<title>ZeroShingoNoTsukigasa_v2026.11.25.12</title>
+<meta property="og:title" content="ZeroShingoNoTsukigasa_v2026.11.25.12">
 <style>
   :root {
     color-scheme: dark;
@@ -3160,6 +3160,70 @@ ${p2}
 
   const NavigationProfile = Object.freeze({ DIRECT:"DIRECT", FLY_OVER:"FLY_OVER" });
   const HostileKind = Object.freeze({ MISSILE:"MISSILE", BOMBER:"BOMBER" });
+  class MissileSpawnRole {
+    get idPrefix() { return "ASM-"; }
+    get seedsFlyOverWaypoints() { return true; }
+    displayRadius(speed) { return attackMissileDisplayRadiusForBaseSpeed(speed); }
+    initialState() { return null; }
+    routeWaypoints(world, order) { return (order.waypoints ?? []).map(point => polarWaypoint(world.ship.position, order.bearing, point)); }
+    violations() { return null; }
+  }
+  class BomberSpawnRole {
+    get idPrefix() { return "BMR-"; }
+    get seedsFlyOverWaypoints() { return false; }
+    displayRadius() { return 15; }
+    initialState(spawnBearingDegrees) { return { phase: "APPROACH_FIRST", firstLaunchTime: null, launchedCount: 0, bearingDegrees: spawnBearingDegrees }; }
+    routeWaypoints(world, order) { return randomBomberInitialWaypoints(world, order); }
+    violations(spec) {
+      const unsupported = (spec.navigationProfile ?? NavigationProfile.DIRECT) !== NavigationProfile.FLY_OVER ||
+        (spec.sensorProfile ?? SensorProfile.NORMAL) !== SensorProfile.NORMAL ||
+        (spec.flightProfileOverride ?? FlightProfile.DIRECT) !== FlightProfile.DIRECT;
+      return unsupported ? "bomber must use normal detection and fly-over navigation" : null;
+    }
+  }
+  class MissileFlightRole {
+    get stopsWithoutWaypoint() { return false; }
+    get collidesWithShip() { return true; }
+    get reportsRemainingDistance() { return true; }
+    isHolding() { return false; }
+  }
+  class BomberFlightRole {
+    get stopsWithoutWaypoint() { return true; }
+    get collidesWithShip() { return false; }
+    get reportsRemainingDistance() { return false; }
+    isHolding(hostile) { return hostile.bomberState.phase === "HOLD"; }
+  }
+  class MissileScoringRole { killBonus() { return 0; } }
+  class BomberScoringRole { killBonus(target) { return target.bomberState?.launchedCount === 0 ? SCORE_PROFILE.bomberPreLaunchKillBonus : 0; } }
+  class MissilePresentationRole {
+    get showsTti() { return true; }
+    drawAccent() {}
+  }
+  class BomberPresentationRole {
+    get showsTti() { return false; }
+    drawAccent(ctx) { ctx.beginPath(); ctx.fillStyle = "#F81541"; ctx.arc(-1.2, 0, 2.4, 0, Math.PI * 2); ctx.fill(); }
+  }
+  const HOSTILE_ROLE_CONTRACT = Object.freeze({
+    spawn: ["idPrefix", "seedsFlyOverWaypoints", "displayRadius", "initialState", "routeWaypoints", "violations"],
+    flight: ["stopsWithoutWaypoint", "collidesWithShip", "reportsRemainingDistance", "isHolding"],
+    scoring: ["killBonus"],
+    presentation: ["showsTti", "drawAccent"],
+  });
+  const HostileKinds = (() => {
+    const kinds = new Map();
+    return Object.freeze({
+      register(definition) {
+        for (const [role, members] of Object.entries(HOSTILE_ROLE_CONTRACT))
+          for (const member of members)
+            if (!(member in definition[role])) throw new Error(`hostile kind ${definition.kind} lacks ${role}.${member}`);
+        kinds.set(definition.kind, Object.freeze(definition));
+      },
+      has: kind => kinds.has(kind),
+      of: kind => kinds.get(kind ?? HostileKind.MISSILE),
+    });
+  })();
+  HostileKinds.register({ kind: HostileKind.MISSILE, spawn: new MissileSpawnRole(), flight: new MissileFlightRole(), scoring: new MissileScoringRole(), presentation: new MissilePresentationRole() });
+  HostileKinds.register({ kind: HostileKind.BOMBER, spawn: new BomberSpawnRole(), flight: new BomberFlightRole(), scoring: new BomberScoringRole(), presentation: new BomberPresentationRole() });
   const BOMBER_SPEED = 50;
   const BOMBER_LAUNCH_RADIUS = 2850;
   const BOMBER_RETREAT_RADIUS = 3300;
@@ -3900,7 +3964,7 @@ ${p2}
       entityKind,
       navigationProfile,
       waypoints: (navigationProfile === NavigationProfile.FLY_OVER &&
-          entityKind !== HostileKind.BOMBER && waypoints == null
+          HostileKinds.of(entityKind).spawn.seedsFlyOverWaypoints && waypoints == null
         ? randomFlyOverWaypoints(stage.stageSeed, index)
         : (waypoints ?? [])).map(point => ({ ...point })),
       bearing: Number.isFinite(bearingDegrees)
@@ -3928,7 +3992,6 @@ ${p2}
     const validSensors = new Set(Object.values(SensorProfile));
     const validFlights = new Set(Object.values(FlightProfile));
     const validNavigation = new Set(Object.values(NavigationProfile));
-    const validKinds = new Set(Object.values(HostileKind));
 
     for (const [waveIndex, wave] of attackPlan.waves.entries()) {
       if (!Number.isFinite(wave.startTime ?? 0)) {
@@ -3982,7 +4045,7 @@ ${p2}
           ) {
             throw new Error(`[${stage.stageId}] missile ${missile.index} has invalid damageProfile`);
           }
-          if (!validKinds.has(missile.entityKind ?? HostileKind.MISSILE)) {
+          if (!HostileKinds.has(missile.entityKind ?? HostileKind.MISSILE)) {
             throw new Error(`[${stage.stageId}] invalid hostile kind ${missile.index}`);
           }
           if (!validNavigation.has(missile.navigationProfile ?? NavigationProfile.DIRECT)) {
@@ -4011,11 +4074,9 @@ ${p2}
               throw new Error(`[${stage.stageId}] waypoint inside SEA_SKIMMING acceleration band: ${missile.index}`);
             }
           }
-          if (missile.entityKind === HostileKind.BOMBER &&
-              ((missile.navigationProfile ?? NavigationProfile.DIRECT) !== NavigationProfile.FLY_OVER ||
-               (missile.sensorProfile ?? SensorProfile.NORMAL) !== SensorProfile.NORMAL ||
-               (missile.flightProfileOverride ?? FlightProfile.DIRECT) !== FlightProfile.DIRECT)) {
-            throw new Error(`[${stage.stageId}] bomber must use normal detection and fly-over navigation`);
+          const kindViolation = HostileKinds.of(missile.entityKind).spawn.violations(missile);
+          if (kindViolation) {
+            throw new Error(`[${stage.stageId}] ${kindViolation}`);
           }
         }
       }
@@ -4122,7 +4183,7 @@ ${p2}
   }
 
   function remainingFlyOverDistance(hostile, origin, shipPosition) {
-    if (hostile.entityKind === HostileKind.BOMBER) return null;
+    if (!HostileKinds.of(hostile.entityKind).flight.reportsRemainingDistance) return null;
     if (hostile.navigationProfile !== NavigationProfile.FLY_OVER) {
       return distance(origin, shipPosition);
     }
@@ -4143,11 +4204,7 @@ ${p2}
       MIN_ENEMY_SPAWN_DISTANCE + order.extra
     );
     const kind = order.entityKind ?? HostileKind.MISSILE;
-    const waypoints = kind === HostileKind.BOMBER
-      ? randomBomberInitialWaypoints(world, order)
-      : (order.waypoints ?? []).map(point =>
-          polarWaypoint(world.ship.position, order.bearing, point)
-        );
+    const waypoints = HostileKinds.of(kind).spawn.routeWaypoints(world, order);
     addAttack(
       world,
       order.index,
@@ -4199,9 +4256,8 @@ ${p2}
     options={}
   ) {
     const entityKind = options.entityKind ?? HostileKind.MISSILE;
-    const entityId = options.entityId ??
-      (entityKind === HostileKind.BOMBER ? "BMR-" : "ASM-") +
-        String(index).padStart(3, "0");
+    const spawnRole = HostileKinds.of(entityKind).spawn;
+    const entityId = options.entityId ?? spawnRole.idPrefix + String(index).padStart(3, "0");
     const spawnSequence = world.spawnedAttackCount + 1;
 
     const attack = new Missile({
@@ -4215,8 +4271,7 @@ ${p2}
         speed * SEA_SKIM_TERMINAL_SPEED_MULTIPLIER,
       terminalAcceleration: null,
       hitRadius: 8,
-      displayRadius: entityKind === HostileKind.BOMBER
-        ? 15 : attackMissileDisplayRadiusForBaseSpeed(speed),
+      displayRadius: spawnRole.displayRadius(speed),
       targetEntityId: world.ship.entityId,
       sensorProfile,
       damageProfile,
@@ -4224,12 +4279,7 @@ ${p2}
       launchPlatformEntityId: options.launchPlatformEntityId ?? null,
       navigationProfile: options.navigationProfile ?? NavigationProfile.DIRECT,
       routeWaypoints: options.routeWaypoints ?? [],
-      bomberState: entityKind === HostileKind.BOMBER ? {
-        phase: "APPROACH_FIRST",
-        firstLaunchTime: null,
-        launchedCount: 0,
-        bearingDegrees: spawnBearingDegrees,
-      } : null,
+      bomberState: spawnRole.initialState(spawnBearingDegrees),
       flightProfile,
       flightPhase:
         flightProfile === FlightProfile.SEA_SKIMMING
@@ -5114,17 +5164,15 @@ ${p2}
       state.lastKillTime=world.time;
       const combo=Math.min(SCORE_PROFILE.comboMaxBonus,
         SCORE_PROFILE.comboStep*Math.max(0,state.currentCombo-1));
-      const earlyBomberBonus=target.entityKind === HostileKind.BOMBER &&
-        target.bomberState?.launchedCount === 0
-        ? SCORE_PROFILE.bomberPreLaunchKillBonus : 0;
+      const kindKillBonus=HostileKinds.of(target.entityKind).scoring.killBonus(target);
       state.killCount++;
       state.baseScore+=base;
       state.typeBonus+=typeBonus;
       state.distancePenalty+=penalty;
       state.automaticReduction+=autoReduction;
       state.comboBonus+=combo;
-      state.bomberPreLaunchBonus+=earlyBomberBonus;
-      state.killScore+=awardedPostDistance+combo+earlyBomberBonus;
+      state.bomberPreLaunchBonus+=kindKillBonus;
+      state.killScore+=awardedPostDistance+combo+kindKillBonus;
       state.roundScore=state.killScore;
       state.lastKillSource=kind;
       return true;
@@ -6235,14 +6283,14 @@ ${p2}
       for (const missile of world.attackMissiles) {
         if (!missile.alive) continue;
         const previousPosition = missile.position.clone();
-        if (missile.entityKind === HostileKind.BOMBER &&
-            missile.bomberState.phase === "HOLD") continue;
+        const flight = HostileKinds.of(missile.entityKind).flight;
+        if (flight.isHolding(missile)) continue;
 
         let remainingStep = missile.currentSpeed * world.missileMotionMultiplier * dt;
         while (remainingStep > 1e-9) {
           const hasWaypoint = missile.navigationProfile === NavigationProfile.FLY_OVER &&
             missile.routeIndex < missile.routeWaypoints.length;
-          if (missile.entityKind === HostileKind.BOMBER && !hasWaypoint) break;
+          if (flight.stopsWithoutWaypoint && !hasWaypoint) break;
           const objective = hasWaypoint
             ? missile.routeWaypoints[missile.routeIndex]
             : targetShip;
@@ -6879,7 +6927,7 @@ ${p2}
       }
 
       for (const a of world.attackMissiles) {
-        if (!a.alive || a.entityKind === HostileKind.BOMBER) continue;
+        if (!a.alive || !HostileKinds.of(a.entityKind).flight.collidesWithShip) continue;
         if (
           distance(a.position, world.ship.position) <=
           a.hitRadius + world.ship.radius
@@ -8377,7 +8425,7 @@ ${p2}
         const source = world.attackMissiles.find(
           m => m.entityId === t.sourceEntityId && m.alive
         );
-        const tti = source && source.entityKind !== HostileKind.BOMBER
+        const tti = source && HostileKinds.of(source.entityKind).presentation.showsTti
           ? (t.displayRemainingDistance ?? distance(t.displayPosition, world.ship.position)) /
               ((t.displaySpeed ?? source.speed) * world.missileMotionMultiplier)
           : null;
@@ -9916,12 +9964,7 @@ ${p2}
     ctx.fill();
     ctx.stroke();
 
-    if (m.entityKind === HostileKind.BOMBER) {
-      ctx.beginPath();
-      ctx.fillStyle = "#F81541";
-      ctx.arc(-1.2, 0, 2.4, 0, Math.PI * 2);
-      ctx.fill();
-    }
+    HostileKinds.of(m.entityKind).presentation.drawAccent(ctx);
 
     ctx.restore();
   }
